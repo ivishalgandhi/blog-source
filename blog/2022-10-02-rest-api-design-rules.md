@@ -239,19 +239,23 @@ http://api.blog.com/v1/authors/vishal-gandhi
 
 - **Rule : Use HTTP Status Codes to Indicate Response Status**
 
+
+
 HTTP status codes are used to indicate the response status of an HTTP request. The following table lists the HTTP status codes and their corresponding meanings:
 
-| HTTP Status Code | Meaning |
-| ---------------- | ------- |
-| 200 OK           | The request was successful |
-| 201 Created      | The request was successful and a resource was created |
-| 204 No Content   | The request was successful but there is no representation to return |
-| 400 Bad Request  | The request could not be understood by the server |
-| 401 Unauthorized | The request requires user authentication |
-| 403 Forbidden    | The server understood the request, but is refusing to fulfill it |
-| 404 Not Found    | The server has not found anything matching the Request-URI |
-| 405 Method Not Allowed | The method specified in the Request-Line is not allowed for the resource identified by the Request-URI |
-| 500 Internal Server Error | The server encountered an unexpected condition which prevented it from fulfilling the request |
+| HTTP Status Code | Meaning | Information |
+| ---------------- | ------- | ----------- |
+100 | 100 and above are information | 100 and above are for "Information". You rarely use them directly. Responses with these status codes cannot have a body.
+| 200 OK           | The request was successful | 200 and above are for "Successful" responses. These are the ones you would use the most. 200 is the default status code for a successful response.
+| 201 Created      | The request was successful and a resource was created | 201 is "Created". This is used when a new resource is created. The response will contain a Location header with the URI of the new resource.
+| 204 No Content   | The request was successful but there is no representation to return | A special case is 204, "No Content". This response is used when there is no content to return to the client, and so the response must not have a body.
+| 300 Multiple Choices | The requested resource corresponds to any one of a set of representations, each with its own specific location | 300 and above are for "Redirection". These are used when the client needs to take some additional action in order to complete the request. For example, if you request a resource that has been moved to a different location, the response will be 301, "Moved Permanently", and the response will contain a Location header with the new location of the resource. The client can then make a new request to that location.
+| 400 Bad Request  | The request could not be understood by the server | 400 and above are for "Client Error" responses. These are used when the client has made a mistake in its request. For example, if you request a resource that doesn't exist, the response will be 404, "Not Found". 
+| 401 Unauthorized | The request requires user authentication | 401 is "Unauthorized". This is used when the client needs to authenticate itself to get the requested response.
+| 403 Forbidden    | The server understood the request, but is refusing to fulfill it | 403 is "Forbidden". This is used when the client is not allowed to access the resource. For example, if you try to access a resource that you don't have permission to access, the response will be 403, "Forbidden".
+| 404 Not Found    | The server has not found anything matching the Request-URI | 404 is "Not Found". This is used when the client requests a resource that doesn't exist. For example, if you request a resource that doesn't exist, the response will be 404, "Not Found".
+| 405 Method Not Allowed | The method specified in the Request-Line is not allowed for the resource identified by the Request-URI | 405 is "Method Not Allowed". This is used when the client requests a resource using a method that isn't allowed. For example, if you try to access a resource using the POST method, but the resource only supports the GET method, the response will be 405, "Method Not Allowed".
+| 500 Internal Server Error | The server encountered an unexpected condition which prevented it from fulfilling the request | 500 and above are for "Server Error" responses. These are used when the server encounters an error while fulfilling the request. For example, if the server runs out of memory while fulfilling the request, the response will be 500, "Internal Server Error".
 
 The approaches and best practices of REST API outlined in this blog article will help anyone follow consistent guidelines for designing and developing REST APIs. 
 
