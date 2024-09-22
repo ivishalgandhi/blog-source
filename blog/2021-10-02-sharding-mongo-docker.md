@@ -8,40 +8,37 @@ authors:
 tags: [mongodb, docker,sharding]
 ---
 
-In my previous [blog](2021-09-18-mongodb-rs-docker-persistent-volume.md) post, I posted about configuring Replica Set to meet high availability requirements. 
+In my previous [blog](2021-09-18-mongodb-rs-docker-persistent-volume.md) post, I posted about configuring Replica Set to meet high availability requirements.
 
-In this post, i cover 
+In this post, i cover
 
-* MongoDB Sharded Cluster Components 
+* MongoDB Sharded Cluster Components
 * Steps to create MongoDB Sharded Cluster using Docker Compose
 * Add Replica Set as a Shard
 * Sharding Data
-* Verify Distribution of Data 
+* Verify Distribution of Data
 
 <!--truncate-->
 
-## Replica Set vs Sharding 
+## Replica Set vs Sharding
 
-**Replica Set** is the way of keeping identical set of data on multiple servers. Sharding refers to the process of splitting data across nodes, also known as horizontal partitioning. 
+**Replica Set** is the way of keeping identical set of data on multiple servers. Sharding refers to the process of splitting data across nodes, also known as horizontal partitioning.
 
-A database **shard**, is a horizontal partition of data in a database,  each node contains different set of the data. 
+A database **shard**, is a horizontal partition of data in a database,  each node contains different set of the data.
 
-MongoDB supports and implements `auto-sharding` by automating balancing of data across the shards. 
+MongoDB supports and implements `auto-sharding` by automating balancing of data across the shards.
 
+## MongoDB Sharding Components
 
-
-
-## MongoDB Sharding Components 
-
-The first step in creating a Sharded MongoDB cluster is to understand all the components and processes that constitute a cluster 
+The first step in creating a Sharded MongoDB cluster is to understand all the components and processes that constitute a cluster
 
 * **Query Router - mongos**
 
-mongos is the routing process. The goal of sharding is to make cluster of 100-1000 nodes looks like a single interface for the application and abstract all the complexity of data access from multiple shards. The mongos router is table of contents and knows where the  data required by application is located, mongos forwards the application request to appropriate shard(s).   
+mongos is the routing process. The goal of sharding is to make cluster of 100-1000 nodes looks like a single interface for the application and abstract all the complexity of data access from multiple shards. The mongos router is table of contents and knows where the  data required by application is located, mongos forwards the application request to appropriate shard(s).
 
 * **Config Servers**
 
-Config Servers hold all the metadata about which node is holding which data(chunks). mongos retrieves all the metadata from Config Servers. Config Servers are critical and its important to configure and bring the config servers first, backup config servers and setup config servers as Replica Set.  
+Config Servers hold all the metadata about which node is holding which data(chunks). mongos retrieves all the metadata from Config Servers. Config Servers are critical and its important to configure and bring the config servers first, backup config servers and setup config servers as Replica Set.
 
 ## Steps to create MongoDB Sharded Cluster using Docker Compose
 
@@ -52,20 +49,20 @@ Below image show different components required to setup MongoDB sharding with Re
     [*] --> Application
     direction LR
     state Application
-    state QueryRouter 
+    state QueryRouter
     {
-   
-   mongos 
+
+   mongos
    }
    Application --> QueryRouter : Read
    QueryRouter --> Application: Results
-    state cfg: config 
+    state cfg: config
     {
-        
-        cfg1 
+
+        cfg1
         cfg2
         cfg3
-        
+
    }
     QueryRouter --> config
     config --> QueryRouter
@@ -81,27 +78,27 @@ Below image show different components required to setup MongoDB sharding with Re
     shard2_mongo2
     shard2_mongo3
     }
-    
-    state Shard3: rs_mongo3 
+
+    state Shard3: rs_mongo3
     {
      shard3_mongo1
     shard3_mongo2
     shard3_mongo3
     }
 
-    
+
       QueryRouter --> rs_mongo1
     QueryRouter --> rs_mongo2
     QueryRouter --> rs_mongo3
     rs_mongo1 --> QueryRouter
     rs_mongo2 --> QueryRouter
     rs_mongo3 --> QueryRouter
- 
+
 ```
 
 Lets setup above MongoDB Sharding Cluster using docker compose
 
-### Step 1 - Author Docker Compose file 
+### Step 1 - Author Docker Compose file
 
 :::note
 Ensure directory path mentioned in docker compose for persistent volume before the “:” is existing on local host
@@ -122,7 +119,7 @@ services:
       - 20005:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   shard1_mongo2:
     image: mongo_ssh
     hostname: shard1_mongo2
@@ -136,7 +133,7 @@ services:
       - 20006:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   shard1_mongo3:
     image: mongo_ssh
     hostname: shard1_mongo3
@@ -150,7 +147,7 @@ services:
       - 20007:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   shard2_mongo1:
     image: mongo_ssh
     hostname: shard2_mongo1
@@ -164,7 +161,7 @@ services:
       - 20008:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   shard2_mongo2:
     image: mongo_ssh
     hostname: shard2_mongo2
@@ -178,7 +175,7 @@ services:
       - 20009:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   shard2_mongo3:
     image: mongo_ssh
     hostname: shard2_mongo3
@@ -192,7 +189,7 @@ services:
       - 20010:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   shard3_mongo1:
     image: mongo_ssh
     hostname: shard3_mongo1
@@ -206,7 +203,7 @@ services:
       - 20011:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   shard3_mongo2:
     image: mongo_ssh
     hostname: shard3_mongo2
@@ -220,7 +217,7 @@ services:
       - 20012:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   shard3_mongo3:
     image: mongo_ssh
     hostname: shard3_mongo3
@@ -234,7 +231,7 @@ services:
       - 20013:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
-# MongoDB Confiugration Server 
+# MongoDB Confiugration Server
   cfg1:
     image: mongo_ssh
     hostname: cfg1
@@ -248,7 +245,7 @@ services:
       - 20014:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   cfg2:
     image: mongo_ssh
     hostname: cfg2
@@ -262,7 +259,7 @@ services:
       - 20015:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   cfg3:
     image: mongo_ssh
     hostname: cfg3
@@ -276,7 +273,7 @@ services:
       - 20016:27017
     command: ["-f", "/etc/mongod.conf"]
     network_mode: mongo_net
- 
+
   mongos:
     image: mongo_ssh
     hostname: mongos
@@ -322,11 +319,11 @@ systemLog:
   destination: file
   logAppend: true
   path: /var/log/mongodb/mongod.log
- 
+
 net:
   port: 27017
   bindIp: 127.0.0.1  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
- 
+
 sharding:
   configDB: rs_config/cfg1:27017,cfg2:27017,cfg3:27017
 ```
@@ -335,35 +332,35 @@ sharding:
 
 ### Step 5 - Spin up Config Server, mongos, all mongod nodes
 
-```shell 
+```shell
 $ docker compose up -d
 ```
 
 ### Step 6 - Connect to config server and add config server in a Replica Set
 
-```javascript 
-rs_config:PRIMARY> rs.initiate() 
+```javascript
+rs_config:PRIMARY> rs.initiate()
 rs_config:PRIMARY> rs.add("cfg2:27017")
 rs_config:PRIMARY> rs.add("cfg3:27017")
 ```
 
 ### Step 7 -  Add all data nodes to replicaset
 
-```javascript 
+```javascript
 # Connect to shard1_mongo1
- 
+
 admin> rs.initiate()
 rs_mongo1 [direct: primary] admin> rs.add("shard1_mongo2")
 rs_mongo1 [direct: primary] admin> rs.add("shard1_mongo3")
- 
+
 # Connect to shard2_mongo1
- 
+
 admin> rs.initiate()
 rs_mongo2 [direct: primary] test> rs.add("shard2_mongo2")
 rs_mongo2 [direct: primary] test> rs.add("shard2_mongo3")
- 
+
 # Connect to shard3_mongo1
- 
+
 test> rs.initiate()
 rs_mongo3 [direct: other] test> rs.add("shard3_mongo2")
 rs_mongo3 [direct: primary] test> rs.add("shard3_mongo3")
@@ -375,9 +372,9 @@ rs_mongo3 [direct: primary] test> rs.add("shard3_mongo3")
 ```javascript
 
 mongos>sh.addShard("rs_mongo1/shard1_mongo1:27017,shard1_mongo2:27017,shard1_mongo3:27017")
- 
+
 mongos>sh.addShard("rs_mongo2/shard2_mongo1:27017,shard2_mongo2:27017,shard2_mongo3:27017")
- 
+
 mongos>sh.addShard("rs_mongo3/shard3_mongo1:27017,shard3_mongo2:27017,
 
 ```
@@ -393,13 +390,13 @@ mongos> db.adminCommand({enableSharding : "employee"})
 ```javascript
 mongos> use employee
 switched to db employee
- 
+
 mongos> for (var i = 0; i < 100000; i++) { db.emp_list2.insert({ "sr_no": "emp # " + i, "create_date": new Date() }); }
- 
+
 mongos> db.emp_list2.ensureIndex({"sr_no" : "hashed"})
- 
+
 mongos> sh.shardCollection("employee.emp_list2", {"sr_no":"hashed"})
- 
+
 {
     "collectionsharded" : "employee.emp_list2",
     "collectionUUID" : UUID("17195baa-fc6c-4c3e-8a2b-58fb1278e40c"),
@@ -417,7 +414,7 @@ mongos> sh.shardCollection("employee.emp_list2", {"sr_no":"hashed"})
 
 ### Step 11 – Validate sharding status
 
-```javascript 
+```javascript
 
 
 mongos> sh.status()
@@ -460,35 +457,33 @@ mongos> sh.status()
                         chunks:
                                 rs_mongo1   2
                                 rs_mongo2   2
-                                rs_mongo3   
+                                rs_mongo3
 ```
 
-### Step 12 - Validate chunk distribution 
+### Step 12 - Validate chunk distribution
 ```javascript
 
 mongos> db.getSiblingDB("employee").emp_list2.getShardDistribution();
- 
+
 Shard rs_mongo1 at rs_mongo1/shard1_mongo1:27017,shard1_mongo2:27017,shard1_mongo3:27017
  data : 2.09MiB docs : 33426 chunks : 2
  estimated data per chunk : 1.04MiB
  estimated docs per chunk : 16713
- 
+
 Shard rs_mongo3 at rs_mongo3/shard3_mongo1:27017,shard3_mongo2:27017,shard3_mongo3:27017
  data : 2.09MiB docs : 33379 chunks : 2
  estimated data per chunk : 1.04MiB
  estimated docs per chunk : 16689
- 
+
 Shard rs_mongo2 at rs_mongo2/shard2_mongo1:27017,shard2_mongo2:27017,shard2_mongo3:27017
  data : 2.08MiB docs : 33195 chunks : 2
  estimated data per chunk : 1.04MiB
  estimated docs per chunk : 16597
- 
+
 Totals
  data : 6.28MiB docs : 100000 chunks : 6
  Shard rs_mongo1 contains 33.42% data, 33.42% docs in cluster, avg obj size on shard : 65B
  Shard rs_mongo3 contains 33.37% data, 33.37% docs in cluster, avg obj size on shard : 65B
- Shard rs_mongo2 contains 33.19% data, 33.19% docs in cluster, avg 
+ Shard rs_mongo2 contains 33.19% data, 33.19% docs in cluster, avg
 
 ```
-
-

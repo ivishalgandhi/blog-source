@@ -64,11 +64,10 @@ In Docker Desktop 4.7.0 Docker introduced and included a new experimental docker
 
 * Display SBOM in CyloneDX format
 
-
 ```shell
-	
+
 $ docker sbom mongo:latest --format cyclonedx-json | more
- 
+
 {
       "type": "library",
       "publisher": "MongoDB Packaging \u003cpackaging@mongodb.com\u003e",
@@ -89,19 +88,19 @@ $ docker sbom mongo:latest --format cyclonedx-json | more
 
 * Display SBOM summary of packages. e.g. using the below command we can check for the log4j vulnerabilities
 
-```shell	
+```shell
 $ docker sbom neo4j | grep log4j
- 
+
 log4j-api                           2.17.1                                     java-archive
 log4j-core                          2.17.1                                     java-archive
-	
+
 $ docker sbom neo4j:4.4.1 | grep log4j
- 
+
 log4j-api                           2.15.0                                     java-archive
 log4j-core                          2.15.0                                     java-archive
-	
+
 $ docker sbom elasticsearch:7.16.3 | grep log4j
- 
+
 elasticsearch-log4j                   7.16.3                             java-archive
 log4j-1.2-api                         2.17.1                             java-archive
 log4j-api                             2.17.1                             java-archive
