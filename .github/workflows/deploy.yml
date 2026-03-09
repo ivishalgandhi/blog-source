@@ -29,6 +29,8 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.GH_PAT }}
+          external_repository: ivishalgandhi/ivishalgandhi.github.io
+          publish_branch: gh-pages
           publish_dir: ./build
           cname: vishalgandhi.in
