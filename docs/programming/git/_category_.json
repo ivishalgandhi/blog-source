@@ -1,0 +1,8 @@
+{
+  "label": "Git",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Guides and tutorials for Git version control"
+  }
+}

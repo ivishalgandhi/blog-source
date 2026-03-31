@@ -1,0 +1,12 @@
+.sidebarContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.sidebarContent {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}

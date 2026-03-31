@@ -25,6 +25,11 @@ const config = {
     locales: ['en'],
   },
 
+  // Google OAuth Client ID for docs authentication
+  customFields: {
+    googleClientId: '940819383184-4ke4g79tv6cmrpdsp6jmjcj92scble1s.apps.googleusercontent.com',
+  },
+
   markdown: {
     mermaid: true,
   },
@@ -55,13 +60,14 @@ const config = {
           anonymizeIP: true,
         }, 
         
-        docs: false,//{
-        //   sidebarPath: require.resolve('./sidebars.js'),
-        //   // Please change this to your repo.
-        //   // Remove this to remove the "edit this page" links.
-        //   // editUrl:
-        //   //   'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        // },
+        docs: {
+          sidebarPath: require.resolve('./sidebars.js'),
+          routeBasePath: 'docs',
+          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
+          // editUrl:
+          //   'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+        },
         blog: {
           // routeBasePath: '/', // Set this value to '/'.
           blogSidebarTitle: 'All posts',
@@ -101,7 +107,8 @@ const config = {
           //   label: 'About',
           // },
           
-          { to: 'about', label: 'About', position: 'left' }, 
+          { to: 'about', label: 'About', position: 'left' },
+          { type: 'docSidebar', sidebarId: 'tutorialSidebar', label: 'Docs', position: 'left' },
           {
             href: 'https://github.com/ivishalgandhi',
             position: 'right',

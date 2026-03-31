@@ -1,0 +1,325 @@
+---
+sidebar_position: 2
+title: Pass Cheat Sheet
+description: Quick reference guide for Pass password manager commands
+---
+
+# 📦 Pass Password Manager - Quick Reference
+
+<div style={{textAlign: 'center', padding: '1.5rem', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', borderRadius: '8px', marginBottom: '2rem'}}>
+  <h2 style={{color: 'white', marginBottom: '0.5rem', fontSize: '2rem'}}>The Standard Unix Password Manager</h2>
+  <p style={{opacity: 0.9, fontSize: '1.1rem'}}>Essential commands and workflows at your fingertips</p>
+</div>
+
+<div className="grid-container">
+
+<div className="section-card">
+
+### Initial Setup
+
+<div className="command-item">
+  <code>gpg --full-generate-key</code>
+  <div className="command-desc">Create a new GPG key (one-time setup)</div>
+</div>
+
+<div className="command-item">
+  <code>pass init "email@example.com"</code>
+  <div className="command-desc">Initialize password store with GPG key</div>
+</div>
+
+<div className="command-item">
+  <code>pass git init</code>
+  <div className="command-desc">Initialize git in password store</div>
+</div>
+
+<div className="command-item">
+  <code>pass git remote add origin URL</code>
+  <div className="command-desc">Add remote repository for sync</div>
+</div>
+
+<div className="command-item">
+  <code>pass git push -u origin main</code>
+  <div className="command-desc">Push to remote repository</div>
+</div>
+
+</div>
+
+<div className="section-card">
+
+### Adding Passwords
+
+<div className="command-item">
+  <code>pass insert path/to/password</code>
+  <div className="command-desc">Add a new password (prompted to enter)</div>
+</div>
+
+<div className="command-item">
+  <code>pass insert -m path/to/password</code>
+  <div className="command-desc">Add multi-line entry (password + notes)</div>
+</div>
+
+<div className="command-item">
+  <code>pass generate path/to/password 24</code>
+  <div className="command-desc">Generate random 24-character password</div>
+</div>
+
+<div className="command-item">
+  <code>pass generate -n path/to/password 20</code>
+  <div className="command-desc">Generate alphanumeric password (no symbols)</div>
+</div>
+
+<div className="command-item">
+  <code>pass generate -c path/to/password 32</code>
+  <div className="command-desc">Generate and copy to clipboard (don't display)</div>
+</div>
+
+</div>
+
+<div className="section-card">
+
+### Viewing Passwords
+
+<div className="command-item">
+  <code>pass</code>
+  <div className="command-desc">List all passwords in tree structure</div>
+</div>
+
+<div className="command-item">
+  <code>pass path/to/password</code>
+  <div className="command-desc">Display password in terminal</div>
+</div>
+
+<div className="command-item">
+  <code>pass -c path/to/password</code>
+  <div className="command-desc">Copy password to clipboard (clears in 45s)</div>
+</div>
+
+<div className="command-item">
+  <code>pass show path/to/password</code>
+  <div className="command-desc">Show full multi-line entry</div>
+</div>
+
+<div className="command-item">
+  <code>pass find keyword</code>
+  <div className="command-desc">Search for passwords containing keyword</div>
+</div>
+
+<div className="command-item">
+  <code>pass grep "search term"</code>
+  <div className="command-desc">Search inside decrypted password files</div>
+</div>
+
+</div>
+
+<div className="section-card">
+
+### Managing Passwords
+
+<div className="command-item">
+  <code>pass edit path/to/password</code>
+  <div className="command-desc">Edit existing password in $EDITOR</div>
+</div>
+
+<div className="command-item">
+  <code>pass rm path/to/password</code>
+  <div className="command-desc">Remove a password</div>
+</div>
+
+<div className="command-item">
+  <code>pass mv old/path new/path</code>
+  <div className="command-desc">Move or rename a password</div>
+</div>
+
+<div className="command-item">
+  <code>pass cp source/path dest/path</code>
+  <div className="command-desc">Copy a password to another location</div>
+</div>
+
+<div className="command-item">
+  <code>pass rm -r folder/</code>
+  <div className="command-desc">Remove entire folder of passwords</div>
+</div>
+
+</div>
+
+<div className="section-card">
+
+### Git Sync
+
+<div className="command-item">
+  <code>pass git pull</code>
+  <div className="command-desc">Pull latest passwords from remote</div>
+</div>
+
+<div className="command-item">
+  <code>pass git push</code>
+  <div className="command-desc">Push local changes to remote</div>
+</div>
+
+<div className="command-item">
+  <code>pass git log</code>
+  <div className="command-desc">View password change history</div>
+</div>
+
+<div className="command-item">
+  <code>pass git status</code>
+  <div className="command-desc">Check sync status</div>
+</div>
+
+<div className="command-item">
+  <code>pass git diff</code>
+  <div className="command-desc">View uncommitted changes</div>
+</div>
+
+</div>
+
+<div className="section-card">
+
+### GPG Key Management
+
+<div className="command-item">
+  <code>gpg --list-keys</code>
+  <div className="command-desc">List all GPG public keys</div>
+</div>
+
+<div className="command-item">
+  <code>gpg --list-secret-keys</code>
+  <div className="command-desc">List all GPG private keys</div>
+</div>
+
+<div className="command-item">
+  <code>gpg --export-secret-keys email &gt; key.asc</code>
+  <div className="command-desc">Export GPG private key for backup</div>
+</div>
+
+<div className="command-item">
+  <code>gpg --import key.asc</code>
+  <div className="command-desc">Import GPG key on new machine</div>
+</div>
+
+<div className="command-item">
+  <code>gpg --edit-key email</code>
+  <div className="command-desc">Edit key (use "trust" to set trust level)</div>
+</div>
+
+</div>
+
+<div className="section-card">
+
+### Advanced Usage
+
+<div className="command-item">
+  <code>pass init -p path/ key-id</code>
+  <div className="command-desc">Re-encrypt passwords in path with new key</div>
+</div>
+
+<div className="command-item">
+  <code>pass init key1 key2 key3</code>
+  <div className="command-desc">Encrypt for multiple GPG keys (team sharing)</div>
+</div>
+
+<div className="command-item">
+  <code>pass ls subfolder/</code>
+  <div className="command-desc">List passwords in specific subfolder</div>
+</div>
+
+<div className="command-item">
+  <code>PASSWORD_STORE_DIR=~/other pass</code>
+  <div className="command-desc">Use alternate password store location</div>
+</div>
+
+<div className="command-item">
+  <code>pass show -c5 path/to/password</code>
+  <div className="command-desc">Copy line 5 of multi-line entry to clipboard</div>
+</div>
+
+</div>
+
+<div className="section-card">
+
+### Important Locations
+
+<div className="command-item">
+  <code>~/.password-store/</code>
+  <div className="command-desc">Default password store directory</div>
+</div>
+
+<div className="command-item">
+  <code>~/.gnupg/</code>
+  <div className="command-desc">GPG configuration and keys directory</div>
+</div>
+
+<div className="command-item">
+  <code>~/.password-store/.gpg-id</code>
+  <div className="command-desc">File containing GPG key ID used for encryption</div>
+</div>
+
+<div className="command-item">
+  <code>/usr/share/bash-completion/completions/pass</code>
+  <div className="command-desc">Bash completion script (source in .bashrc)</div>
+</div>
+
+</div>
+
+</div>
+
+:::warning Security Reminder
+Always use a **private Git repository** for your password store, even though passwords are encrypted. Never commit your GPG private keys to the repository.
+:::
+
+:::tip Pro Tip
+Use `pass -c` instead of `pass show` to avoid displaying passwords on screen. The clipboard auto-clears after 45 seconds for security.
+:::
+
+<div className="grid-container">
+
+<div className="section-card">
+
+### Common Workflows
+
+<div className="command-item">
+  <code>pass insert work/gitlab && pass git push</code>
+  <div className="command-desc">Add password and immediately sync</div>
+</div>
+
+<div className="command-item">
+  <code>pass git pull && pass -c personal/email</code>
+  <div className="command-desc">Sync first, then copy password</div>
+</div>
+
+<div className="command-item">
+  <code>pass find github | grep personal</code>
+  <div className="command-desc">Search and filter results</div>
+</div>
+
+</div>
+
+<div className="section-card">
+
+### Troubleshooting
+
+<div className="command-item">
+  <code>gpg-connect-agent reloadagent /bye</code>
+  <div className="command-desc">Reload GPG agent after config changes</div>
+</div>
+
+<div className="command-item">
+  <code>pass init "$(cat ~/.password-store/.gpg-id)"</code>
+  <div className="command-desc">Re-encrypt all passwords with current key</div>
+</div>
+
+<div className="command-item">
+  <code>cd ~/.password-store && git status</code>
+  <div className="command-desc">Check for sync issues manually</div>
+</div>
+
+</div>
+
+</div>
+
+---
+
+<div style={{textAlign: 'center', padding: '1.5rem', background: '#2d3748', color: 'white', borderRadius: '8px', marginTop: '2rem'}}>
+  <p style={{margin: 0, fontSize: '1.1rem'}}><strong>Pass - The Standard Unix Password Manager</strong></p>
+  <p style={{margin: '0.5rem 0 0 0', opacity: 0.8}}><a href="https://www.passwordstore.org" target="_blank" style={{color: '#667eea', textDecoration: 'none'}}>passwordstore.org</a></p>
+</div>
