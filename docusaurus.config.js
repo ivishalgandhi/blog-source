@@ -109,6 +109,7 @@ const config = {
           
           { to: 'about', label: 'About', position: 'left' },
           { type: 'docSidebar', sidebarId: 'tutorialSidebar', label: 'Docs', position: 'left' },
+          { type: 'custom-toolsNavbarItem', position: 'left' },
           {
             href: 'https://github.com/ivishalgandhi',
             position: 'right',
