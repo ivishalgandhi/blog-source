@@ -1,0 +1,8 @@
+{
+  "label": "Spec-Driven Development",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Detailed notes on Spec-Driven Development (SDD) — writing specifications before code, using spec-kit, and mapping SDD concepts to Windsurf."
+  }
+}

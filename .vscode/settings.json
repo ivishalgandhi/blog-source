@@ -24,5 +24,11 @@
     "titleBar.inactiveForeground": "#15202b99",
     "commandCenter.border": "#15202b99"
   },
-  "peacock.color": "#f9e64f"
+  "peacock.color": "#f9e64f",
+  "markdown.marp.html": "all",
+  "demoTime.defaultFileType": "yaml",
+  "workbench.colorTheme": "Default Light Modern",
+  "workbench.statusBar.visible": true,
+  "workbench.editor.showTabs": "multiple",
+  "workbench.activityBar.location": "default"
 }
