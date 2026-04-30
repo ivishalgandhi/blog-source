@@ -1,0 +1,239 @@
+title: 'Spec-Driven Development — Full Presentation'
+description: >
+  Complete 60-minute SDD workshop: slides + live demo.
+  Covers What/Why, spec-kit workflow, Windsurf mapping,
+  and a live PostgreSQL Health Check Scanner demo.
+version: 3
+demos:
+
+  # ── PART 1: What is SDD and Why it Matters ─────────────────────────────────
+
+  - title: 'Title + Agenda'
+    description: 'Open the presentation. Welcome the audience.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/01-title-agenda.md
+
+  - title: 'The problem we all know'
+    description: 'Set up the problem — specs become archaeology, code becomes truth.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/02-the-problem.md
+
+  - title: 'What is SDD + What is a spec?'
+    description: 'Define Spec-Driven Development and what a spec actually is.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/03-what-is-sdd.md
+
+  - title: 'Three levels of SDD'
+    description: 'Spec-First → Spec-Anchored → Spec-as-Source. Most teams start at Level 1.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/04-three-levels.md
+
+  - title: 'Why now + Vibe Coding vs. Intent-First'
+    description: 'Three forces converging. Side-by-side comparison of vibe coding and SDD.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/05-why-now.md
+
+  # ── PART 2: The spec-kit Workflow ──────────────────────────────────────────
+
+  - title: 'What is spec-kit?'
+    description: 'GitHub open-source SDD toolkit. Three commands, full artifact chain.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/06-speckit-intro.md
+
+  - title: 'The Constitution'
+    description: 'The most important file — immutable principles + the 9 articles.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/07-constitution.md
+
+  - title: 'Step 1: Specify + spec.md example'
+    description: 'Show the specify command and what spec.md looks like.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/08-specify.md
+
+  - title: 'Step 2: Plan + plan.md example'
+    description: 'Show the plan command — every decision traces to a user story.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/09-plan.md
+
+  - title: 'Step 3: Tasks + artifact chain'
+    description: 'Show tasks.md and the full .specify/ folder structure.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/10-tasks.md
+
+  # ── PART 3: SDD meets Windsurf ─────────────────────────────────────────────
+
+  - title: 'SDD meets Windsurf — mapping table'
+    description: 'Connect spec-kit concepts to Rules, Workflows, and Skills your team already knows.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/11-windsurf-mapping.md
+
+  - title: 'Rules = Constitution + Workflows = Tasks'
+    description: 'Side-by-side code comparisons of .windsurfrules vs constitution.md and workflows vs tasks.md.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/12-rules-workflows.md
+
+  - title: 'Real example + Complete pipeline'
+    description: 'Show .specify/auth-for-docs/ — SDD the team has already done. Then show the full pipeline.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/13-real-example-pipeline.md
+      - action: open
+        path: .specify/auth-for-docs/spec.md
+
+  # ── PART 4: Live Demo ──────────────────────────────────────────────────────
+
+  - title: 'Demo plan — 15 minutes'
+    description: 'Explain what we are about to build and the 9-step plan.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/14-demo-plan.md
+
+  - title: 'Demo: Show the only pre-built file'
+    description: 'Open docker-compose.yml — the ONLY thing pre-built. Everything else is live.'
+    steps:
+      - action: open
+        path: docs/demos/health-check-scanner/docker-compose.yml
+      - action: highlight
+        path: docs/demos/health-check-scanner/docker-compose.yml
+        startPlaceholder: 'services:'
+        endPlaceholder: 'retries: 5'
+
+  - title: 'Demo: Start Postgres'
+    description: 'One command. Database ready.'
+    steps:
+      - action: openTerminal
+        terminalId: sdd-demo
+      - action: executeTerminalCommand
+        command: docker compose -f docs/demos/health-check-scanner/docker-compose.yml up -d
+        terminalId: sdd-demo
+        autoExecute: false
+
+  - title: 'Demo: Init spec-kit'
+    description: 'Initialise spec-kit — creates constitution.md and .specify/ structure.'
+    steps:
+      - action: focusTerminal
+        terminalId: sdd-demo
+      - action: executeTerminalCommand
+        command: uvx spec-kit init
+        terminalId: sdd-demo
+        insertTypingMode: character-by-character
+        insertTypingSpeed: 60
+        autoExecute: false
+
+  - title: 'Demo: Review the constitution'
+    description: 'Open the generated constitution.md — show Article I and II to audience.'
+    steps:
+      - action: open
+        path: memory/constitution.md
+      - action: highlight
+        path: memory/constitution.md
+        startPlaceholder: '## Article I'
+        endPlaceholder: '## Article III'
+
+  - title: '[ MANUAL ] Run /speckit.specify in Cascade'
+    description: >
+      Switch to Windsurf Cascade and run:
+        /speckit.specify
+        Build a PostgreSQL health check scanner with FastAPI and Typer CLI.
+        Checks: connectivity, latency, connection pool.
+      Wait for spec.md to be generated, then advance.
+    steps:
+      - action: openSlide
+        path: .demo/slides/specify.md
+
+  - title: 'Demo: Review spec.md'
+    description: 'Open spec.md — highlight first user story and acceptance criteria.'
+    steps:
+      - action: open
+        path: .specify/health-scanner/spec.md
+      - action: highlight
+        path: .specify/health-scanner/spec.md
+        startPlaceholder: '## US-1'
+        endPlaceholder: '## EC-1'
+
+  - title: '[ MANUAL ] Run /speckit.plan in Cascade'
+    description: >
+      Switch to Windsurf Cascade and run:
+        /speckit.plan
+        Use psycopg2-binary, FastAPI, Typer.
+        Share check logic between API and CLI.
+        Test against real Docker Postgres — no mocks.
+      Wait for plan.md to be generated, then advance.
+    steps:
+      - action: openSlide
+        path: .demo/slides/plan.md
+
+  - title: 'Demo: Review plan.md'
+    description: 'Open plan.md — show architecture decision and US traceability.'
+    steps:
+      - action: open
+        path: .specify/health-scanner/plan.md
+      - action: highlight
+        path: .specify/health-scanner/plan.md
+        startPlaceholder: '## Architecture'
+        endPlaceholder: '## Component Design'
+
+  - title: '[ MANUAL ] Run /speckit.tasks in Cascade'
+    description: >
+      Switch to Windsurf Cascade and run:
+        /speckit.tasks
+      Wait for tasks.md to be generated, then advance.
+    steps:
+      - action: openSlide
+        path: .demo/slides/tasks.md
+
+  - title: 'Demo: Review tasks.md — test-first ordering'
+    description: 'Open tasks.md — highlight T03 (tests) before T04 (implement). Article II enforced.'
+    steps:
+      - action: open
+        path: .specify/health-scanner/tasks.md
+      - action: highlight
+        path: .specify/health-scanner/tasks.md
+        startPlaceholder: '## [T03]'
+        endPlaceholder: '## [T05]'
+
+  - title: '[ MANUAL ] Ask Cascade to execute tasks'
+    description: >
+      Switch to Windsurf Cascade and say:
+        Work through tasks.md from T01.
+        Check off each task as you complete it.
+      Demo Time will stay on this slide while Cascade works.
+    steps:
+      - action: openSlide
+        path: .demo/slides/execute.md
+
+  - title: 'Demo: Run and verify'
+    description: 'Start the FastAPI server and prove the spec became working code.'
+    steps:
+      - action: focusTerminal
+        terminalId: sdd-demo
+      - action: executeTerminalCommand
+        command: uvicorn src.main:app --reload
+        terminalId: sdd-demo
+        autoExecute: false
+
+  # ── PART 5: Practical Guidance ─────────────────────────────────────────────
+
+  - title: 'Tradeoffs + When to use SDD'
+    description: 'Be honest. SDD is not a silver bullet. Show the decision table.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/15-tradeoffs.md
+
+  - title: 'Getting started + Q&A'
+    description: 'Four concrete steps this week. Resources. Open Q&A.'
+    steps:
+      - action: openSlide
+        path: .demo/slides/16-getting-started-qa.md
