@@ -1,0 +1,78 @@
+{
+  "LAB-03-A": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-03-a",
+    "description": "3-node Patroni + etcd cluster lab (Chapter 03)"
+  },
+  "LAB-08-A": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-08-a",
+    "description": "Backup/DR PITR lab — full + incremental + restore (Chapter 08)"
+  },
+  "LAB-08-B": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/terraform/lab-08-b",
+    "description": "Cross-region restore lab (Chapter 08)"
+  },
+  "LAB-A-A": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-a-a",
+    "description": "Python runtime rolling upgrade lab (Appendix A)"
+  },
+  "LAB-B-A": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/ansible/lab-b-a",
+    "description": "Watchdog and lease pathology lab (Appendix B)"
+  },
+  "CONFIG-04-REF": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/patroni/config-04-ref.yml",
+    "description": "Annotated reference patroni.yml (Chapter 04)"
+  },
+  "DASH-06-CORE": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/dashboards/dash-06-core.json",
+    "description": "Core Patroni fleet Grafana dashboard (Chapter 06)"
+  },
+  "DASH-06-LAG": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/dashboards/dash-06-lag.json",
+    "description": "Replication lag Grafana dashboard (Chapter 06)"
+  },
+  "ALERT-06-LAG": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-lag.yaml",
+    "description": "Replication lag alert rule (Chapter 06)"
+  },
+  "ALERT-06-LEADER-FLAP": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-leader-flap.yaml",
+    "description": "Leader flapping alert rule (Chapter 06)"
+  },
+  "ALERT-06-WAL-BLOAT": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-wal-bloat.yaml",
+    "description": "WAL bloat alert rule (Chapter 06)"
+  },
+  "ALERT-06-DCS-PARTITION": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-dcs-partition.yaml",
+    "description": "DCS partition alert rule (Chapter 06)"
+  },
+  "ALERT-06-CERT-EXPIRY": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-cert-expiry.yaml",
+    "description": "Certificate expiry alert rule (Chapter 06)"
+  },
+  "AGENT-11-MON": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/agents/monitoring",
+    "description": "Autonomous monitoring agent (Chapter 11)"
+  },
+  "AGENT-11-PF": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/agents/predictive-failover",
+    "description": "Predictive failover agent (Chapter 11)"
+  },
+  "AGENT-11-ST": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/agents/self-tuning",
+    "description": "Self-tuning agent (Chapter 11)"
+  },
+  "AGENT-11-AR": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/agents/auto-remediation",
+    "description": "Auto-remediation agent (Chapter 11)"
+  },
+  "AGENT-11-NL": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/agents/nl-ops",
+    "description": "Natural language ops agent (Chapter 11)"
+  },
+  "CHAOS-03-A": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/chaos/chaos-03-a.sh",
+    "description": "Leader kill chaos script (Chapter 03)"
+  }
+}

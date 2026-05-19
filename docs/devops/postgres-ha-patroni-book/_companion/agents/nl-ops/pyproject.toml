@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent-nl"
+version = "0.1.0"
+description = "AGENT-11-NL: Natural-language ops agent for Patroni HA clusters"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic-ai>=0.25",
+    "litellm>=1.40",
+]
+
+[project.scripts]
+agent-nl = "agent_nl.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agent_nl"]

@@ -1,0 +1,111 @@
+---
+title: "Mastering PostgreSQL High Availability with Patroni"
+sidebar_position: 0
+description: "Enterprise patterns for geo-distributed Postgres systems — a 2026 practitioner reference covering Patroni, etcd, Consul, observability, backup/DR, and agentic AI operations."
+version_support:
+  postgres: ["18.x", "17.x (N-1)"]
+  patroni: ["latest stable (4.x)"]
+  window_months: 12
+anchors_user_stories: ["US1", "US2", "US3", "US4", "US5"]
+frs_covered: ["FR-008", "FR-017"]
+tags: [postgres, patroni, ha, book]
+---
+
+# Mastering PostgreSQL High Availability with Patroni
+
+**Enterprise Patterns for Geo-Distributed Systems — 2026 Edition**
+
+## Who This Book Is For
+
+This book is written for **senior database administrators**, **site reliability engineers**, and **platform engineers** who manage mission-critical PostgreSQL deployments at scale. You should already be comfortable with:
+
+- PostgreSQL administration (replication, WAL, vacuum, `pg_hba.conf`)
+- Linux systems administration
+- At least one infrastructure-as-code tool (Terraform, Ansible, or equivalent)
+- Basic container orchestration concepts (Docker; Kubernetes is helpful but not required)
+
+:::info Not a beginner tutorial
+This book does **not** teach PostgreSQL basics. If you need an introduction to PostgreSQL, start with the [official documentation](https://www.postgresql.org/docs/) or a beginner-oriented guide first.
+:::
+
+## What You Will Learn
+
+By working through this book and its companion labs, you will be able to:
+
+1. **Design** a production-grade, multi-node Patroni cluster with the right DCS (etcd, Consul, or Kubernetes-native) for your environment
+2. **Deploy** reproducible clusters across multiple substrates — homelab (Proxmox LXC), local containers (Docker/kind), and cloud (AWS/GCP/Azure via Terraform + Ansible)
+3. **Operate** a Patroni fleet with confidence: configuration best practices, performance tuning under HA constraints, and zero-downtime upgrade procedures
+4. **Monitor** your fleet with purpose-built Grafana dashboards and Prometheus alert rules that map directly to the troubleshooting playbooks
+5. **Troubleshoot** under pressure using symptom-keyed decision trees that trace every leaf to an observable signal and a recovery runbook
+6. **Protect** your data with battle-tested backup/DR strategies (pgBackRest, WAL-G, PITR) validated against measurable RTO/RPO targets
+7. **Scale** across regions with documented quorum placement, sync/async replication trade-offs, split-brain prevention, and data-sovereignty patterns
+8. **Automate** with 2026 agentic AI patterns — autonomous monitoring, predictive failover, self-tuning, auto-remediation, and natural-language operations — each with explicit guardrails and manual fallbacks
+
+## Non-Goals
+
+- **Basic PostgreSQL tutorials** — assumed knowledge
+- **Single-vendor cloud-managed solutions** — this book focuses on self-managed Patroni; cloud DBaaS is referenced only where it intersects with Patroni patterns
+- **Beginner-level content** — every chapter targets senior practitioners
+
+## How to Use This Book
+
+### Reading Paths
+
+| Your Role | Start With | Then |
+|-----------|-----------|------|
+| **Senior DBA** (new deployment) | Ch. 01 → 02 → 03 → 04 → 05 → 10 | Ch. 08 (backup/DR), then Ch. 06–07 |
+| **SRE** (operating existing fleet) | Ch. 06 → 07 → 09 | Ch. 04 (config review), Appendix A (Python runtime) |
+| **Platform Engineer** (AI integration) | Ch. 01–04 (foundations), then Ch. 11 | Ch. 06–07 (the manual equivalents) |
+| **Architect** (DR/compliance audit) | Ch. 08 → 10 | Ch. 01 (failure models), Ch. 03 (deployment validation) |
+
+### Companion Repository
+
+All hands-on labs, Terraform modules, Ansible roles, Grafana dashboards, chaos scripts, and AI-agent reference integrations live in a **separate companion repository**:
+
+> **[github.com/ivishalgandhi/postgres-ha-patroni-companion](https://github.com/ivishalgandhi/postgres-ha-patroni-companion)**
+
+Artifacts are referenced by stable IDs throughout the book (e.g., `LAB-03-A`, `DASH-06-CORE`). If an ID drifts from the companion repo, the site build fails automatically — this is intentional drift detection.
+
+### Lab Substrates
+
+Each lab declares which substrates it supports. You do **not** need all of them:
+
+| Substrate | Best For | Requirements |
+|-----------|----------|-------------|
+| **Proxmox LXC** | Homelab, fast multi-node on a single host | Proxmox VE 8.x+ |
+| **Docker / Docker Compose** | Quick, ephemeral, non-K8s labs | Docker 24+, Compose v2 |
+| **kind / k3d** | Kubernetes-operator labs, CI | kind 0.24+ or k3d, Docker |
+| **Terraform + Ansible** | Cloud-portable, multi-region | Terraform ≥1.7, Ansible ≥2.16, cloud credentials |
+
+### Version Support Window
+
+This edition targets:
+
+- **PostgreSQL**: 18.x (current) and 17.x (N-1)
+- **Patroni**: latest stable (4.x line)
+- **Compatibility window**: 12 months from publication
+
+Labs are CI-tested against the version matrix in the companion repository. Each chapter's frontmatter declares its supported versions, and out-of-window readers see an in-page warning.
+
+## Chapter Overview
+
+| # | Title | User Story |
+|---|-------|------------|
+| 01 | Foundations of Postgres HA at Scale | US1 |
+| 02 | Patroni Architecture & DCS Choices | US1 |
+| 03 | Designing & Deploying a Patroni Cluster | US1 |
+| 04 | Configuration Best Practices | US1 |
+| 05 | Performance Tuning Under HA Constraints | US1 |
+| 06 | Observability & Monitoring for Patroni Fleets | US2 |
+| 07 | Troubleshooting Playbooks | US2 |
+| 08 | Backup, DR, and PITR at Enterprise Scale | US4 |
+| 09 | Zero-Downtime Operations | US2 |
+| 10 | Geo-Distributed Patroni | US1 |
+| 11 | Agentic AI for Autonomous Patroni Operations | US3 |
+| 12 | Case Studies & Anti-Patterns *(optional)* | US5 |
+| A | Appendix — Managing the Python Runtime for Patroni | US2 |
+| B | Appendix — Patroni Internals Deep-Dive | US1, US2 |
+
+---
+
+*Proceed to the [Preface](./00-preface) for conventions, notation, and the complete version-support reference.*

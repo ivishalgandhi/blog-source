@@ -1,0 +1,24 @@
+# ALERT-06-LEADER-FLAP — Leader Changed More Than N Times in M Minutes
+# Source: Chapter 06 (06-observability-monitoring.mdx)
+# Severity: Critical.
+# Trigger: SIG-10 — more than 2 promote events in 10 minutes.
+# Runbook: Chapter 07 → "Leader Flapping" decision tree (SIG-08, SIG-10).
+
+groups:
+  - name: patroni-leader-flap
+    rules:
+      - alert: PatroniLeaderFlapping
+        expr: >
+          increase(patroni_history_promote_total[10m]) > 2
+        for: 0m
+        labels:
+          severity: critical
+          signal: SIG-10
+        annotations:
+          summary: "Patroni leader flapping detected in cluster {{ $labels.cluster }}"
+          description: >
+            More than 2 promotions (leader elections) have occurred in cluster
+            {{ $labels.cluster }} within the last 10 minutes.
+            Current promotion count increase: {{ $value }}.
+            This indicates split-brain, DCS instability, or a misconfigured watchdog.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#leader-flapping"

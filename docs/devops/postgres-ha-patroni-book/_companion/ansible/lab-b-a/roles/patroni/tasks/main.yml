@@ -1,0 +1,112 @@
+---
+# roles/patroni/tasks/main.yml
+# Install Patroni 4.x, PostgreSQL 18.x, and configure systemd services.
+# Source of truth: Appendix B — Patroni Internals Deep-Dive
+
+- name: Ensure Python 3 and dependencies are installed
+  ansible.builtin.package:
+    name:
+      - python3
+      - python3-pip
+      - python3-psycopg2
+      - python3-yaml
+    state: present
+
+- name: Ensure PostgreSQL 18.x repository (PGDG) is configured (Debian/Ubuntu)
+  ansible.builtin.apt:
+    deb: "https://apt.postgresql.org/pub/repos/apt/pool/main/p/postgresql-common/postgresql-common_261_all.deb"
+    state: present
+  when: ansible_os_family == "Debian"
+  ignore_errors: true
+
+- name: Add PGDG apt repository (Debian/Ubuntu)
+  ansible.builtin.shell: |
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+    apt-get update
+  when: ansible_os_family == "Debian"
+  changed_when: true
+
+- name: Install PostgreSQL 18.x (Debian/Ubuntu)
+  ansible.builtin.apt:
+    name:
+      - postgresql-18
+      - postgresql-client-18
+      - postgresql-contrib-18
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Install PostgreSQL 18.x (RHEL/Rocky)
+  ansible.builtin.dnf:
+    name:
+      - "https://download.postgresql.org/pub/repos/yum/18/redhat/rhel-$(rpm -E %{rhel})-x86_64/postgresql18-server-18.0-1PGDG.rhel$(rpm -E %{rhel}).x86_64.rpm"
+      - postgresql18-contrib
+    state: present
+    disable_gpg_check: true
+  when: ansible_os_family == "RedHat"
+  ignore_errors: true
+
+- name: Ensure PostgreSQL data directory exists
+  ansible.builtin.file:
+    path: /var/lib/postgresql/18/main
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: "0700"
+  when: ansible_os_family == "Debian"
+
+- name: Ensure PostgreSQL data directory exists (RHEL)
+  ansible.builtin.file:
+    path: /var/lib/pgsql/18/data
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: "0700"
+  when: ansible_os_family == "RedHat"
+
+- name: Install Patroni via pip
+  ansible.builtin.pip:
+    name: patroni[etcd]
+    version: "4.0.*"
+    executable: pip3
+
+- name: Ensure Patroni config directory exists
+  ansible.builtin.file:
+    path: /etc/patroni
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: "0755"
+
+- name: Copy patroni.yml configuration
+  ansible.builtin.template:
+    src: patroni.yml.j2
+    dest: /etc/patroni/patroni.yml
+    owner: postgres
+    group: postgres
+    mode: "0640"
+  notify: Restart patroni
+
+- name: Template Patroni systemd service
+  ansible.builtin.template:
+    src: patroni.service.j2
+    dest: /etc/systemd/system/patroni.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload systemd
+
+- name: Enable and start Patroni service
+  ansible.builtin.systemd:
+    name: patroni
+    enabled: true
+    state: started
+    daemon_reload: true
+
+- name: Wait for Patroni to report healthy
+  ansible.builtin.command: patronictl list
+  changed_when: false
+  retries: 15
+  delay: 5
+  until: patroni_health.rc == 0
+  register: patroni_health

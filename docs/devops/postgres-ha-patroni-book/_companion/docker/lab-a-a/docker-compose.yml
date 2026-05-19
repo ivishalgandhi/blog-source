@@ -1,0 +1,86 @@
+name: lab-a-a
+
+services:
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: etcd
+    hostname: etcd
+    environment:
+      ETCD_NAME: etcd1
+      ETCD_INITIAL_CLUSTER: etcd1=http://etcd:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-a-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://etcd:2379
+    networks:
+      - patroni
+    volumes:
+      - etcd-data:/etcd-data
+
+  patroni1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: patroni1
+    hostname: patroni1
+    environment:
+      - PATRONI_NAME=patroni1
+      - PATRONI_RESTAPI_CONNECT_ADDRESS=patroni1:8008
+      - PATRONI_POSTGRESQL_CONNECT_ADDRESS=patroni1:5432
+    volumes:
+      - patroni1-data:/var/lib/postgresql/16/data
+      - ./patroni.yml:/etc/patroni/patroni.yml:ro
+    networks:
+      - patroni
+    depends_on:
+      - etcd
+
+  patroni2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: patroni2
+    hostname: patroni2
+    environment:
+      - PATRONI_NAME=patroni2
+      - PATRONI_RESTAPI_CONNECT_ADDRESS=patroni2:8008
+      - PATRONI_POSTGRESQL_CONNECT_ADDRESS=patroni2:5432
+    volumes:
+      - patroni2-data:/var/lib/postgresql/16/data
+      - ./patroni.yml:/etc/patroni/patroni.yml:ro
+    networks:
+      - patroni
+    depends_on:
+      - etcd
+
+  patroni3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: patroni3
+    hostname: patroni3
+    environment:
+      - PATRONI_NAME=patroni3
+      - PATRONI_RESTAPI_CONNECT_ADDRESS=patroni3:8008
+      - PATRONI_POSTGRESQL_CONNECT_ADDRESS=patroni3:5432
+    volumes:
+      - patroni3-data:/var/lib/postgresql/16/data
+      - ./patroni.yml:/etc/patroni/patroni.yml:ro
+    networks:
+      - patroni
+    depends_on:
+      - etcd
+
+networks:
+  patroni:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  etcd-data:
+  patroni1-data:
+  patroni2-data:
+  patroni3-data:

@@ -1,0 +1,223 @@
+# Annotated Reference patroni.yml
+# Source: Chapter 04 — Configuration Best Practices
+# Artifact ID: CONFIG-04-REF
+#
+# This is a production-oriented reference configuration for a 3-node Patroni
+# cluster backed by etcd. Every non-default parameter has an inline comment
+# explaining its purpose, recommended value, and cross-reference to the book.
+#
+# Topology: 1 leader + 2 replicas, etcd on separate nodes (or colocated for lab)
+# Postgres: 18.x (default) or 17.x (N-1)
+# Patroni:  4.x
+
+# ============================================================================
+# IDENTITY
+# ============================================================================
+
+scope: patroni-cluster-01
+# ^ Cluster scope — MUST match across all nodes. Used as the DCS key prefix.
+#   Changing this after bootstrap creates a new logical cluster.
+#   See Ch. 04 "Identity and Scope"
+
+name: node-1
+# ^ Unique per node. Use hostname or inventory name. Must be stable across
+#   restarts (not an IP that can change).
+
+namespace: /service/
+# ^ DCS key prefix for etcd/Consul. Ignored for Kubernetes.
+#   All cluster keys live under /service/patroni-cluster-01/
+
+# ============================================================================
+# REST API
+# ============================================================================
+
+restapi:
+  listen: 0.0.0.0:8008
+  # ^ Bind address for Patroni's local REST API.
+  #   0.0.0.0 is acceptable inside a container or private network.
+  #   Use a specific interface IP on bare metal.
+
+  connect_address: 10.0.0.11:8008
+  # ^ Address other nodes and HAProxy use to reach this node's REST API.
+  #   MUST be reachable from all other Patroni nodes and from the proxy tier.
+
+  # authentication:
+  #   username: patroni
+  #   password: <CHANGEME>
+  # ^ Uncomment for production. The password is used by patronictl and by
+  #   HAProxy health checks. Store it in a secret manager, not in this file.
+
+# ============================================================================
+# DCS (etcd) — RECOMMENDED FOR NEW DEPLOYMENTS
+# ============================================================================
+
+etcd3:
+  hosts:
+    - etcd1.internal:2379
+    - etcd2.internal:2379
+    - etcd3.internal:2379
+  # ^ List all etcd member endpoints. Patroni round-robins through them.
+  #   If one member is down, Patroni retries the next.
+
+  protocol: http
+  # ^ Use "https" in production with the cacert/cert/key below.
+  #   "http" is acceptable only in isolated lab environments.
+
+  # cacert: /etc/patroni/ssl/etcd-ca.crt
+  # cert:    /etc/patroni/ssl/patroni-client.crt
+  # key:     /etc/patroni/ssl/patroni-client.key
+  # ^ mTLS is strongly recommended for production etcd.
+  #   See Ch. 04 "DCS-Specific Configuration"
+
+# ============================================================================
+# BOOTSTRAP — RUN ONCE PER CLUSTER
+# ============================================================================
+
+bootstrap:
+  dcs:
+    ttl: 30
+    # ^ Leader lock TTL (seconds). The leader must renew its DCS lease
+    #   before this expires. Default: 30. Tune DOWN only with evidence
+    #   (network latency measurements). See Ch. 04 "TTL and Timing"
+    #   and Appendix B "DCS Lease Semantics" for the math:
+    #   ttl MUST be > loop_wait * 3.
+
+    loop_wait: 10
+    # ^ Patroni main loop interval (seconds). Every loop_wait seconds,
+    #   Patroni reads DCS state, checks PostgreSQL health, decides action.
+    #   Default: 10. Lower = faster reaction but more DCS load.
+
+    retry_timeout: 10
+    # ^ Timeout for individual DCS operations. Set equal to loop_wait.
+    #   If a DCS call takes longer than this, Patroni treats it as failed.
+
+    maximum_lag_on_failover: 1048576
+    # ^ 1 MiB. Replicas with replication lag > this value are excluded
+    #   from leader election. Prevents promoting a severely lagged replica.
+    #   See Ch. 04 "maximum_lag_on_failover"
+
+    synchronous_mode: false
+    # ^ false = async replication (default). true = Patroni manages
+    #   synchronous_standby_names automatically. See Ch. 04
+    #   "Synchronous Replication Modes" for the full decision matrix.
+
+    synchronous_mode_strict: false
+    # ^ Only relevant when synchronous_mode: true. Blocks ALL writes
+    #   if no sync replica is available. Use with caution.
+    #   See Ch. 04 warning callout on availability impact.
+
+    postgresql:
+      use_pg_rewind: true
+      # ^ ESSENTIAL. Allows a demoted leader to rejoin the cluster via
+      #   pg_rewind instead of a full basebackup. Dramatically reduces
+      #   recovery time after failover. Requires wal_log_hints=on.
+
+      use_slots: true
+      # ^ Patroni manages replication slots automatically. Prevents
+      #   WAL accumulation from disconnected replicas.
+
+      parameters:
+        # PostgreSQL parameters stored in DCS — applied cluster-wide
+        wal_level: replica
+        hot_standby: "on"
+        wal_keep_size: 1GB
+        max_wal_senders: 10
+        max_replication_slots: 10
+        wal_log_hints: "on"
+        # ^ Required for pg_rewind. Without this, use_pg_rewind fails.
+
+  initdb:
+    - encoding: UTF8
+    - data-checksums
+    # ^ Enable page-level checksums. Detects silent corruption.
+    #   Cannot be changed after initdb without reinitializing.
+
+  pg_hba:
+    # Patroni writes these lines to pg_hba.conf on bootstrap.
+    # Add your application and monitoring subnets.
+    - host replication replicator 10.0.0.0/8 md5
+    - host all all 10.0.0.0/8 md5
+
+# ============================================================================
+# POSTGRESQL — LOCAL NODE CONFIGURATION
+# ============================================================================
+
+postgresql:
+  listen: 0.0.0.0:5432
+  connect_address: 10.0.0.11:5432
+  # ^ Same pattern as restapi: listen is the bind, connect_address
+  #   is what other nodes use to reach this PostgreSQL instance.
+
+  data_dir: /var/lib/postgresql/data
+  bin_dir: /usr/lib/postgresql/18/bin
+  # ^ Adjust bin_dir to match your Postgres major version (18, 17, etc.)
+
+  pgpass: /var/lib/postgresql/.pgpass
+
+  authentication:
+    replication:
+      username: replicator
+      password: <CHANGEME>
+    superuser:
+      username: postgres
+      password: <CHANGEME>
+    # ^ Store real passwords in a secret manager or mounted file.
+    #   Never commit plaintext passwords to version control.
+
+  parameters:
+    # Node-specific overrides. Use sparingly — prefer DCS-stored params
+    # for anything that should be cluster-wide.
+    # See Ch. 04 "Governance rule" on local overrides vs. DCS.
+    shared_buffers: 256MB
+    effective_cache_size: 1GB
+    maintenance_work_mem: 64MB
+    checkpoint_completion_target: 0.9
+    wal_buffers: 16MB
+    default_statistics_target: 100
+    random_page_cost: 1.1
+    effective_io_concurrency: 200
+    work_mem: 4MB
+    min_wal_size: 1GB
+    max_wal_size: 4GB
+    max_connections: 100
+
+  create_replica_methods:
+    - basebackup
+    # ^ Use pg_basebackup for initial replica setup. Fast and simple.
+    #   For large datasets, consider pgBackRest or WAL-G restore methods.
+
+# ============================================================================
+# WATCHDOG — FENCING (PRODUCTION: DO NOT DISABLE)
+# ============================================================================
+
+watchdog:
+  mode: required
+  # ^ "required" = Patroni fails to start if watchdog is unavailable.
+  #   "automatic" = use if available, otherwise warn and continue.
+  #   "off" = NO FENCING. Dangerous in production. See Appendix B
+  #   "Watchdog and Fencing" for why this exists.
+
+  device: /dev/watchdog
+  safety_margin: 5
+  # ^ safety_margin must satisfy: safety_margin < ttl - loop_wait.
+  #   With ttl=30 and loop_wait=10, safety_margin=5 leaves 15s
+  #   for Patroni to heartbeat before watchdog fires.
+
+# ============================================================================
+# TAGS — TOPOLOGY HINTS
+# ============================================================================
+
+tags:
+  nofailover: false
+  # ^ true = this node will never be promoted to leader.
+  #   Use for read-only replicas, analytics nodes, or nodes in
+  #   secondary regions you don't want to promote.
+
+  noloadbalance: false
+  # ^ true = HAProxy/pgbouncer will not route reads to this node.
+
+  clonefrom: false
+  # ^ true = other replicas may clone from this node (not just leader).
+
+  nosync: false
+  # ^ true = this node is excluded from synchronous replication.

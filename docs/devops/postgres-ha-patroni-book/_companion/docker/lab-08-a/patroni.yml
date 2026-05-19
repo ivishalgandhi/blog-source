@@ -1,0 +1,75 @@
+# Patroni configuration for LAB-08-A (pgBackRest PITR)
+# In the Docker lab, Spilo merges these settings via SPILO_CONFIGURATION.
+# Use this file directly for bare-metal or VM deployments.
+
+scope: lab-08-a
+namespace: /db/
+# name is set per-node via PATRONI_NAME env var in docker-compose.yml
+
+restapi:
+  listen: 0.0.0.0:8008
+  connect_address: 0.0.0.0:8008
+
+etcd3:
+  hosts:
+    - etcd1:2379
+    - etcd2:2379
+    - etcd3:2379
+
+bootstrap:
+  dcs:
+    ttl: 30
+    loop_wait: 10
+    retry_timeout: 10
+    maximum_lag_on_failover: 1048576
+    postgresql:
+      use_pg_rewind: true
+      use_slots: true
+      parameters:
+        wal_level: replica
+        hot_standby: "on"
+        wal_keep_size: 1GB
+        max_wal_senders: 10
+        max_replication_slots: 10
+        wal_log_hints: "on"
+        archive_mode: "on"
+        archive_command: 'pgbackrest --stanza=lab-08-a archive-push %p'
+        max_connections: 200
+  initdb:
+    - encoding: UTF8
+    - data-checksums
+  pg_hba:
+    - host replication replicator 0.0.0.0/0 scram-sha-256
+    - host all all 0.0.0.0/0 scram-sha-256
+  users:
+    postgres:
+      password: postgres
+    replicator:
+      password: repass
+      replication: true
+
+postgresql:
+  data_dir: /home/postgres/pgdata/data
+  pgpass: /tmp/pgpass
+  authentication:
+    replication:
+      username: replicator
+      password: repass
+    superuser:
+      username: postgres
+      password: postgres
+  parameters:
+    archive_mode: "on"
+    archive_command: 'pgbackrest --stanza=lab-08-a archive-push %p'
+    restore_command: 'pgbackrest --stanza=lab-08-a archive-get %f "%p"'
+    recovery_target_timeline: latest
+  create_replica_methods:
+    - basebackup
+  basebackup:
+    checkpoint: fast
+
+tags:
+  nofailover: false
+  noloadbalance: false
+  clonefrom: false
+  nosync: false

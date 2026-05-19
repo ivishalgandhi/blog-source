@@ -1,0 +1,92 @@
+name: Companion Code CI
+
+on:
+  pull_request:
+    paths:
+      - 'docs/devops/postgres-ha-patroni-book/_companion/**'
+      - '.github/workflows/companion-ci.yml'
+
+jobs:
+  docker-labs:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        lab: [lab-03-a, lab-08-a, lab-a-a]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run lab ${{ matrix.lab }}
+        run: |
+          cd docs/devops/postgres-ha-patroni-book/_companion/docker/${{ matrix.lab }}
+          make setup
+          make verify
+          make break
+          make verify
+          make recover
+          make verify
+          make teardown
+        timeout-minutes: 10
+
+  terraform-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.7.0"
+
+      - name: Validate LAB-08-B
+        run: |
+          cd docs/devops/postgres-ha-patroni-book/_companion/terraform/lab-08-b
+          terraform init -backend=false
+          terraform validate
+          terraform fmt -check
+
+  agent-scaffolds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install and validate agent scaffolds
+        run: |
+          for agent in monitoring predictive-failover self-tuning auto-remediation nl-ops; do
+            echo "=== Testing agent: $agent ==="
+            cd docs/devops/postgres-ha-patroni-book/_companion/agents/$agent
+            if [ -f pyproject.toml ]; then
+              pip install -e .
+              python -c "import sys; sys.path.insert(0, 'src'); from agent_${agent:0:2} import __version__; print('OK')"
+            else
+              echo "No pyproject.toml yet for $agent — skipping"
+            fi
+            cd -
+          done
+
+  dashboards-and-alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON dashboards
+        run: |
+          cd docs/devops/postgres-ha-patroni-book/_companion/dashboards
+          for f in *.json; do
+            echo "Checking $f..."
+            python -c "import json; json.load(open('$f'))"
+          done
+
+      - name: Validate YAML alerts
+        run: |
+          cd docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts
+          for f in *.yaml; do
+            echo "Checking $f..."
+            python -c "import yaml; yaml.safe_load(open('$f'))"
+          done

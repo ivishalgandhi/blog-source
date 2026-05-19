@@ -1,0 +1,341 @@
+---
+title: "Appendix A — Python Runtime Migration"
+sidebar_position: 20
+description: "Comprehensive guide to migrating Patroni's Python runtime across production PostgreSQL HA clusters, covering dependency compatibility, migration patterns, and operational procedures."
+version_support:
+  postgres: ["18.x", "17.x (N-1)"]
+  patroni: ["latest stable (4.x)"]
+  dcs:
+    etcd: ["3.5.x"]
+    consul: ["1.18+"]
+    k8s: ["1.31+"]
+  window_months: 12
+anchors_user_stories: ["US2"]
+frs_covered: ["FR-004", "FR-013"]
+lab_ids: ["LAB-A-A"]
+tags: [postgres, patroni, ha, python, migration, runtime, upgrade]
+---
+
+import ArtifactRef from '@site/src/components/ArtifactRef';
+
+## Executive Summary
+
+Patroni's Python runtime version directly impacts cluster performance, security posture, and operational stability. This appendix provides a systematic approach to upgrading Python across production PostgreSQL HA clusters while maintaining zero-downtime availability. We cover dependency compatibility assessment, three migration patterns with specific use cases, and operational procedures tested in production environments. The side-by-side venv swap pattern enables sub-5-minute node upgrades with instant rollback capability, while containerized cutovers facilitate infrastructure modernization. Proper Python runtime management eliminates CVE exposure in older stdlib versions and enables performance improvements in asyncio and SSL handling that directly benefit Patroni's failover coordination.
+
+## Why Python Runtime Matters for Patroni
+
+Patroni is fundamentally a Python application that orchestrates PostgreSQL high availability through distributed consensus. The Python version it runs on affects three critical areas:
+
+**Performance Impact**: Python 3.8+ introduced significant asyncio optimizations that reduce Patroni's event loop latency during leader elections and health checks. SSL/TLS performance improvements in Python 3.11+ accelerate DCS communication, while startup time reductions of 15-30% per node directly impact failover recovery time objectives (RTO).
+
+**Security Posture**: Production clusters frequently run Python 3.6 or 3.8 from original deployments, exposing them to CVE-2023-36232 (urllib3 cookie handling) and CVE-2022-0778 (OpenSSL denial-of-service). The Python stdlib receives security updates only for supported versions, creating dependency management debt.
+
+**Dependency Compatibility**: Patroni's ecosystem includes psycopg2/psycopg3, kazoo (ZooKeeper), python-etcd, and cryptography libraries with varying Python version support matrices. Upgrading Python without addressing these dependencies leads to import failures during critical failover scenarios.
+
+Many organizations discover their Python runtime debt only during emergency security patches or when attempting to upgrade Patroni versions that require newer Python. This appendix provides proactive migration strategies.
+
+## Inventory Step
+
+Before planning any migration, you must audit the current Python runtime across all Patroni nodes. Use this comprehensive inventory script:
+
+```bash
+#!/bin/bash
+# patroni-python-inventory.sh
+for node in $(patronictl list -f json | jq -r '.[].Member'); do
+    echo "=== $node ==="
+    ssh $node "
+        echo 'System Python:' $(python3 --version 2>/dev/null || echo 'Not found')
+        echo 'Patroni Python:' $(ps -o pid,cmd -C patroni | awk 'NR>1{print \$2}' | xargs -I {} sh -c 'ls -l /proc/{}/exe 2>/dev/null | cut -d\" \" -f11' | head -1 | xargs basename)
+        echo 'Virtual env:' $(systemctl show patroni -p Environment | grep VIRTUAL_ENV | cut -d= -f2)
+        echo 'Pip packages:' $(systemctl show patroni -p Environment | grep PATH | cut -d= -f2 | cut -d: -f1 | sed 's|/bin$|/bin/pip|' | xargs -I {} sh -c '{} list 2>/dev/null | wc -l')
+        echo 'Package manager:' $(command -v apt >/dev/null && echo 'apt' || command -v yum >/dev/null && echo 'yum' || echo 'unknown')
+    "
+done
+```
+
+For quick one-liner checks across all nodes:
+```bash
+pdsh -w node[01-05] "python3 --version && systemctl status patroni | grep Active"
+```
+
+Document the findings in a matrix tracking: node hostname, system Python version, Patroni Python version, virtual environment path, package manager, and any custom compilation flags. This inventory drives your migration pattern selection.
+
+## Dependency Compatibility Risk Matrix
+
+| Library | Min Python | Max Python Tested | Breaking Changes | Notes |
+|---------|------------|-------------------|------------------|-------|
+| psycopg2 | 3.6 | 3.12 | None | Requires recompilation against new Python headers |
+| psycopg3 | 3.8 | 3.13 | API changes in connection handling | Recommended for new deployments |
+| kazoo | 3.6 | 3.11 | None | ZooKeeper DCS users verify version compatibility |
+| python-etcd | 3.6 | 3.10 | None | Consider etcd3-py for newer Python |
+| etcd3 | 3.7 | 3.12 | None | Preferred for etcd DCS with Python 3.8+ |
+| urllib3 | 3.6 | 3.13 | SSL context changes in 1.26+ | Critical for DCS communication |
+| cryptography | 3.6 | 3.13 | FIPS mode changes in 3.4+ | TLS certificate handling |
+| PyOpenSSL | 3.6 | 3.11 | Deprecated in favor of cryptography | Remove if possible |
+| click | 3.6 | 3.13 | None | Patroni CLI dependency |
+| prettytable | 3.6 | 3.12 | None | CLI formatting |
+| ydiff | 3.6 | 3.12 | None | Configuration diff tool |
+
+Key risk areas:
+- **psycopg2**: Must be recompiled against new Python development headers
+- **urllib3**: Version 1.26+ requires explicit SSL context configuration
+- **cryptography**: FIPS compliance changes may affect certificate validation
+- **kazoo**: ZooKeeper users must verify DCS compatibility matrix
+
+Always test dependency installation in a staging environment before production migration.
+
+## Three Migration Patterns
+
+### Pattern 1: Side-by-Side Venv Swap
+
+**When to use**: Bare metal or LXC environments with minimal downtime requirements, existing virtual environment infrastructure, and need for instant rollback capability.
+
+**Step-by-step**:
+1. Install target Python version alongside existing version
+2. Create new virtual environment: `python3.12 -m venv /opt/patroni/venv-new`
+3. Install Patroni and dependencies in new venv with identical versions
+4. Test Patroni startup with new venv on a non-critical node
+5. During maintenance window: `systemctl stop patroni`
+6. Swap symlink: `ln -sfn /opt/patroni/venv-new /opt/patroni/venv`
+7. Restart Patroni: `systemctl start patroni`
+8. Verify node rejoins cluster successfully
+
+**Rollback path**: `ln -sfn /opt/patroni/venv-old /opt/patroni/venv && systemctl restart patroni`
+
+**Risk level**: Low - maintains existing configuration and enables instant rollback
+
+**Prerequisites**: Sufficient disk space for parallel venvs, Python development headers for psycopg2 compilation
+
+### Pattern 2: Rolling Node Replacement
+
+**When to use**: Immutable infrastructure environments, OS upgrades required alongside Python migration, or when virtual environments are not used.
+
+**Step-by-step**:
+1. Drain node from cluster: `patronictl pause cluster && patronictl remove node`
+2. Decommission and rebuild node with target OS/Python
+3. Install Patroni with identical configuration from version control
+4. Validate DCS connectivity and PostgreSQL binaries
+5. Add node back to cluster: `patronictl add node --force`
+6. Resume cluster: `patronictl resume cluster`
+7. Repeat for remaining nodes
+
+**Rollback path**: Maintain previous node snapshot or spare hardware with original configuration
+
+**Risk level**: Medium - requires full node rebuild but provides clean state
+
+**Prerequisites**: Automated node provisioning, configuration management, sufficient cluster capacity to tolerate node removal
+
+### Pattern 3: Containerized Cutover
+
+**When to use**: Organizations migrating to containerized infrastructure, Kubernetes adoption, or when complete infrastructure modernization is desired.
+
+**Step-by-step**:
+1. Build container image with target Python version and Patroni
+2. Deploy containerized Patroni alongside existing bare-metal nodes
+3. Migrate DCS configuration to support mixed environment
+4. Gradually drain bare-metal nodes and scale up containers
+5. Update load balancers and monitoring to target container endpoints
+6. Decommission bare-metal nodes after cutover verification
+
+**Rollback path**: Maintain bare-metal nodes in standby mode during transition
+
+**Risk level**: High - most disruptive but enables long-term operational improvements
+
+**Prerequisites**: Container orchestration platform, CI/CD pipeline for image builds, monitoring integration
+
+## LAB-A-A: Rolling Python Upgrade
+
+<ArtifactRef id="LAB-A-A" />
+
+### 1. Supported Substrates
+["proxmox-lxc", "docker", "bare-vm-ansible"]
+
+### 2. Prerequisites
+- Python 3.8 (current runtime)
+- Python 3.12 (target runtime) available in package repositories
+- 3-node Patroni cluster running with Leader/Follower topology
+- Patroni 4.x installed in virtual environment
+- sudo access on all nodes
+- etcd DCS cluster accessible
+
+### 3. Setup
+Deploy a 3-node Patroni cluster using Python 3.8 virtual environment:
+
+```bash
+# On each node
+sudo apt-get update
+sudo apt-get install -y python3.8 python3.8-venv python3.8-dev
+python3.8 -m venv /opt/patroni/venv
+source /opt/patroni/venv/bin/activate
+pip install patroni[etcd] psycopg2-binary
+
+# Configure Patroni with 3-node cluster
+# Verify cluster health
+patronictl list
+```
+
+Expected output: 3 healthy nodes with one leader, two followers.
+
+### 4. What You'll Learn
+- Perform zero-downtime Python runtime upgrades using side-by-side venv swap
+- Validate Patroni cluster behavior during rolling upgrades
+- Implement rollback procedures for failed migrations
+- Monitor cluster health metrics during upgrade process
+- Handle dependency recompilation for psycopg2
+
+### 5. Break it on Purpose
+:::danger
+Upgrade Python on the leader node WITHOUT pausing Patroni first. This simulates what happens when you skip the rolling procedure and attempt concurrent upgrades.
+
+```bash
+# On leader node (DO NOT do this in production)
+sudo systemctl stop patroni
+sudo apt-get install -y python3.12 python3.12-venv python3.12-dev
+python3.12 -m venv /opt/patroni/venv-new
+source /opt/patroni/venv-new/bin/activate
+pip install patroni[etcd] psycopg2-binary
+ln -sfn /opt/patroni/venv-new /opt/patroni/venv
+sudo systemctl start patroni
+```
+
+Observe the cluster behavior: failover may trigger, but connection disruption occurs.
+:::
+
+### 6. Verification
+After proper rolling upgrade procedure:
+
+```bash
+# Verify cluster health
+patronictl list --format json | jq '.[].State' | sort | uniq -c
+
+# Check Python version on each node
+pdsh -w node[01-03] "ps -o pid,cmd -C patroni | awk 'NR>1{print \$2}' | xargs -I {} sh -c 'ls -l /proc/{}/exe 2>/dev/null | cut -d\" \" -f11' | xargs basename"
+
+# Validate DCS connectivity
+patronictl dcs-api --action get /service/patroni/cluster/config
+```
+
+Expected results: All nodes show "running" state, Python 3.12 across all nodes, DCS operations successful.
+
+### 7. Recovery Procedure
+If upgrade fails:
+
+```bash
+# Rollback on affected node
+sudo systemctl stop patroni
+ln -sfn /opt/patroni/venv-3.8 /opt/patroni/venv
+sudo systemctl start patroni
+
+# Verify rejoin
+patronictl list
+```
+
+Monitor logs for successful rejoin: `tail -f /var/log/patroni.log | grep "joined cluster"`
+
+### 8. Teardown
+```bash
+# Remove temporary virtual environments
+sudo rm -rf /opt/patroni/venv-new
+sudo rm -rf /opt/patroni/venv-3.8
+
+# Restore original configuration if needed
+# Verify cluster returns to initial state
+patronictl list
+```
+
+### 9. What This Tells You About Production
+- Rolling upgrades prevent cluster disruption and maintain availability
+- Side-by-side venv swaps provide instant rollback capability
+- Dependency recompilation is critical for psycopg2 compatibility
+- Cluster health monitoring must continue throughout upgrade process
+- Proper sequencing (followers first, leader last) minimizes failover risk
+
+## Python-Version-as-Metric-Label
+
+Export Python version as a Prometheus metric label to track runtime drift across your Patroni fleet:
+
+```python
+# /opt/patroni/python_version_exporter.py
+import prometheus_client
+import sys
+import subprocess
+from prometheus_client import Gauge, start_http_server
+
+PYTHON_VERSION = Gauge('patroni_python_version', 'Patroni Python version', ['version', 'node'])
+
+def get_python_version():
+    return f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+
+def get_node_name():
+    try:
+        result = subprocess.run(['hostname', '-s'], capture_output=True, text=True)
+        return result.stdout.strip()
+    except:
+        return 'unknown'
+
+if __name__ == '__main__':
+    node_name = get_node_name()
+    python_version = get_python_version()
+    
+    PYTHON_VERSION.labels(version=python_version, node=node_name).set(1)
+    
+    start_http_server(9090)
+    print(f"Exporting Python {python_version} for node {node_name}")
+    
+    # Keep running
+    import time
+    while True:
+        time.sleep(3600)
+```
+
+Add to Patroni's systemd service:
+```ini
+[Service]
+ExecStartPost=/opt/patroni/venv/bin/python /opt/patroni/python_version_exporter.py
+```
+
+Query in Grafana: `topk by (version) (sum(patroni_python_version) by (version, node))`
+
+## Anti-Patterns
+
+**Upgrading Python on all nodes simultaneously**: This eliminates your safety net and risks complete cluster outage. Always upgrade followers first, then perform controlled leader failover.
+
+**Forgetting to rebuild psycopg2 against new Python headers**: psycopg2 contains C extensions that must be recompiled. Skipping this step causes import failures during Patroni startup.
+
+**Not testing Patroni callbacks/hooks with new Python**: Custom scripts in `bootstrap.d`, `callbacks`, or `restore_command` may have Python version dependencies. Test each hook in isolation before migration.
+
+**Ignoring SSL/TLS library version changes**: Python 3.10+ changed default SSL context settings. Verify DCS certificate validation works with new OpenSSL versions.
+
+**Using system Python instead of venvs**: System Python updates can break Patroni unexpectedly. Virtual environments provide isolation and enable instant rollbacks.
+
+**Skipping dependency version pinning**: New Python versions may pull in newer dependency versions with breaking changes. Always pin exact versions in requirements.txt.
+
+## Checklist
+
+- [ ] Inventory completed for all Patroni nodes with Python versions and venv paths
+- [ ] Dependency compatibility matrix validated for target Python version
+- [ ] Test environment successfully upgraded with identical Patroni configuration
+- [ ] Rollback procedure documented and tested on non-production node
+- [ ] Monitoring alerts configured for Python version drift detection
+- [ ] Maintenance window scheduled with stakeholder approval
+- [ ] Backup procedures verified for DCS and PostgreSQL data
+- [ ] Post-upgrade validation checklist prepared and signed off
+
+## Gotchas
+
+- **psycopg2 compilation requires python-dev headers**: Install `python3.12-dev` (Ubuntu) or `python312-devel` (RHEL) before venv creation
+- **Virtual environment activation in systemd**: Use `Environment=PATH=/opt/patroni/venv/bin` instead of sourcing activate script
+- **Python path in shebang lines**: Update any custom scripts with `#!/usr/bin/env python3` to use venv Python
+- **etcd3 library compatibility**: Python 3.12+ requires etcd3 &gt;= 0.12.0 for proper async context handling
+- **kazoo event loop changes**: ZooKeeper users may need to adjust `use_gevent=False` in Patroni configuration
+- **Prometheus client library version**: `prometheus_client` &lt; 0.14.0 has compatibility issues with Python 3.11+
+
+## Version Support
+
+**PostgreSQL**: 18.x (primary), 17.x (N-1 support)  
+**Patroni**: Latest stable 4.x series  
+**DCS**: etcd 3.5.x, Consul 1.18+, Kubernetes 1.31+  
+**Python**: 3.9+ (recommended 3.12 for production)  
+**Support Window**: 12 months from Python EOL date  
+
+This appendix provides the foundation for maintaining modern, secure Python runtimes across your Patroni-managed PostgreSQL clusters while ensuring continuous availability and operational excellence.

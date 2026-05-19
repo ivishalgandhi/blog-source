@@ -1,0 +1,40 @@
+# Lab Makefile Template
+# Usage: make setup | make break | make verify | make recover | make teardown
+
+.SILENT:
+
+# Color codes for output
+GREEN := \033[0;32m
+RED := \033[0;31m
+YELLOW := \033[0;33m
+NC := \033[0m # No Color
+
+TIMESTAMP := $(shell date '+%Y-%m-%d %H:%M:%S')
+
+setup:
+	@echo "[$(TIMESTAMP)] SETUP starting..."
+	@echo "$(GREEN)[$(TIMESTAMP)] SETUP completed (exit 0)$(NC)"
+
+break:
+	@echo "[$(TIMESTAMP)] BREAK starting..."
+	@echo "$(YELLOW)[$(TIMESTAMP)] BREAK completed (exit 0)$(NC)"
+
+verify:
+	@echo "[$(TIMESTAMP)] VERIFY starting..."
+	@echo "$(GREEN)[$(TIMESTAMP)] VERIFY completed (exit 0)$(NC)"
+
+recover:
+	@echo "[$(TIMESTAMP)] RECOVER starting..."
+	@echo "$(GREEN)[$(TIMESTAMP)] RECOVER completed (exit 0)$(NC)"
+
+teardown:
+	@echo "[$(TIMESTAMP)] TEARDOWN starting..."
+	@echo "$(GREEN)[$(TIMESTAMP)] TEARDOWN completed (exit 0)$(NC)"
+
+help:
+	@echo "Available targets:"
+	@echo "  setup    - Deploy the lab environment"
+	@echo "  break    - Simulate the failure condition"
+	@echo "  verify   - Assert expected outcome"
+	@echo "  recover  - Return to healthy state"
+	@echo "  teardown - Remove all resources"

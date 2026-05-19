@@ -1,0 +1,137 @@
+---
+title: "Preface — Audience, Conventions, and Version Support"
+sidebar_position: 1
+description: "Audience, reading conventions, callout notation, diagram conventions, artifact ID format, and the complete version-support reference for this book."
+version_support:
+  postgres: ["18.x", "17.x (N-1)"]
+  patroni: ["latest stable (4.x)"]
+  dcs:
+    etcd: ["3.5.x"]
+    consul: ["1.18+"]
+    k8s: ["1.31+"]
+  window_months: 12
+anchors_user_stories: ["US1", "US2"]
+frs_covered: ["FR-011", "FR-017"]
+tags: [postgres, patroni, ha, conventions]
+---
+
+# Preface
+
+## Audience
+
+This book targets **senior database administrators**, **site reliability engineers**, and **platform engineers** responsible for mission-critical PostgreSQL systems. We assume you are comfortable with:
+
+- PostgreSQL replication, WAL, vacuum, and `pg_hba.conf`
+- Linux systems administration (systemd, networking, package management)
+- At least one infrastructure-as-code tool (Terraform, Ansible, or equivalent)
+- Basic container concepts (Docker at minimum; Kubernetes helpful but not required for most chapters)
+
+If you are new to PostgreSQL, start with the [official documentation](https://www.postgresql.org/docs/) before returning here.
+
+## Conventions
+
+### Callouts
+
+Throughout this book, we use the following admonition styles:
+
+:::tip
+**Tips** highlight best practices and efficiency gains.
+:::
+
+:::info
+**Info** blocks provide context, background, or cross-references.
+:::
+
+:::caution
+**Caution** blocks flag subtle pitfalls or conditions that can silently degrade your cluster.
+:::
+
+:::danger
+**Danger** blocks precede destructive commands in labs. Never run these against production clusters.
+:::
+
+### Code Blocks
+
+- Every code block has an explicit language tag (`bash`, `yaml`, `sql`, `json`, etc.)
+- Commands intended for copy-paste are prefixed with `$` to distinguish them from output
+- Multi-line commands use `\` continuation
+- Placeholders use `<ANGLE_BRACKETS>` and are documented immediately above the code block
+
+### Artifact IDs
+
+Companion-repo artifacts are referenced by stable IDs throughout the book:
+
+| Prefix | Meaning | Example |
+|--------|---------|---------|
+| `LAB-` | Hands-on lab | `LAB-03-A` |
+| `CONFIG-` | Reference configuration file | `CONFIG-04-REF` |
+| `DASH-` | Grafana dashboard | `DASH-06-CORE` |
+| `ALERT-` | Prometheus alert rule | `ALERT-06-LAG` |
+| `AGENT-` | AI-agent workflow | `AGENT-11-PF` |
+| `CHAOS-` | Chaos/fault-injection script | `CHAOS-03-A` |
+
+If an artifact ID is missing from the companion repository, the site build fails — this is intentional drift detection (FR-010).
+
+### Diagrams
+
+- **Mermaid** diagrams render inline for sequence flows, decision trees, state machines, and component diagrams
+- **Excalidraw** diagrams are used for architecture and topology views where spatial layout matters; source `.excalidraw` files and exported `.svg` files are both committed
+
+## Glossary
+
+Key terms used consistently across chapters:
+
+| Term | Definition |
+|------|-----------|
+| **DCS** | Distributed Configuration Store — the consensus backend Patroni uses for leader election (etcd, Consul, or Kubernetes endpoints) |
+| **Leader** | The Patroni node currently holding the DCS leader lock and accepting writes |
+| **Replica / Standby** | A Patroni node streaming WAL from the leader; read-only |
+| **Failover** | Unplanned promotion of a replica to leader after the current leader becomes unavailable |
+| **Switchover** | Planned, graceful leadership transfer from one node to another |
+| **Split-brain** | A state where two or more nodes simultaneously believe they are the leader — the failure Patroni exists to prevent |
+| **TTL** | Time To Live — the DCS lease duration; if the leader fails to renew within TTL, the lock expires and replicas may promote |
+| **Watchdog** | A kernel device (`softdog` or hardware) that forces a node to reboot/fence if Patroni fails to heartbeat, preventing stale leaders from accepting writes |
+| **Quorum** | The minimum number of DCS nodes required to agree for leader election to proceed |
+| **RTO** | Recovery Time Objective — the maximum acceptable duration of an outage |
+| **RPO** | Recovery Point Objective — the maximum acceptable data loss, measured in time or transactions |
+| **PITR** | Point-In-Time Recovery — restoring a PostgreSQL cluster to a specific transaction or timestamp using base backups + WAL archives |
+
+## Structure Overview
+
+Each chapter follows a consistent structure:
+
+1. **Executive Summary** — what you will learn and why it matters (≤200 words)
+2. **Diagrams** — architecture, flow, or topology visualizations
+3. **Body** — the core technical content
+4. **Hands-on Lab** — a reproducible exercise with setup, break-it-on-purpose, verification, recovery, and teardown
+5. **Checklist** — verifiable items you can check against your environment
+6. **Gotchas** — common mistakes and subtle pitfalls
+7. **Case Study** — an anonymized, FAANG-scale scenario with a transferable pattern and an anti-pattern
+8. **Version Support** — which versions this chapter has been validated against
+
+## Version Support Reference
+
+This edition has been validated against the following version matrix:
+
+| Component | Supported Versions | Notes |
+|-----------|-------------------|-------|
+| **PostgreSQL** | 18.x, 17.x | N (current) and N-1 |
+| **Patroni** | 4.x (latest stable) | Exact tag pinned in companion repo `ARTIFACT-IDS.md` |
+| **etcd** | 3.5.x | |
+| **Consul** | 1.18+ | |
+| **Kubernetes** | 1.31+ | kind 0.24+ for local labs |
+| **Terraform** | ≥1.7 | Cloud-portable labs |
+| **Ansible** | ≥2.16 | Provisioning roles |
+| **Docker** | 24+ | Local labs |
+| **pgBackRest** | Latest stable | Backup/DR chapter |
+| **WAL-G** | Latest stable | Backup/DR chapter |
+
+**Compatibility window**: 12 months from publication. After this window, lab reproducibility is not guaranteed without version pin updates in the companion repository.
+
+:::caution Running outside the version window?
+If you are using PostgreSQL versions older than 17.x or Patroni versions older than 4.x, the configuration examples, lab exercises, and alert rules in this book may not work as documented. Consult the companion repository's `ARTIFACT-IDS.md` for the exact tested versions.
+:::
+
+---
+
+*Continue to [Chapter 01 — Foundations of Postgres HA at Scale](./01-foundations-postgres-ha).*

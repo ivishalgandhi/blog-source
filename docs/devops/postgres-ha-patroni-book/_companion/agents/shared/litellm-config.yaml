@@ -1,0 +1,35 @@
+# LiteLLM Proxy Configuration Template
+# Copy this file to litellm-config.yaml and fill in your API keys.
+# Docs: https://docs.litellm.ai/docs/proxy/configs
+
+model_list:
+  # OpenAI
+  - model_name: gpt-4o
+    litellm_params:
+      model: openai/gpt-4o
+      api_key: "os.environ/OPENAI_API_KEY"
+
+  # Anthropic
+  - model_name: claude-sonnet
+    litellm_params:
+      model: anthropic/claude-3-sonnet-20240229
+      api_key: "os.environ/ANTHROPIC_API_KEY"
+
+  # AWS Bedrock
+  - model_name: bedrock-claude
+    litellm_params:
+      model: bedrock/anthropic.claude-3-sonnet-20240229-v1:0
+      aws_access_key_id: "os.environ/AWS_ACCESS_KEY_ID"
+      aws_secret_access_key: "os.environ/AWS_SECRET_ACCESS_KEY"
+      aws_region_name: "us-east-1"
+
+  # Local / Ollama
+  - model_name: ollama-llama3
+    litellm_params:
+      model: ollama/llama3
+      api_base: http://localhost:11434
+
+general_settings:
+  master_key: "os.environ/LITELLM_MASTER_KEY"
+  proxy_batch_write_at: 10
+  log_level: info

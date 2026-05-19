@@ -1,0 +1,244 @@
+name: lab-08-a
+
+services:
+  etcd1:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: lab-08-a-etcd1
+    environment:
+      ETCD_NAME: etcd1
+      ETCD_INITIAL_CLUSTER: etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-08-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://etcd1:2379
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://etcd1:2380
+    networks:
+      - lab-08-a
+    volumes:
+      - etcd1-data:/etcd-data
+
+  etcd2:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: lab-08-a-etcd2
+    environment:
+      ETCD_NAME: etcd2
+      ETCD_INITIAL_CLUSTER: etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-08-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://etcd2:2379
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://etcd2:2380
+    networks:
+      - lab-08-a
+    volumes:
+      - etcd2-data:/etcd-data
+
+  etcd3:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: lab-08-a-etcd3
+    environment:
+      ETCD_NAME: etcd3
+      ETCD_INITIAL_CLUSTER: etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-08-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://etcd3:2379
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://etcd3:2380
+    networks:
+      - lab-08-a
+    volumes:
+      - etcd3-data:/etcd-data
+
+  minio:
+    image: minio/minio:RELEASE.2024-06-29T03-36-44Z
+    container_name: lab-08-a-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio-data:/data
+    networks:
+      - lab-08-a
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Patroni nodes use the Spilo image (Patroni + PostgreSQL + pgBackRest).
+  # Custom Patroni/postgresql settings are injected via SPILO_CONFIGURATION.
+  patroni1:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    container_name: lab-08-a-patroni1
+    hostname: patroni1
+    environment:
+      PATRONI_NAME: patroni1
+      PATRONI_SCOPE: lab-08-a
+      PATRONI_NAMESPACE: /db/
+      PATRONI_ETCD3_HOSTS: "'etcd1:2379','etcd2:2379','etcd3:2379'"
+      PATRONI_RESTAPI_LISTEN: 0.0.0.0:8008
+      PATRONI_RESTAPI_CONNECT_ADDRESS: patroni1:8008
+      PGVERSION: "16"
+      SCOPE: lab-08-a
+      SPILO_CONFIGURATION: |
+        bootstrap:
+          dcs:
+            postgresql:
+              parameters:
+                archive_command: 'pgbackrest --stanza=lab-08-a archive-push %p'
+                archive_mode: 'on'
+                wal_level: replica
+                max_wal_senders: 10
+                max_replication_slots: 10
+        postgresql:
+          parameters:
+            archive_command: 'pgbackrest --stanza=lab-08-a archive-push %p'
+            restore_command: 'pgbackrest --stanza=lab-08-a archive-get %f "%p"'
+            archive_mode: 'on'
+    volumes:
+      - patroni1-data:/home/postgres/pgdata
+      - ./pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
+      - ./patroni.yml:/etc/patroni/patroni.yml:ro
+    networks:
+      - lab-08-a
+    depends_on:
+      - etcd1
+      - etcd2
+      - etcd3
+      - minio
+    ports:
+      - "5432:5432"
+      - "8008:8008"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  patroni2:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    container_name: lab-08-a-patroni2
+    hostname: patroni2
+    environment:
+      PATRONI_NAME: patroni2
+      PATRONI_SCOPE: lab-08-a
+      PATRONI_NAMESPACE: /db/
+      PATRONI_ETCD3_HOSTS: "'etcd1:2379','etcd2:2379','etcd3:2379'"
+      PATRONI_RESTAPI_LISTEN: 0.0.0.0:8008
+      PATRONI_RESTAPI_CONNECT_ADDRESS: patroni2:8008
+      PGVERSION: "16"
+      SCOPE: lab-08-a
+      SPILO_CONFIGURATION: |
+        bootstrap:
+          dcs:
+            postgresql:
+              parameters:
+                archive_command: 'pgbackrest --stanza=lab-08-a archive-push %p'
+                archive_mode: 'on'
+                wal_level: replica
+                max_wal_senders: 10
+                max_replication_slots: 10
+        postgresql:
+          parameters:
+            archive_command: 'pgbackrest --stanza=lab-08-a archive-push %p'
+            restore_command: 'pgbackrest --stanza=lab-08-a archive-get %f "%p"'
+            archive_mode: 'on'
+    volumes:
+      - patroni2-data:/home/postgres/pgdata
+      - ./pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
+      - ./patroni.yml:/etc/patroni/patroni.yml:ro
+    networks:
+      - lab-08-a
+    depends_on:
+      - etcd1
+      - etcd2
+      - etcd3
+      - minio
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  patroni3:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    container_name: lab-08-a-patroni3
+    hostname: patroni3
+    environment:
+      PATRONI_NAME: patroni3
+      PATRONI_SCOPE: lab-08-a
+      PATRONI_NAMESPACE: /db/
+      PATRONI_ETCD3_HOSTS: "'etcd1:2379','etcd2:2379','etcd3:2379'"
+      PATRONI_RESTAPI_LISTEN: 0.0.0.0:8008
+      PATRONI_RESTAPI_CONNECT_ADDRESS: patroni3:8008
+      PGVERSION: "16"
+      SCOPE: lab-08-a
+      SPILO_CONFIGURATION: |
+        bootstrap:
+          dcs:
+            postgresql:
+              parameters:
+                archive_command: 'pgbackrest --stanza=lab-08-a archive-push %p'
+                archive_mode: 'on'
+                wal_level: replica
+                max_wal_senders: 10
+                max_replication_slots: 10
+        postgresql:
+          parameters:
+            archive_command: 'pgbackrest --stanza=lab-08-a archive-push %p'
+            restore_command: 'pgbackrest --stanza=lab-08-a archive-get %f "%p"'
+            archive_mode: 'on'
+    volumes:
+      - patroni3-data:/home/postgres/pgdata
+      - ./pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
+      - ./patroni.yml:/etc/patroni/patroni.yml:ro
+    networks:
+      - lab-08-a
+    depends_on:
+      - etcd1
+      - etcd2
+      - etcd3
+      - minio
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # pgBackRest sidecar: used to run stanza-create, backup, info, and restore
+  # operations against the shared pgbackrest.conf and patroni1 data volume.
+  pgbackrest:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    container_name: lab-08-a-pgbackrest
+    entrypoint: ["sleep", "infinity"]
+    volumes:
+      - patroni1-data:/home/postgres/pgdata
+      - ./pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
+    networks:
+      - lab-08-a
+    depends_on:
+      - patroni1
+      - minio
+
+networks:
+  lab-08-a:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.8.0/24
+
+volumes:
+  etcd1-data:
+  etcd2-data:
+  etcd3-data:
+  patroni1-data:
+  patroni2-data:
+  patroni3-data:
+  minio-data:

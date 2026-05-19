@@ -1,0 +1,31 @@
+# ALERT-06-DCS-PARTITION — DCS Connectivity Loss from Any Patroni Node
+# Source: Chapter 06 (06-observability-monitoring.mdx)
+# Severity: Critical.
+# Trigger: SIG-09 — patroni_dcs_last_seen_seconds delta exceeds loop_wait * 3 on any member.
+# Runbook: Chapter 07 → "DCS Connectivity" decision tree (SIG-09).
+
+groups:
+  - name: patroni-dcs-partition
+    rules:
+      - alert: PatroniDCSPartition
+        expr: >
+          (
+            time() - patroni_dcs_last_seen_timestamp_seconds
+          )
+          >
+          (
+            patroni_loop_wait_seconds * 3
+          )
+        for: 0m
+        labels:
+          severity: critical
+          signal: SIG-09
+        annotations:
+          summary: "DCS partition detected on Patroni node {{ $labels.instance }}"
+          description: >
+            Patroni node {{ $labels.instance }} in cluster {{ $labels.cluster }}
+            has not communicated with the DCS for more than loop_wait * 3 seconds.
+            DCS stale time: {{ $value }}s.
+            A leader that loses DCS connectivity will demote itself.
+            A replica that loses DCS connectivity cannot be promoted.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#dcs-partition"

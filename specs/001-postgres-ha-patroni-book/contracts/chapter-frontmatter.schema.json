@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ivishalgandhi.github.io/schemas/postgres-ha-patroni-book/chapter-frontmatter.json",
+  "title": "Chapter Frontmatter",
+  "description": "Required Docusaurus frontmatter for every chapter file under docs/devops/postgres-ha-patroni-book/",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "title",
+    "sidebar_position",
+    "description",
+    "version_support",
+    "anchors_user_stories",
+    "frs_covered"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 5,
+      "description": "Chapter title; appears in sidebar and as <h1>."
+    },
+    "sidebar_position": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 99,
+      "description": "Docusaurus sidebar ordering; matches NN- prefix in filename."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "description": "One-sentence chapter summary; used for OpenGraph and search."
+    },
+    "version_support": {
+      "type": "object",
+      "required": ["postgres", "patroni", "window_months"],
+      "properties": {
+        "postgres": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Supported Postgres versions, e.g. [\"18.x\", \"17.x (N-1)\"]."
+        },
+        "patroni": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "dcs": {
+          "type": "object",
+          "properties": {
+            "etcd": { "type": "array", "items": { "type": "string" } },
+            "consul": { "type": "array", "items": { "type": "string" } },
+            "k8s": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "window_months": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Compatibility window in months from publication date."
+        }
+      }
+    },
+    "anchors_user_stories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^US[1-5]$"
+      },
+      "minItems": 1,
+      "description": "Spec user stories this chapter anchors (US1..US5)."
+    },
+    "frs_covered": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^FR-\\d{3}$"
+      },
+      "minItems": 1,
+      "description": "Spec functional requirements this chapter satisfies."
+    },
+    "substrates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["proxmox-lxc", "docker", "kind", "k3d", "terraform-aws", "terraform-gcp", "terraform-azure", "bare-vm-ansible"]
+      },
+      "description": "Lab substrates this chapter's labs cover. Must include at least one when the chapter contains a lab."
+    },
+    "lab_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^LAB-(\\d{2}|[A-Z])-[A-Z]$"
+      },
+      "description": "Companion artifact IDs for labs anchored in this chapter."
+    },
+    "agent_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^AGENT-\\d{2}-[A-Z]{1,3}$"
+      },
+      "description": "Companion artifact IDs for AI-agent workflows."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
