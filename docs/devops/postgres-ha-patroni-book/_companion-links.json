@@ -74,5 +74,13 @@
   "CHAOS-03-A": {
     "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/chaos/chaos-03-a.sh",
     "description": "Leader kill chaos script (Chapter 03)"
+  },
+  "LAB-13-A": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a",
+    "description": "2-node Patroni network partition test lab (Chapter 13)"
+  },
+  "LAB-13-B": {
+    "url": "https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b",
+    "description": "3-node Patroni quorum recovery test lab (Chapter 13)"
   }
 }

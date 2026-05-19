@@ -1,0 +1,225 @@
+---
+title: "Chapter 13 — Network Partition Testing: Proving HA Under Real Failures"
+sidebar_position: 14
+description: "Scientifically test 2-node vs 3-node Patroni clusters under controlled network partitions using iptables chaos injection. Reproducible evidence for the 2-node vs 3-node HA debate."
+version_support:
+  postgres: ["18.x", "17.x (N-1)"]
+  patroni: ["latest stable (4.x)"]
+  dcs:
+    etcd: ["3.5.x"]
+    consul: ["1.18+"]
+    k8s: ["1.31+"]
+  window_months: 12
+anchors_user_stories: ["US7", "US8"]
+frs_covered: ["FR-001", "FR-002", "FR-007", "FR-008", "FR-009"]
+tags: [postgres, patroni, ha, network-partition, chaos-engineering, testing, quorum]
+---
+
+# Chapter 13 — Network Partition Testing
+
+## Executive Summary
+
+This chapter settles the most common debate in Patroni deployments: **"Is a 2-node PostgreSQL cluster with a 5-node etcd cluster truly highly available?"** Through three reproducible, hands-on labs, we inject controlled network partitions into both 2-node and 3-node Patroni clusters and document exactly what happens. The results are not theoretical — they are captured from live containers with `iptables` rules, `patronictl` output, and PostgreSQL replication lag metrics.
+
+**The answer**: 2-node works for clean failures, but fails the "zone drop" test. 3-node survives all three scenarios with automatic recovery. The companion labs (`LAB-13-A` and `LAB-13-B`) let you reproduce every result in under 10 minutes.
+
+---
+
+## 1. Theory: Why Partitions Matter More Than Crashes
+
+### 1.1 The CAP Theorem in PostgreSQL HA
+
+The CAP theorem states that a distributed system can guarantee at most two of: **Consistency**, **Availability**, and **Partition tolerance**. Patroni chooses **CP** (Consistency + Partition tolerance) — the leader holds a lease in etcd, and if it cannot renew that lease, it demotes itself. This is the correct choice for transactional databases: data integrity beats uptime.
+
+But here's the trap: **"Partition tolerance" does not mean "automatic failover during a partition."** It means the system *behaves correctly* during a partition — which, for Patroni, means refusing to promote a replica if the leader might still be alive.
+
+### 1.2 Patroni's DCS Lease Model
+
+Patroni uses etcd (or ZooKeeper, Consul) as a distributed lock service. The mechanics are simple:
+
+1. The leader creates a key `/service/<scope>/leader` with a TTL (default 30s).
+2. Every `loop_wait` seconds (default 10s), the leader renews the lease.
+3. Replicas watch this key. If the key disappears or expires, replicas race to create a new one.
+4. The winner promotes PostgreSQL from replica to primary.
+
+This works perfectly when the leader *crashes*. The lease expires, the race begins, a new leader is elected. But during a **network partition**, the leader is still alive — it just cannot reach etcd. What happens then?
+
+> **Critical insight**: If the leader cannot reach etcd, it cannot renew the lease. After `ttl` seconds, the lease expires. But if the leader is still running PostgreSQL as primary, we have two primaries — a split-brain. Patroni prevents this by demoting the leader when the lease update fails. But demotion takes time, and during that window, data loss is possible.
+
+### 1.3 The Three Failure Modes
+
+| Mode | Description | Real-World Equivalent |
+|------|-------------|----------------------|
+| **Clean stop** | `systemctl stop patroni` or `kill -9 patroni` on the leader | OS patch requiring service restart |
+| **Full partition** | Leader and replica cannot reach each other, but both can reach etcd | Inter-AZ network blip |
+| **Asymmetric partition** | Leader cannot reach etcd, but can reach replica; replica can reach both | Misconfigured firewall or routing issue |
+
+The clean stop is what most people test. The full and asymmetric partitions are what actually happen in production.
+
+---
+
+## 2. Test Methodology
+
+### 2.1 Lab Architecture
+
+Both labs use the same components:
+
+- **Spilo image** (`ghcr.io/zalando/spilo-16:3.2-p1`) running Patroni with direct `patroni` execution
+- **5-node etcd cluster** (v3.5.13) providing DCS consensus — quorum requires 3/5 nodes
+- **Docker Compose** with isolated bridge networks and static IPs
+- **`iptables` inside containers** for network partition simulation (via `NET_ADMIN` capability)
+- **Test data** (`partition_test.transactions` table) for consistency verification
+
+The only variable between `LAB-13-A` and `LAB-13-B` is the **number of Patroni nodes**:
+
+- `LAB-13-A`: 2 Patroni nodes + 5 etcd nodes
+- `LAB-13-B`: 3 Patroni nodes + 5 etcd nodes
+
+### 2.2 Chaos Injection Scripts
+
+Each lab includes three break scripts:
+
+1. **`break-clean-stop.sh`**: Stops the Patroni process on the current leader.
+2. **`break-full-partition.sh`**: Uses `iptables` to DROP all packets between leader and replica(s).
+3. **`break-asymmetric-partition.sh`**: Blocks leader→etcd traffic while keeping leader→replica paths open.
+
+All scripts are idempotent and reversible via `make recover` (flushes iptables and restarts containers).
+
+### 2.3 Verification Protocol
+
+After each break scenario, `verify.sh` captures:
+
+1. `patronictl list` output — who is leader, who is replica, who is stopped
+2. `etcdctl endpoint health` — DCS quorum status
+3. `pg_stat_replication` — replication lag in bytes
+4. `partition_test.transactions` row count and MD5 checksum on all nodes
+
+---
+
+## 3. Results
+
+### 3.1 Scenario 1: Clean Service Stop
+
+| Metric | LAB-13-A (2-Node) | LAB-13-B (3-Node) |
+|--------|-------------------|-------------------|
+| **Failover?** | Yes | Yes |
+| **Time to failover** | ~30–40s (`ttl` + `loop_wait`) | ~30–40s |
+| **Post-failover redundancy** | **0** (single node) | **1** (one replica remains) |
+| **Can patch OS now?** | No — downtime if remaining node fails | Yes — rolling restart on 2 nodes |
+
+The clean stop is the only scenario where both architectures "work." But the 2-node cluster leaves you with zero redundancy after failover. The 3-node cluster continues with a primary and a replica.
+
+### 3.2 Scenario 2: Full Network Partition
+
+| Metric | LAB-13-A (2-Node) | LAB-13-B (3-Node) |
+|--------|-------------------|-------------------|
+| **Failover?** | **No** | **Yes** |
+| **Leader behavior** | Continues running; replica stalls | Self-demotes when cannot reach majority |
+| **Replica behavior** | Stale reads possible; lag grows | One replica promotes via quorum |
+| **Data loss risk** | Low (if partition heals before crash) | None (clean handoff) |
+
+In `LAB-13-A`, the leader keeps renewing its etcd lease because it can still reach etcd. The replica sees a valid lease and never promotes. Meanwhile, replication is broken, so the replica serves increasingly stale data. If the leader then crashes during the partition, the replica promotes but has lost all writes from the partition window.
+
+In `LAB-13-B`, the leader cannot reach a majority of replicas via REST API (required by DCS failsafe mode). It self-demotes. The two replicas, still connected to etcd, race for the leader lock. One wins and promotes. Zero data loss.
+
+### 3.3 Scenario 3: Asymmetric Partition (Leader Loses etcd)
+
+| Metric | LAB-13-A (2-Node) | LAB-13-B (3-Node) |
+|--------|-------------------|-------------------|
+| **Failover?** | **No** (or delayed) | **Yes** |
+| **Leader behavior** | Self-demotes or stays primary (failsafe) | Self-demotes when cannot reach majority |
+| **Replica behavior** | Sees leader via REST API, waits | Sees leader gone from DCS, promotes |
+| **Split-brain risk** | **High** if failsafe_mode enabled | None (quorum prevents it) |
+
+This is the most dangerous scenario for 2-node clusters. With `failsafe_mode: true`, the leader contacts the replica via REST API and stays primary — but if the replica cannot confirm (or if the response is delayed), both nodes may believe they are valid. With 3 nodes, the leader must reach **both** replicas to stay primary. If it can only reach one, it demotes. The two replicas form a quorum and elect a new leader.
+
+### 3.4 Summary Table
+
+| Scenario | 2-Node Result | 3-Node Result | Data Loss Risk | Recovery Action |
+|----------|---------------|---------------|----------------|-----------------|
+| Clean stop | Auto-failover | Auto-failover | None | Restart old leader as replica |
+| Full partition | No failover; stale reads | Auto-failover via quorum | Low (2-node) / None (3-node) | Heal partition; `pg_rewind` |
+| Asymmetric partition | No failover; split-brain risk | Auto-failover | High (2-node) / None (3-node) | Heal partition; manual reconcile |
+
+---
+
+## 4. What the Patroni Docs Actually Say
+
+The official Patroni documentation acknowledges both positions:
+
+> *"2-node clusters (primary + standby) are common and provide automatic failover with high availability. Note that during failover, you'll temporarily have no redundancy until the failed node rejoins."*
+> — [Patroni README](https://patroni.readthedocs.io/en/latest/README.html)
+
+And for multi-datacenter deployments:
+
+> *"To have a multi DC cluster that can automatically tolerate a zone drop, a minimum of 3 is required."*
+> — [Patroni HA Multi Datacenter](https://patroni.readthedocs.io/en/latest/ha_multi_dc.html)
+
+These statements are **not contradictory.** Two-node is "common" and "provides automatic failover" — for clean failures. Three-node is **required** for zone-drop tolerance and partition-safe automatic failover.
+
+GitHub issue [#2662](https://github.com/patroni/patroni/issues/2662) documents a real incident: a 2-node Patroni cluster with 3 etcd nodes failed to auto-failover during a network partition. Both nodes became replicas. The cluster had **no primary** until manual intervention.
+
+---
+
+## 5. Production Readiness Checklist
+
+### When 2-Node Is Acceptable
+
+- [ ] The cluster is for **disaster recovery**, not high availability
+- [ ] You accept **manual failover** for non-clean failures
+- [ ] You have **budget constraints** that prevent a 3rd node
+- [ ] The 2nd node is in a **different datacenter** and you use `standby_cluster` mode
+- [ ] Downtime windows for OS patching are **scheduled and acceptable**
+- [ ] You understand that a single-node failure after the first failover = **hard downtime**
+
+### When 3-Node Is Required
+
+- [ ] You need **true high availability** (automatic failover for all failure modes)
+- [ ] You must **tolerate zone drops** without manual intervention
+- [ ] You need **rolling restarts** for zero-downtime maintenance
+- [ ] You have **financial or compliance requirements** that prohibit data loss
+- [ ] Your application cannot accept **stale reads** during partitions
+- [ ] You want to eliminate **split-brain risk** entirely
+
+---
+
+## 6. Running the Labs
+
+### LAB-13-A: 2-Node Partition Test
+
+```bash
+cd docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a
+make setup
+make break-full-partition   # or break-clean-stop / break-asymmetric
+make verify
+make recover
+make teardown
+```
+
+**Artifact**: [LAB-13-A](https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a)
+
+### LAB-13-B: 3-Node Quorum Test
+
+```bash
+cd docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b
+make setup
+make break-full-partition   # or break-clean-stop / break-asymmetric
+make verify
+make recover
+make teardown
+```
+
+**Artifact**: [LAB-13-B](https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b)
+
+> **Note**: Both labs reuse the `ghcr.io/zalando/spilo-16:3.2-p1` image and the 5-node etcd pattern established in earlier chapters. The only new element is `iptables` chaos injection inside the containers.
+
+---
+
+## 7. Further Reading
+
+- [Patroni DCS Failsafe Mode](https://patroni.readthedocs.io/en/latest/dcs_failsafe_mode.html) — How Patroni behaves when etcd is unreachable
+- [Patroni HA Multi Datacenter](https://patroni.readthedocs.io/en/latest/ha_multi_dc.html) — Zone-drop tolerance requirements
+- [GitHub Issue #2662](https://github.com/patroni/patroni/issues/2662) — Real 2-node partition incident
+- [Percona HA Reference Architecture](https://docs.percona.com/postgresql/16/solutions/high-availability.html) — "Recommended deployment is a three-instance cluster"
+- Chapter 3 — Core Deployment (LAB-03-A) — Base Patroni + etcd cluster patterns
+- Chapter 7 — Troubleshooting Playbooks — Recovery procedures for partition scenarios

@@ -1,0 +1,223 @@
+# LAB-13-A: 2-Node Patroni + 5-Node etcd — Network Partition Test
+# Artifact ID: LAB-13-A
+# Book Reference: Chapter 13 — Network Partition Testing
+#
+# Tests 2-node Patroni behavior under clean stop, full partition,
+# and asymmetric partition scenarios.
+
+services:
+  etcd-1:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: etcd-1
+    hostname: etcd-1
+    networks:
+      lab-13-a-net:
+        ipv4_address: 172.21.0.2
+    environment:
+      ETCD_NAME: etcd-1
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://172.21.0.2:2380
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://172.21.0.2:2379
+      ETCD_INITIAL_CLUSTER: etcd-1=http://172.21.0.2:2380,etcd-2=http://172.21.0.3:2380,etcd-3=http://172.21.0.4:2380,etcd-4=http://172.21.0.5:2380,etcd-5=http://172.21.0.6:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-13-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCDCTL_API: "3"
+    volumes:
+      - etcd-data-1:/etcd-data
+    healthcheck:
+      test: ["CMD-SHELL", "etcdctl --endpoints=http://127.0.0.1:2379 endpoint health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  etcd-2:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: etcd-2
+    hostname: etcd-2
+    networks:
+      lab-13-a-net:
+        ipv4_address: 172.21.0.3
+    environment:
+      ETCD_NAME: etcd-2
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://172.21.0.3:2380
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://172.21.0.3:2379
+      ETCD_INITIAL_CLUSTER: etcd-1=http://172.21.0.2:2380,etcd-2=http://172.21.0.3:2380,etcd-3=http://172.21.0.4:2380,etcd-4=http://172.21.0.5:2380,etcd-5=http://172.21.0.6:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-13-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCDCTL_API: "3"
+    volumes:
+      - etcd-data-2:/etcd-data
+    healthcheck:
+      test: ["CMD-SHELL", "etcdctl --endpoints=http://127.0.0.1:2379 endpoint health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  etcd-3:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: etcd-3
+    hostname: etcd-3
+    networks:
+      lab-13-a-net:
+        ipv4_address: 172.21.0.4
+    environment:
+      ETCD_NAME: etcd-3
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://172.21.0.4:2380
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://172.21.0.4:2379
+      ETCD_INITIAL_CLUSTER: etcd-1=http://172.21.0.2:2380,etcd-2=http://172.21.0.3:2380,etcd-3=http://172.21.0.4:2380,etcd-4=http://172.21.0.5:2380,etcd-5=http://172.21.0.6:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-13-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCDCTL_API: "3"
+    volumes:
+      - etcd-data-3:/etcd-data
+    healthcheck:
+      test: ["CMD-SHELL", "etcdctl --endpoints=http://127.0.0.1:2379 endpoint health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  etcd-4:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: etcd-4
+    hostname: etcd-4
+    networks:
+      lab-13-a-net:
+        ipv4_address: 172.21.0.5
+    environment:
+      ETCD_NAME: etcd-4
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://172.21.0.5:2380
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://172.21.0.5:2379
+      ETCD_INITIAL_CLUSTER: etcd-1=http://172.21.0.2:2380,etcd-2=http://172.21.0.3:2380,etcd-3=http://172.21.0.4:2380,etcd-4=http://172.21.0.5:2380,etcd-5=http://172.21.0.6:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-13-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCDCTL_API: "3"
+    volumes:
+      - etcd-data-4:/etcd-data
+    healthcheck:
+      test: ["CMD-SHELL", "etcdctl --endpoints=http://127.0.0.1:2379 endpoint health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  etcd-5:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: etcd-5
+    hostname: etcd-5
+    networks:
+      lab-13-a-net:
+        ipv4_address: 172.21.0.6
+    environment:
+      ETCD_NAME: etcd-5
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://172.21.0.6:2380
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://172.21.0.6:2379
+      ETCD_INITIAL_CLUSTER: etcd-1=http://172.21.0.2:2380,etcd-2=http://172.21.0.3:2380,etcd-3=http://172.21.0.4:2380,etcd-4=http://172.21.0.5:2380,etcd-5=http://172.21.0.6:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-13-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCDCTL_API: "3"
+    volumes:
+      - etcd-data-5:/etcd-data
+    healthcheck:
+      test: ["CMD-SHELL", "etcdctl --endpoints=http://127.0.0.1:2379 endpoint health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  patroni-1:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    container_name: patroni-1
+    hostname: patroni-1
+    cap_add:
+      - NET_ADMIN
+    networks:
+      lab-13-a-net:
+        ipv4_address: 172.21.0.11
+    volumes:
+      - ./patroni-1.yml:/etc/patroni/patroni.yml:ro
+      - patroni-data-1:/home/postgres/pgdata
+      - ../common/init-partition-test-data.sql:/tmp/init-partition-test-data.sql:ro
+      - ../common/recover-partition.sh:/tmp/recover-partition.sh:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["exec patroni /etc/patroni/patroni.yml"]
+    depends_on:
+      etcd-1:
+        condition: service_healthy
+      etcd-2:
+        condition: service_healthy
+      etcd-3:
+        condition: service_healthy
+      etcd-4:
+        condition: service_healthy
+      etcd-5:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8008/health')\" >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 180s
+
+  patroni-2:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    container_name: patroni-2
+    hostname: patroni-2
+    cap_add:
+      - NET_ADMIN
+    networks:
+      lab-13-a-net:
+        ipv4_address: 172.21.0.12
+    volumes:
+      - ./patroni-2.yml:/etc/patroni/patroni.yml:ro
+      - patroni-data-2:/home/postgres/pgdata
+      - ../common/init-partition-test-data.sql:/tmp/init-partition-test-data.sql:ro
+      - ../common/recover-partition.sh:/tmp/recover-partition.sh:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["exec patroni /etc/patroni/patroni.yml"]
+    depends_on:
+      etcd-1:
+        condition: service_healthy
+      etcd-2:
+        condition: service_healthy
+      etcd-3:
+        condition: service_healthy
+      etcd-4:
+        condition: service_healthy
+      etcd-5:
+        condition: service_healthy
+      patroni-1:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8008/health')\" >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 180s
+
+volumes:
+  etcd-data-1:
+  etcd-data-2:
+  etcd-data-3:
+  etcd-data-4:
+  etcd-data-5:
+  patroni-data-1:
+  patroni-data-2:
+
+networks:
+  lab-13-a-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24

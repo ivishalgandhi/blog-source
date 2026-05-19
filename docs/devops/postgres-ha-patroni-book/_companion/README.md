@@ -15,6 +15,8 @@ Book source: [blog-source/docs/devops/postgres-ha-patroni-book](https://github.c
 | LAB-08-B | `terraform/lab-08-b/` | Ch. 08 | Cross-region disaster recovery (AWS/GCP) |
 | LAB-A-A | `docker/lab-a-a/` | Appendix A | Python 3.8 → 3.12 rolling upgrade |
 | LAB-B-A | `ansible/lab-b-a/` | Appendix B | Watchdog and DCS lease pathology |
+| LAB-13-A | `docker/lab-13-a/` | Ch. 13 | 2-node network partition test (iptables chaos) |
+| LAB-13-B | `docker/lab-13-b/` | Ch. 13 | 3-node quorum recovery test (iptables chaos) |
 | CONFIG-04-REF | `patroni/config-04-ref.yml` | Ch. 04 | Annotated reference patroni.yml |
 | DASH-06-CORE | `dashboards/dash-06-core.json` | Ch. 06 | Core fleet Grafana dashboard |
 | DASH-06-LAG | `dashboards/dash-06-lag.json` | Ch. 06 | Replication lag Grafana dashboard |
@@ -32,6 +34,8 @@ Book source: [blog-source/docs/devops/postgres-ha-patroni-book](https://github.c
 docker/           # Docker Compose labs
   lab-03-a/       # 3-node Patroni + etcd cluster (Ch. 03)
   lab-08-a/       # Backup/DR PITR lab (Ch. 08)
+  lab-13-a/       # 2-node network partition test (Ch. 13)
+  lab-13-b/       # 3-node quorum recovery test (Ch. 13)
   lab-a-a/        # Python runtime rolling upgrade (Appendix A)
 terraform/        # Terraform modules
   lab-08-b/       # Cross-region restore lab (Ch. 08)

@@ -11,6 +11,8 @@ This file maps artifact IDs used in the book prose (`_companion-links.json`) to 
 | LAB-08-B | `terraform/lab-08-b/` | Ch. 08 "Cross-Region DR" | Implemented |
 | LAB-A-A | `docker/lab-a-a/` | Appendix A "Python Rolling Upgrade" | Implemented |
 | LAB-B-A | `ansible/lab-b-a/` | Appendix B "Watchdog & DCS Lease Pathology" | Implemented |
+| LAB-13-A | `docker/lab-13-a/` | Ch. 13 "2-Node Partition Test" | Implemented |
+| LAB-13-B | `docker/lab-13-b/` | Ch. 13 "3-Node Quorum Test" | Implemented |
 
 ## Reference Configurations
 
