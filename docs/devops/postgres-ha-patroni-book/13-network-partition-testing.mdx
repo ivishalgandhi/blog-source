@@ -21,7 +21,7 @@ tags: [postgres, patroni, ha, network-partition, chaos-engineering, testing, quo
 
 This chapter settles the most common debate in Patroni deployments: **"Is a 2-node PostgreSQL cluster with a 5-node etcd cluster truly highly available?"** Through three reproducible, hands-on labs, we inject controlled network partitions into both 2-node and 3-node Patroni clusters and document exactly what happens. The results are not theoretical — they are captured from live containers with `iptables` rules, `patronictl` output, and PostgreSQL replication lag metrics.
 
-**The answer**: 2-node works for clean failures, but fails the "zone drop" test. 3-node survives all three scenarios with automatic recovery. The companion labs (`LAB-13-A` and `LAB-13-B`) let you reproduce every result in under 10 minutes.
+**The answer**: 2-node works for clean failures, but fails the "zone drop" test. 3-node survives all three scenarios with automatic recovery. The companion labs ([LAB-13-A](https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a) and [LAB-13-B](https://github.com/ivishalgandhi/blog-source/tree/main/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b)) let you reproduce every result in under 10 minutes.
 
 ---
 
