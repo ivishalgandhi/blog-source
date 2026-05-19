@@ -1,0 +1,54 @@
+# ALERT-06-WAL-BLOAT — WAL Accumulation Beyond Safe Threshold
+# Source: Chapter 06 (06-observability-monitoring.mdx)
+# Severity: Warning at >1 GB slot lag for >30 m; Critical at >10 GB.
+# Trigger: SIG-05 or SIG-06.
+# Runbook: Chapter 07 → "WAL Bloat / Stuck Slot" decision tree (SIG-05, SIG-06, SIG-07).
+
+groups:
+  - name: patroni-wal-bloat
+    rules:
+      - alert: PatroniWALSlotLagWarning
+        expr: >
+          pg_replication_slots_pg_wal_lsn_diff > 1073741824
+        for: 30m
+        labels:
+          severity: warning
+          signal: SIG-05
+        annotations:
+          summary: "WAL slot lag exceeds 1 GB on {{ $labels.instance }}"
+          description: >
+            Replication slot {{ $labels.slot_name }} on {{ $labels.instance }}
+            is holding back > 1 GB of WAL for more than 30 minutes.
+            Current lag: {{ $value | humanize1024 }}B.
+            Consumer may have fallen behind or disconnected.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#wal-bloat"
+
+      - alert: PatroniWALSlotLagCritical
+        expr: >
+          pg_replication_slots_pg_wal_lsn_diff > 10737418240
+        for: 0m
+        labels:
+          severity: critical
+          signal: SIG-05
+        annotations:
+          summary: "WAL slot lag exceeds 10 GB on {{ $labels.instance }}"
+          description: >
+            Replication slot {{ $labels.slot_name }} on {{ $labels.instance }}
+            is holding back > 10 GB of WAL. Immediate action required.
+            Current lag: {{ $value | humanize1024 }}B.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#wal-bloat"
+
+      - alert: PatroniInactiveReplicationSlot
+        expr: >
+          pg_replication_slots_active == 0
+        for: 15m
+        labels:
+          severity: warning
+          signal: SIG-06
+        annotations:
+          summary: "Inactive replication slot detected on {{ $labels.instance }}"
+          description: >
+            Replication slot {{ $labels.slot_name }} on {{ $labels.instance }}
+            has been inactive for more than 15 minutes.
+            Inactive slots prevent WAL cleanup and will cause disk bloat.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#wal-bloat"

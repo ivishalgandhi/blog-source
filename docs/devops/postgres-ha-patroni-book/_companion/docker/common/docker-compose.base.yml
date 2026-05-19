@@ -1,0 +1,54 @@
+# Base Docker Compose patterns for Patroni labs
+# Include this in lab-specific docker-compose.yml files with:
+#   extends:
+#     file: ../common/docker-compose.base.yml
+#     service: patroni-base
+
+name: patroni-lab
+
+services:
+  patroni-base:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    # ^ Spilo = Patroni + PostgreSQL in one image. Pin the tag for reproducibility.
+    #   For Postgres 18.x/17.x labs, adjust to the appropriate Spilo or custom image.
+    environment:
+      ETCD_HOSTS: "etcd1:2379,etcd2:2379,etcd3:2379"
+      SCOPE: patroni-lab
+      PGVERSION: "16"
+      # ^ Adjust to match your target Postgres version (16, 17, 18 when available)
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - patroni
+    volumes:
+      - patroni-data:/home/postgres/pgdata
+
+  etcd-base:
+    image: quay.io/coreos/etcd:v3.5.13
+    # ^ Pin the etcd version. Check for newer 3.5.x releases.
+    environment:
+      ETCD_NAME: etcd
+      ETCD_INITIAL_CLUSTER: etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: patroni-lab
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://etcd:2379
+    networks:
+      - patroni
+    volumes:
+      - etcd-data:/etcd-data
+
+networks:
+  patroni:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  patroni-data:
+  etcd-data:

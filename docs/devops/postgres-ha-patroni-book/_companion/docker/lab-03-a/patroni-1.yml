@@ -1,0 +1,84 @@
+# LAB-03-A: Patroni Node 1 Configuration
+# Artifact ID: LAB-03-A
+# Book Reference: Chapter 03 — Core Deployment
+#
+# Per-node patroni.yml for patroni-1 (172.20.0.11).
+# Mount at /etc/patroni/patroni.yml inside the container.
+
+scope: lab-03-a
+name: patroni-1
+namespace: /service/
+
+restapi:
+  listen: 0.0.0.0:8008
+  connect_address: 172.20.0.11:8008
+
+etcd3:
+  hosts:
+    - 172.20.0.2:2379
+    - 172.20.0.3:2379
+    - 172.20.0.4:2379
+  protocol: http
+
+bootstrap:
+  dcs:
+    ttl: 30
+    loop_wait: 10
+    retry_timeout: 10
+    maximum_lag_on_failover: 1048576
+    synchronous_mode: false
+    synchronous_mode_strict: false
+    postgresql:
+      use_pg_rewind: true
+      use_slots: true
+      parameters:
+        wal_level: replica
+        hot_standby: "on"
+        wal_keep_size: 1GB
+        max_wal_senders: 10
+        max_replication_slots: 10
+        wal_log_hints: "on"
+  initdb:
+    - encoding: UTF8
+    - data-checksums
+  pg_hba:
+    - host replication replicator 172.20.0.0/24 md5
+    - host all all 172.20.0.0/24 md5
+
+postgresql:
+  listen: 0.0.0.0:5432
+  connect_address: 172.20.0.11:5432
+  data_dir: /home/postgres/pgdata
+  bin_dir: /usr/lib/postgresql/16/bin
+  pgpass: /home/postgres/.pgpass
+  authentication:
+    replication:
+      username: replicator
+      password: replicator-pass
+    superuser:
+      username: postgres
+      password: postgres-pass
+  parameters:
+    shared_buffers: 256MB
+    effective_cache_size: 1GB
+    maintenance_work_mem: 64MB
+    checkpoint_completion_target: 0.9
+    wal_buffers: 16MB
+    default_statistics_target: 100
+    random_page_cost: 1.1
+    effective_io_concurrency: 200
+    work_mem: 4MB
+    min_wal_size: 1GB
+    max_wal_size: 4GB
+    max_connections: 100
+  create_replica_methods:
+    - basebackup
+
+watchdog:
+  mode: off
+
+tags:
+  nofailover: false
+  noloadbalance: false
+  clonefrom: false
+  nosync: false

@@ -1,0 +1,28 @@
+[Unit]
+Description=etcd key-value store
+Documentation=https://github.com/etcd-io/etcd
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+User=etcd
+Group=etcd
+ExecStart=/usr/local/bin/etcd \
+  --name {{ inventory_hostname }} \
+  --data-dir /var/lib/etcd \
+  --listen-client-urls http://{{ ansible_default_ipv4.address | default(ansible_host) }}:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://{{ ansible_default_ipv4.address | default(ansible_host) }}:2379 \
+  --listen-peer-urls http://{{ ansible_default_ipv4.address | default(ansible_host) }}:2380 \
+  --initial-advertise-peer-urls http://{{ ansible_default_ipv4.address | default(ansible_host) }}:2380 \
+  --initial-cluster-token etcd-cluster-lab-b-a \
+  --initial-cluster {% for host in groups['etcd'] %}{{ host }}=http://{{ hostvars[host]['ansible_host'] | default(host) }}:2380{% if not loop.last %},{% endif %}{% endfor %} \
+  --initial-cluster-state new \
+  --heartbeat-interval 100 \
+  --election-timeout 1000
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,182 @@
+# LAB-03-A: 3-Node Patroni + etcd Cluster
+# Artifact ID: LAB-03-A
+# Book Reference: Chapter 03 — Core Deployment
+#
+# Self-contained Docker Compose lab for deploying, breaking, and recovering
+# a 3-node Patroni cluster backed by a 3-node etcd DCS.
+
+services:
+  etcd-1:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: etcd-1
+    hostname: etcd-1
+    networks:
+      lab-03-a-net:
+        ipv4_address: 172.20.0.2
+    environment:
+      ETCD_NAME: etcd-1
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://172.20.0.2:2380
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://172.20.0.2:2379
+      ETCD_INITIAL_CLUSTER: etcd-1=http://172.20.0.2:2380,etcd-2=http://172.20.0.3:2380,etcd-3=http://172.20.0.4:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-03-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCDCTL_API: "3"
+    volumes:
+      - etcd-data-1:/etcd-data
+    healthcheck:
+      test: ["CMD-SHELL", "etcdctl --endpoints=http://127.0.0.1:2379 endpoint health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  etcd-2:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: etcd-2
+    hostname: etcd-2
+    networks:
+      lab-03-a-net:
+        ipv4_address: 172.20.0.3
+    environment:
+      ETCD_NAME: etcd-2
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://172.20.0.3:2380
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://172.20.0.3:2379
+      ETCD_INITIAL_CLUSTER: etcd-1=http://172.20.0.2:2380,etcd-2=http://172.20.0.3:2380,etcd-3=http://172.20.0.4:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-03-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCDCTL_API: "3"
+    volumes:
+      - etcd-data-2:/etcd-data
+    healthcheck:
+      test: ["CMD-SHELL", "etcdctl --endpoints=http://127.0.0.1:2379 endpoint health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  etcd-3:
+    image: quay.io/coreos/etcd:v3.5.13
+    container_name: etcd-3
+    hostname: etcd-3
+    networks:
+      lab-03-a-net:
+        ipv4_address: 172.20.0.4
+    environment:
+      ETCD_NAME: etcd-3
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://172.20.0.4:2380
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://172.20.0.4:2379
+      ETCD_INITIAL_CLUSTER: etcd-1=http://172.20.0.2:2380,etcd-2=http://172.20.0.3:2380,etcd-3=http://172.20.0.4:2380
+      ETCD_INITIAL_CLUSTER_TOKEN: lab-03-a
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCDCTL_API: "3"
+    volumes:
+      - etcd-data-3:/etcd-data
+    healthcheck:
+      test: ["CMD-SHELL", "etcdctl --endpoints=http://127.0.0.1:2379 endpoint health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  patroni-1:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    container_name: patroni-1
+    hostname: patroni-1
+    networks:
+      lab-03-a-net:
+        ipv4_address: 172.20.0.11
+    volumes:
+      - ./patroni-1.yml:/etc/patroni/patroni.yml:ro
+      - patroni-data-1:/home/postgres/pgdata
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["exec patroni /etc/patroni/patroni.yml"]
+    depends_on:
+      etcd-1:
+        condition: service_healthy
+      etcd-2:
+        condition: service_healthy
+      etcd-3:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8008/health')\" >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 180s
+
+  patroni-2:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    container_name: patroni-2
+    hostname: patroni-2
+    networks:
+      lab-03-a-net:
+        ipv4_address: 172.20.0.12
+    volumes:
+      - ./patroni-2.yml:/etc/patroni/patroni.yml:ro
+      - patroni-data-2:/home/postgres/pgdata
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["exec patroni /etc/patroni/patroni.yml"]
+    depends_on:
+      etcd-1:
+        condition: service_healthy
+      etcd-2:
+        condition: service_healthy
+      etcd-3:
+        condition: service_healthy
+      patroni-1:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8008/health')\" >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 180s
+
+  patroni-3:
+    image: ghcr.io/zalando/spilo-16:3.2-p1
+    container_name: patroni-3
+    hostname: patroni-3
+    networks:
+      lab-03-a-net:
+        ipv4_address: 172.20.0.13
+    volumes:
+      - ./patroni-3.yml:/etc/patroni/patroni.yml:ro
+      - patroni-data-3:/home/postgres/pgdata
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["exec patroni /etc/patroni/patroni.yml"]
+    depends_on:
+      etcd-1:
+        condition: service_healthy
+      etcd-2:
+        condition: service_healthy
+      etcd-3:
+        condition: service_healthy
+      patroni-1:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8008/health')\" >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 180s
+
+volumes:
+  etcd-data-1:
+  etcd-data-2:
+  etcd-data-3:
+  patroni-data-1:
+  patroni-data-2:
+  patroni-data-3:
+
+networks:
+  lab-03-a-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24

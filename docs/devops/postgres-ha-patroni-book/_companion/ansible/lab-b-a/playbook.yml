@@ -1,0 +1,31 @@
+---
+# playbook.yml
+# LAB-B-A: Watchdog and Lease Pathology
+# Orchestrates etcd cluster, Patroni cluster, and watchdog configuration.
+# Source of truth: Appendix B — Patroni Internals Deep-Dive
+#
+# Execution order:
+#   1. etcd cluster (all etcd nodes)
+#   2. Patroni (all patroni nodes)
+#   3. Watchdog (all patroni nodes — must run after Patroni is installed)
+
+- name: Deploy etcd cluster
+  hosts: etcd
+  become: true
+  gather_facts: true
+  roles:
+    - etcd
+
+- name: Deploy Patroni cluster
+  hosts: patroni
+  become: true
+  gather_facts: true
+  roles:
+    - patroni
+
+- name: Configure watchdog on Patroni nodes
+  hosts: patroni
+  become: true
+  gather_facts: true
+  roles:
+    - watchdog

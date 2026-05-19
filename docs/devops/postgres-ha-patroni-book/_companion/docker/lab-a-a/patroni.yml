@@ -1,0 +1,60 @@
+scope: patroni-lab
+namespace: /service/
+
+restapi:
+  listen: 0.0.0.0:8008
+
+etcd3:
+  hosts:
+    - etcd:2379
+
+postgresql:
+  listen: 0.0.0.0:5432
+  bin_dir: /usr/lib/postgresql/16/bin
+  data_dir: /var/lib/postgresql/16/data
+  pgpass: /tmp/pgpass
+  authentication:
+    superuser:
+      username: postgres
+      password: postgres
+    replication:
+      username: replicator
+      password: replicator
+  parameters:
+    unix_socket_directories: /var/run/postgresql
+    max_connections: 100
+    max_locks_per_transaction: 64
+    max_worker_processes: 8
+    max_prepared_transactions: 0
+    wal_level: replica
+    wal_log_hints: on
+    max_wal_senders: 10
+    max_replication_slots: 10
+    hot_standby: on
+
+bootstrap:
+  dcs:
+    postgresql:
+      parameters:
+        unix_socket_directories: /var/run/postgresql
+        max_connections: 100
+        max_locks_per_transaction: 64
+        max_worker_processes: 8
+        max_prepared_transactions: 0
+        wal_level: replica
+        wal_log_hints: on
+        max_wal_senders: 10
+        max_replication_slots: 10
+        hot_standby: on
+  initdb:
+    - encoding: UTF8
+    - data-checksums
+  pg_hba:
+    - host replication replicator 0.0.0.0/0 md5
+    - host all all 0.0.0.0/0 md5
+
+tags:
+  nofailover: false
+  noloadbalance: false
+  clonefrom: false
+  nosync: false

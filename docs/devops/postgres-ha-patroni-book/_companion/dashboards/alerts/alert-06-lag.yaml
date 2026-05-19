@@ -1,0 +1,72 @@
+# ALERT-06-LAG — Replication Lag Exceeding Threshold
+# Source: Chapter 06 (06-observability-monitoring.mdx)
+# Severity: Warning at >50 MB / 30 s; Critical at >500 MB / 300 s.
+# Runbook: Chapter 07 → "Replication Lag" decision tree (SIG-03, SIG-04).
+
+groups:
+  - name: patroni-replication-lag
+    rules:
+      - alert: PatroniReplicationLagWarning
+        expr: >
+          (
+            pg_stat_replication_replay_lag_bytes > 50 * 1024 * 1024
+          )
+          and on(instance) up == 1
+        for: 5m
+        labels:
+          severity: warning
+          signal: SIG-03
+        annotations:
+          summary: "Replication lag exceeds 50 MB on {{ $labels.instance }}"
+          description: >
+            Replica {{ $labels.instance }} (application: {{ $labels.application_name }})
+            has replay lag > 50 MB for more than 5 minutes.
+            Current lag: {{ $value | humanize1024 }}B.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#replication-lag"
+
+      - alert: PatroniReplicationLagCritical
+        expr: >
+          (
+            pg_stat_replication_replay_lag_bytes > 500 * 1024 * 1024
+          )
+          and on(instance) up == 1
+        for: 5m
+        labels:
+          severity: critical
+          signal: SIG-03
+        annotations:
+          summary: "Replication lag exceeds 500 MB on {{ $labels.instance }}"
+          description: >
+            Replica {{ $labels.instance }} (application: {{ $labels.application_name }})
+            has replay lag > 500 MB for more than 5 minutes.
+            Current lag: {{ $value | humanize1024 }}B.
+            Planned failover to this replica risks data loss.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#replication-lag"
+
+      - alert: PatroniReplicationLagTimeWarning
+        expr: >
+          pg_stat_replication_replay_lag_seconds > 30
+        for: 5m
+        labels:
+          severity: warning
+          signal: SIG-04
+        annotations:
+          summary: "Replication lag exceeds 30 s on {{ $labels.instance }}"
+          description: >
+            Replica {{ $labels.instance }} has replay lag > 30 s for more than 5 minutes.
+            Current lag: {{ $value }}s.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#replication-lag"
+
+      - alert: PatroniReplicationLagTimeCritical
+        expr: >
+          pg_stat_replication_replay_lag_seconds > 300
+        for: 5m
+        labels:
+          severity: critical
+          signal: SIG-04
+        annotations:
+          summary: "Replication lag exceeds 300 s on {{ $labels.instance }}"
+          description: >
+            Replica {{ $labels.instance }} has replay lag > 300 s for more than 5 minutes.
+            Current lag: {{ $value }}s.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#replication-lag"

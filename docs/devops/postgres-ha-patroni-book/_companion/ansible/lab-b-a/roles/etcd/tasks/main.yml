@@ -1,0 +1,112 @@
+---
+# roles/etcd/tasks/main.yml
+# Install and configure etcd 3.5.x as a 3-node cluster.
+# Source of truth: Appendix B — Patroni Internals Deep-Dive
+
+- name: Ensure required packages are installed
+  ansible.builtin.package:
+    name:
+      - curl
+      - tar
+    state: present
+
+- name: Create etcd user
+  ansible.builtin.user:
+    name: etcd
+    shell: /usr/sbin/nologin
+    home: /var/lib/etcd
+    system: true
+    create_home: false
+
+- name: Create etcd directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: etcd
+    group: etcd
+    mode: "0750"
+  loop:
+    - /var/lib/etcd
+    - /etc/etcd
+
+- name: Download etcd binaries
+  ansible.builtin.unarchive:
+    src: "https://github.com/etcd-io/etcd/releases/download/v3.5.15/etcd-v3.5.15-linux-amd64.tar.gz"
+    dest: /usr/local/bin
+    remote_src: true
+    extra_opts:
+      - --strip-components=1
+    owner: root
+    group: root
+    mode: "0755"
+  args:
+    creates: /usr/local/bin/etcd
+
+- name: Ensure etcd binaries are executable
+  ansible.builtin.file:
+    path: "/usr/local/bin/{{ item }}"
+    mode: "0755"
+  loop:
+    - etcd
+    - etcdctl
+    - etcdutl
+
+- name: Template etcd systemd service
+  ansible.builtin.template:
+    src: etcd.service.j2
+    dest: /etc/systemd/system/etcd.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload systemd
+
+- name: Enable and start etcd service
+  ansible.builtin.systemd:
+    name: etcd
+    enabled: true
+    state: started
+    daemon_reload: true
+
+- name: Open etcd client port (2379/tcp)
+  ansible.posix.firewalld:
+    port: 2379/tcp
+    permanent: true
+    immediate: true
+    state: enabled
+  when: ansible_os_family == "RedHat"
+  ignore_errors: true
+
+- name: Open etcd peer port (2380/tcp)
+  ansible.posix.firewalld:
+    port: 2380/tcp
+    permanent: true
+    immediate: true
+    state: enabled
+  when: ansible_os_family == "RedHat"
+  ignore_errors: true
+
+- name: Open etcd client port via ufw (Debian/Ubuntu)
+  ansible.builtin.ufw:
+    rule: allow
+    port: "2379"
+    proto: tcp
+  when: ansible_os_family == "Debian"
+  ignore_errors: true
+
+- name: Open etcd peer port via ufw (Debian/Ubuntu)
+  ansible.builtin.ufw:
+    rule: allow
+    port: "2380"
+    proto: tcp
+  when: ansible_os_family == "Debian"
+  ignore_errors: true
+
+- name: Wait for etcd to be healthy
+  ansible.builtin.command: >
+    /usr/local/bin/etcdctl endpoint health
+    --endpoints=http://{{ ansible_default_ipv4.address }}:2379
+  changed_when: false
+  retries: 10
+  delay: 3
+  until: etcd_health.rc == 0
+  register: etcd_health

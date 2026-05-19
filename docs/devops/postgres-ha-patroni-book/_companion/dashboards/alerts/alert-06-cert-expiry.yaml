@@ -1,0 +1,39 @@
+# ALERT-06-CERT-EXPIRY — TLS Certificates Approaching Expiration
+# Source: Chapter 06 (06-observability-monitoring.mdx)
+# Severity: Warning at <30 days; Critical at <7 days.
+# Trigger: SIG-13, SIG-14.
+# Runbook: Chapter 07 → "Certificate Expiry" decision tree (SIG-13, SIG-14).
+
+groups:
+  - name: patroni-cert-expiry
+    rules:
+      - alert: PatroniCertificateExpiryWarning
+        expr: >
+          (ssl_cert_not_after - time()) / 86400 < 30
+        for: 1h
+        labels:
+          severity: warning
+          signal: SIG-13
+        annotations:
+          summary: "TLS certificate for {{ $labels.instance }} expires in < 30 days"
+          description: >
+            TLS certificate on {{ $labels.instance }} (job: {{ $labels.job }})
+            expires in {{ $value | humanizeDuration }}.
+            Rotate or renew before the 7-day critical threshold.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#certificate-expiry"
+
+      - alert: PatroniCertificateExpiryCritical
+        expr: >
+          (ssl_cert_not_after - time()) / 86400 < 7
+        for: 0m
+        labels:
+          severity: critical
+          signal: SIG-13
+        annotations:
+          summary: "TLS certificate for {{ $labels.instance }} expires in < 7 days"
+          description: >
+            TLS certificate on {{ $labels.instance }} (job: {{ $labels.job }})
+            expires in {{ $value | humanizeDuration }}.
+            Immediate renewal required. An expired certificate will cause
+            immediate connectivity failure and cluster quorum loss.
+          runbook_url: "https://ivishalgandhi.github.io/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks#certificate-expiry"

@@ -1,0 +1,1 @@
+"""Patroni agent scaffolds package."""

@@ -1,0 +1,67 @@
+---
+# roles/watchdog/tasks/main.yml
+# Enable softdog kernel module and verify watchdog device.
+# Source of truth: Appendix B — Patroni Internals Deep-Dive
+
+- name: Load softdog kernel module
+  ansible.builtin.modprobe:
+    name: softdog
+    state: present
+  register: softdog_modprobe
+
+- name: Ensure softdog loads on boot
+  ansible.builtin.lineinfile:
+    path: /etc/modules-load.d/softdog.conf
+    line: softdog
+    create: true
+    mode: "0644"
+
+- name: Verify /dev/watchdog exists
+  ansible.builtin.stat:
+    path: /dev/watchdog
+  register: watchdog_dev
+
+- name: Fail if /dev/watchdog is missing
+  ansible.builtin.fail:
+    msg: "/dev/watchdog does not exist. softdog module may not be loaded or container lacks device access."
+  when: not watchdog_dev.stat.exists
+
+- name: Set /dev/watchdog permissions for postgres user
+  ansible.builtin.file:
+    path: /dev/watchdog
+    owner: root
+    group: postgres
+    mode: "0660"
+  ignore_errors: true
+
+- name: Add postgres to root group for watchdog access (fallback)
+  ansible.builtin.user:
+    name: postgres
+    groups: root
+    append: true
+  ignore_errors: true
+
+- name: Verify softdog timeout
+  ansible.builtin.command: cat /sys/class/watchdog/watchdog0/timeout
+  changed_when: false
+  register: softdog_timeout
+
+- name: Print softdog timeout
+  ansible.builtin.debug:
+    msg: "softdog timeout is {{ softdog_timeout.stdout }} seconds"
+
+- name: Warn if softdog timeout is shorter than Patroni safety_margin
+  ansible.builtin.debug:
+    msg: >
+      WARNING: softdog timeout ({{ softdog_timeout.stdout }}s) should be >= Patroni safety_margin.
+      If not, the watchdog may not fire in time. Adjust with:
+      echo 60 | sudo tee /sys/class/watchdog/watchdog0/timeout
+  when: softdog_timeout.stdout | int < 5
+
+- name: Ensure sysctl vm.overcommit_memory is set (PostgreSQL recommendation)
+  ansible.posix.sysctl:
+    name: vm.overcommit_memory
+    value: "1"
+    state: present
+    reload: true
+  ignore_errors: true
