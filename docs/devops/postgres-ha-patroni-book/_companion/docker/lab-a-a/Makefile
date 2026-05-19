@@ -20,7 +20,7 @@ upgrade-node-3:
 
 verify:
 	@echo "=== Cluster Status ==="
-	@docker-compose exec patroni1 /opt/patroni/venv/bin/patronictl list
+	@docker-compose exec patroni1 /opt/patroni/venv/bin/patronictl -c /etc/patroni/patroni.yml list
 	@echo ""
 	@echo "=== Python Versions ==="
 	@for node in patroni1 patroni2 patroni3; do \

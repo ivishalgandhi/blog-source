@@ -11,12 +11,14 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "lint:book": "node scripts/lint-chapter-frontmatter.mjs",
+    "build:book": "docusaurus build"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.9.2",
-    "@docusaurus/preset-classic": "^3.9.2",
-    "@docusaurus/theme-mermaid": "^3.9.2",
+    "@docusaurus/core": "^3.10.1",
+    "@docusaurus/preset-classic": "^3.10.1",
+    "@docusaurus/theme-mermaid": "^3.10.1",
     "@easyops-cn/docusaurus-search-local": "^0.47.0",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
@@ -26,8 +28,8 @@
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.9.2",
-    "@docusaurus/types": "^3.9.2"
+    "@docusaurus/module-type-aliases": "^3.10.1",
+    "@docusaurus/types": "^3.10.1"
   },
   "browserslist": {
     "production": [

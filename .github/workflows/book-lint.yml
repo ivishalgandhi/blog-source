@@ -1,0 +1,36 @@
+name: Book Lint & Build
+
+on:
+  pull_request:
+    paths:
+      - 'docs/devops/postgres-ha-patroni-book/**'
+      - 'src/components/ArtifactRef/**'
+      - 'scripts/lint-chapter-frontmatter.mjs'
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Lint chapter frontmatter
+        run: npm run lint:book
+
+      - name: Build site (broken links = error)
+        run: npm run build:book
+
+      - name: Credentials audit (Principle VII)
+        run: |
+          if grep -rEn '(AKIA[A-Z0-9]{16}|ghp_[A-Za-z0-9]{36}|BEGIN (RSA |EC )?PRIVATE KEY|password\s*=\s*[^<\s{])' \
+            docs/devops/postgres-ha-patroni-book/**/*.mdx 2>/dev/null; then
+            echo "::error::Found potential credentials in book content"
+            exit 1
+          fi
+          echo "No credentials found — clean"

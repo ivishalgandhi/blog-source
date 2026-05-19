@@ -12,7 +12,6 @@ const config = {
   url: 'https://ivishalgandhi.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   // favicon: 'img/vishal.png',
   organizationName: 'ivishalgandhi', // Usually your GitHub org/user name.
   projectName: 'ivishalgandhi.github.io', // Usually your repo name.
@@ -32,6 +31,9 @@ const config = {
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
   },
 
   themes: [
@@ -63,7 +65,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: 'docs',
-          exclude: ['**/presentations/**', '**/demos/**'],
+          exclude: ['**/presentations/**', '**/demos/**', '**/_companion/**'],
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:

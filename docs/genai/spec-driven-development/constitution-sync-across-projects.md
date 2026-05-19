@@ -30,15 +30,19 @@ Manually copying the file into every project is error-prone and quickly drifts. 
 
 ## Propagation Paths
 
-When `const-sync` runs, it copies `~/code/constitution/constitution.md` to:
+When `const-sync` runs, it propagates `~/code/constitution/constitution.md` to each agent via its preferred mechanism:
 
-| Agent | Target path | Target filename |
-|-------|------------|-----------------|
-| Pi / spec-kit | `$proj/.specify/memory/` | `constitution.md` |
-| Windsurf | `$proj/.windsurfrules` | (replaces `.windsurfrules` entirely) |
-| Devin | `$proj/.devin.md` | (replaces `.devin.md` entirely) |
+| Agent | Target path | Mechanism |
+|-------|------------|-----------|
+| Pi / spec-kit | `$proj/.specify/memory/constitution.md` | **`ln -sf`** — live symlink to central constitution |
+| Windsurf | `$proj/.windsurfrules` | **Redirect text** — tells Cascade to read `.specify/memory/constitution.md` |
+| Devin | `$proj/.devin.md` | **`cp`** — static copy of constitution content |
 
-The sync is **non-destructive for missing files** and **overwrites existing files** with the latest constitution. It searches all directories under `~/code` up to depth 2.
+- **Pi** symlinks mean the constitution is always current after a `const-pull`. No re-sync needed.
+- **Windsurf** receives a thin redirect file (not the constitution itself) so project-specific rules can still be layered in if you migrate to `.windsurf/rules/` later.
+- **Devin** gets a static copy because `.devin.md` is Devin's sole instruction channel and there is no multi-file rules format.
+
+The sync runs over all directories under `~/code` up to depth 2 by default.
 
 ## Shell Functions
 
@@ -63,16 +67,32 @@ export CONSTITUTION_FILE="$CONSTITUTION_HOME/constitution.md"
 
 | Function | Purpose |
 |----------|---------|
-| `const-bootstrap` | One-time setup: create missing `.specify/memory/`, `.windsurfrules`, and `.devin.md` across all projects |
-| `const-sync` | Copy `constitution.md` to **all** Pi, Windsurf, and Devin targets under `~/code` |
+| `const-bootstrap` | One-time setup: create missing `.specify/memory/`, `.windsurfrules` redirect, and `.devin.md` across all projects |
+| `const-sync [opts] [dir]` | Propagate constitution to agents; see flag table below |
 | `const-amend "message"` | One-shot workflow: `git add` → commit → push → `const-sync` |
+
+#### `const-sync` flags
+
+| Flag | Agent |
+|------|-------|
+| `-p` / `--pi` | Pi / spec-kit only |
+| `-w` / `--windsurf` | Windsurf redirect only |
+| `-d` / `--devin` | Devin copy only |
+| *(none)* | All agents |
+
+Add an optional project directory at the end to scope to a single repo.
 
 ### Example Usage
 
 ```bash
-# --- Daily pull and sync ---
-const-pull      # get latest from GitLab
-const-sync      # push to all projects
+# --- Daily pull (Pi symlinks update automatically; Devin needs const-sync) ---
+const-pull                    # get latest from GitLab
+const-sync                    # refresh all agents across all projects
+
+# --- Scoped sync ---
+const-sync -w ~/code/workops  # Windsurf redirect only, one project
+const-sync -p -d              # Pi + Devin, all projects
+const-sync ~/code/workops     # All agents, single project
 
 # --- After editing the constitution ---
 cd ~/code/constitution
@@ -98,7 +118,7 @@ Paste the constitution block into the chezmoi-managed source, save, and chezmoi 
 
 ## Bootstrap Output
 
-Running `const-sync` produces a report like:
+Running `const-sync` (or `const-sync -w ~/code/workops`) produces output like:
 
 ```
 Syncing from /Users/vishal/code/constitution/constitution.md ...
@@ -108,30 +128,37 @@ Syncing from /Users/vishal/code/constitution/constitution.md ...
   pi    → 3 project(s)
   wind  ✓ workops
   wind  → 1 project(s)
-  devin → 0 project(s)
+  devin ✓ workops
+  devin → 1 project(s)
 ```
 
-A count of `0` means no matching files were found. Run `const-bootstrap` first if a new agent type was added to a project.
+A count of `0` for an agent means no matching projects were found. Run `const-bootstrap` first if a new agent type was added to a project.
 
 ## Adding a New Project
 
 When you clone a new repo into `~/code/`:
 
 ```bash
-# 1. If using Pi / spec-kit
+# 1. If using Pi / spec-kit (or specify init)
 mkdir -p ~/code/newproject/.specify/memory
 
-# 2. If using Windsurf
-touch ~/code/newproject/.windsurfrules
+# 2. If using Windsurf, nothing needed — const-sync writes .windsurfrules
 
-# 3. If using Devin
-touch ~/code/newproject/.devin.md
+# 3. If using Devin, nothing needed — const-sync writes .devin.md
 
 # 4. Populate them
-const-sync
+const-sync ~/code/newproject
 ```
 
-Or simply run `const-bootstrap` after cloning — it discovers git repos and creates any missing agent files.
+Or simply run `const-bootstrap` after cloning — it discovers git repos and creates any missing agent files, then you can scoped-sync.
+
+:::tip specify init
+Running `specify init . --here` will overwrite `.specify/memory/constitution.md` with spec-kit's template. Repair it with:
+
+```bash
+const-sync -p ~/code/newproject
+```
+:::
 
 ## Amendment Workflow
 
@@ -151,11 +178,14 @@ This commits and pushes the new version to GitLab, then immediately runs `const-
 | Task | Command |
 |------|---------|
 | Pull latest from GitLab | `const-pull` |
-| Copy to all projects/agents | `const-sync` |
+| Sync all agents everywhere | `const-sync` |
+| Sync Windsurf only, one project | `const-sync -w ~/code/workops` |
+| Sync Pi + Devin everywhere | `const-sync -p -d` |
 | Amend + commit + push + sync | `const-amend "commit message"` |
 | Check GitLab status | `const-status` |
 | Open in browser | `const-web` |
 | Re-create missing agent files | `const-bootstrap` |
+| Repair after `specify init` | `const-sync -p <dir>` |
 | Edit zshrc via chezmoi | `chezmoi edit --apply ~/.zshrc` |
 
 ## Dependencies
