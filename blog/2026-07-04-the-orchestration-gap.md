@@ -92,7 +92,7 @@ After spending time with all three approaches, I believe the orchestration layer
 
 ### 1. The C10K Problem
 
-Handling 10,000 concurrent agent thought-loops is trivial with goroutines (Keen Code) or Rust's async tasks, but it is a nightmare with `asyncio` (OpenHands) or child-process pools (Pi) under heavy load. Lightweight, language-level concurrency lets you model *each* sub-agent, *each* tool call, or *each* wait-state as a separate unit. That granularity changes how you design the agent.
+Goroutines make 10,000 concurrent thought-loops cheap to schedule (Keen Code), and Rust's async tasks do the same. That scale is harder to reach with Python's `asyncio` or process pools (Pi) once memory, I/O, and serialization overhead become the bottleneck. Lightweight, language-level concurrency lets you model *each* sub-agent, *each* tool call, or *each* wait-state as a separate unit. That granularity changes how you design the agent.
 
 C++ could also handle this load, but its concurrency model is too error-prone for a domain where safety and iteration speed matter. C is even further from the right level of abstraction. Go and Rust give you the concurrency without the footguns.
 
@@ -108,7 +108,7 @@ For a runtime where manager agents dispatch work to worker agents, those boundar
 
 A coding agent must live close to the code it is editing. A single Go or Rust binary is vastly easier to sandbox, deploy, and replicate across a fleet of machines than a Node.js or Python environment. Dependencies are compiled in, startup time is predictable, and the operational surface is small.
 
-That does not mean Go or Rust replaces Python for every agent. The ML ecosystem is still Python-first. But the *runtime* layer—the orchestration, the IPC, the lifecycle management—belongs in a language built for concurrency and distribution. Go is the fastest path there; Rust is the most rigorous.
+That does not mean Go or Rust replaces Python for every agent. The ML ecosystem is still Python-first. But the *runtime* layer—the orchestration, the IPC, the lifecycle management—is usually a better fit for a language built for concurrency and distribution. Go is the fastest path there; Rust is the most rigorous.
 
 ## 4. The Missing Layer: Webhooks and Events
 
