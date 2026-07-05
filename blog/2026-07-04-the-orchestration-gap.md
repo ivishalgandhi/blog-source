@@ -8,9 +8,9 @@ authors:
 tags: [ai-agents, concurrency, webhooks, events, golang, rust, systems-programming, agent-architecture, distributed-systems]
 ---
 
-When we talk about AI agents, the conversation usually centers on the LLM's reasoning capabilities—the brain. But as an architect, when I look at agents like [Pi](https://github.com/earendil-works/pi), [Keen Code](https://github.com/mochow13/keen-code), and [OpenHands](https://github.com/OpenHands/OpenHands), the most interesting part is not the brain; it is the nervous system.
+I have spent the last few months reading source code of real coding agents — not the model, the scaffolding around it. What I found surprised me: the most interesting engineering is not the brain; it is the nervous system.
 
-This post is a scaffold-level analysis: we look at the code that wraps the model—the control loops, concurrency primitives, state management, and event plumbing—to understand what makes a coding agent usable in production. Building a coding agent is not just about calling an API; it is a distributed systems problem. You have to manage long-running state, coordinate multiple sub-agents, and ensure that a thought process that takes 30 seconds does not freeze your entire environment. The runtime that wires these pieces together is what separates a demo from a production-grade agent.
+This post is what I learned from that source-code dive. We look at the code that wraps the model—the control loops, concurrency primitives, state management, and event plumbing—to understand what makes a coding agent usable in production. Building a coding agent is not just about calling an API; it is a distributed systems problem. You have to manage long-running state, coordinate multiple sub-agents, and ensure that a thought process that takes 30 seconds does not freeze your entire environment. The runtime that wires these pieces together is what separates a demo from a production-grade agent.
 
 <!--truncate-->
 
@@ -88,7 +88,7 @@ The right choice depends on what you are optimizing for. If you want to run a th
 
 ## 3. Why Systems Languages Are Taking Over Agent Runtimes
 
-After spending time with all three approaches, I believe the orchestration layer of a production agent belongs in a systems language, not in a dynamic runtime. Go and Rust are the two strongest candidates today. Go is the pragmatic default; Rust is the correctness-first choice.
+After spending time with all three approaches, the orchestration layer of a production agent is a better fit for a systems language than a dynamic runtime. Go and Rust are the two strongest candidates today. Go is the pragmatic default; Rust is the correctness-first choice.
 
 ### 1. The C10K Problem
 
@@ -200,6 +200,8 @@ If you are building or evaluating an agent runtime, here are the questions I wou
 The brain of an AI agent gets the attention, but the runtime is what makes it usable. Pi, Keen Code, and OpenHands represent three different philosophies: process isolation, lightweight concurrency, and durable event-driven workflows. Each is valid; each has a place.
 
 What makes a production agent reliable is not choosing one of these models in isolation. It is combining them: a systems-language runtime for orchestration, durable event logs for state, and webhooks for real-world integration. Whether that runtime is Go or Rust depends on whether you prioritize shipping speed or correctness guarantees. Either way, the agents that win will not be the ones with the smartest LLM prompts; they will be the ones with the most reliable nervous systems—observable, recoverable, and safe to plug into the rest of your toolchain.
+
+If you are building an agent today, that is where I would focus first: get the runtime right before you chase the model.
 
 ## References
 
