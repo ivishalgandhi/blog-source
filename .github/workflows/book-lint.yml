@@ -16,15 +16,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'yarn'
 
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
 
       - name: Lint chapter frontmatter
-        run: npm run lint:book
+        run: yarn lint:book
 
       - name: Build site (broken links = error)
-        run: npm run build:book
+        run: yarn build:book
 
       - name: Credentials audit (Principle VII)
         run: |
