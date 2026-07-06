@@ -1,5 +1,5 @@
 # LAB-08-B — Cross-Region Disaster Recovery
-# Top-level Terraform entry point. Delegates to AWS or GCP module based on var.provider.
+# Top-level Terraform entry point. Delegates to AWS or GCP module based on var.cloud_provider.
 
 terraform {
   required_version = ">= 1.7"
@@ -20,13 +20,22 @@ terraform {
   }
 }
 
+provider "aws" {
+  region = var.region
+}
+
+provider "google" {
+  region = var.region
+}
+
 # ---------------------------------------------------------------------------
 # AWS
 # ---------------------------------------------------------------------------
 module "aws" {
-  count = var.provider == "aws" ? 1 : 0
+  count = var.cloud_provider == "aws" ? 1 : 0
 
   source        = "./modules/aws"
+  providers     = { aws = aws }
   region        = var.region
   instance_type = var.instance_type
   key_name      = var.key_name
@@ -38,9 +47,10 @@ module "aws" {
 # GCP
 # ---------------------------------------------------------------------------
 module "gcp" {
-  count = var.provider == "gcp" ? 1 : 0
+  count = var.cloud_provider == "gcp" ? 1 : 0
 
   source        = "./modules/gcp"
+  providers     = { google = google }
   region        = var.region
   zone          = var.zone
   instance_type = var.instance_type

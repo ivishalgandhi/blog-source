@@ -47,10 +47,6 @@ variable "node_count" {
   default     = 3
 }
 
-provider "google" {
-  region = var.region
-}
-
 # VPC
 resource "google_compute_network" "main" {
   name                    = "${var.cluster_name}-vpc"

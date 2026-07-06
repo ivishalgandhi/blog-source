@@ -1,12 +1,12 @@
 # LAB-08-B — Variables
 
-variable "provider" {
+variable "cloud_provider" {
   description = "Cloud provider to deploy into: aws or gcp"
   type        = string
   default     = "aws"
 
   validation {
-    condition     = contains(["aws", "gcp"], var.provider)
+    condition     = contains(["aws", "gcp"], var.cloud_provider)
     error_message = "Provider must be 'aws' or 'gcp'."
   }
 }

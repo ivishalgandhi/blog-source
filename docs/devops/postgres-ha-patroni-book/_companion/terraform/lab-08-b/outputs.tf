@@ -10,7 +10,7 @@ output "backup_bucket_name" {
   value       = try(module.aws[0].backup_bucket, module.gcp[0].backup_bucket, null)
 }
 
-output "provider_used" {
+output "cloud_provider_used" {
   description = "The cloud provider that was selected"
-  value       = var.provider
+  value       = var.cloud_provider
 }

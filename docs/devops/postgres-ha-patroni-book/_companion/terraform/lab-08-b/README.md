@@ -78,22 +78,22 @@ Create `terraform.tfvars` in this directory:
 **AWS example** (`terraform.tfvars`):
 
 ```hcl
-provider      = "aws"
-region        = "us-east-1"
-instance_type = "t3.medium"
-key_name      = "my-ec2-keypair"
-cluster_name  = "lab-08-b-primary"
+cloud_provider = "aws"
+region         = "us-east-1"
+instance_type  = "t3.medium"
+key_name       = "my-ec2-keypair"
+cluster_name   = "lab-08-b-primary"
 ```
 
 **GCP example** (`terraform.tfvars`):
 
 ```hcl
-provider      = "gcp"
-region        = "us-central1"
-zone          = "us-central1-a"
-instance_type = "e2-medium"
-ssh_key       = "ssh-rsa AAAAB3... ubuntu"
-cluster_name  = "lab-08-b-primary"
+cloud_provider = "gcp"
+region         = "us-central1"
+zone           = "us-central1-a"
+instance_type  = "e2-medium"
+ssh_key        = "ssh-rsa AAAAB3... ubuntu"
+cluster_name   = "lab-08-b-primary"
 ```
 
 > **Security**: Never commit `terraform.tfvars` to git. It is listed in `.gitignore` by convention.

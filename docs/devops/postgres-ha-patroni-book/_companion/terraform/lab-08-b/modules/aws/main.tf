@@ -37,10 +37,6 @@ variable "node_count" {
   default     = 3
 }
 
-provider "aws" {
-  region = var.region
-}
-
 data "aws_availability_zones" "available" {
   state = "available"
 }
