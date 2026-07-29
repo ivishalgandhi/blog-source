@@ -1,0 +1,1802 @@
+{
+  "/Users/vishal/code/blog-source/cspell.json": {
+    "mtime": 1779192639.9118927,
+    "ast_hash": "cdd543750ea14ae187f31f978c013953",
+    "semantic_hash": "cdd543750ea14ae187f31f978c013953"
+  },
+  "/Users/vishal/code/blog-source/.markdown-link-check.json": {
+    "mtime": 1779192639.8870354,
+    "ast_hash": "84d425f744cb1b744815bc2995a176cd",
+    "semantic_hash": "84d425f744cb1b744815bc2995a176cd"
+  },
+  "/Users/vishal/code/blog-source/babel.config.js": {
+    "mtime": 1773015502.3253033,
+    "ast_hash": "d0e7a9fdd8a6b7b92cd5acfa95e4d0ff",
+    "semantic_hash": "d0e7a9fdd8a6b7b92cd5acfa95e4d0ff"
+  },
+  "/Users/vishal/code/blog-source/package.json": {
+    "mtime": 1779192639.9582434,
+    "ast_hash": "c9badc842bf910e2783ea2abfab8f8a1",
+    "semantic_hash": "c9badc842bf910e2783ea2abfab8f8a1"
+  },
+  "/Users/vishal/code/blog-source/docusaurus.config.js": {
+    "mtime": 1779192639.9576905,
+    "ast_hash": "9a34675634cec1ec56d4a98f2fb979bf",
+    "semantic_hash": "9a34675634cec1ec56d4a98f2fb979bf"
+  },
+  "/Users/vishal/code/blog-source/sidebars.js": {
+    "mtime": 1773015502.3353622,
+    "ast_hash": "9e473f298baa1fe31110340ea1ba9b10",
+    "semantic_hash": "9e473f298baa1fe31110340ea1ba9b10"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/contracts/chapter-frontmatter.schema.json": {
+    "mtime": 1779192639.9591522,
+    "ast_hash": "70e263504d485e81efe8fb9dd199bdc0",
+    "semantic_hash": "70e263504d485e81efe8fb9dd199bdc0"
+  },
+  "/Users/vishal/code/blog-source/.claude/settings.local.json": {
+    "mtime": 1777508530.139195,
+    "ast_hash": "81dfce94ff8ed8413c134f12eb6da798",
+    "semantic_hash": "81dfce94ff8ed8413c134f12eb6da798"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/_category_.json": {
+    "mtime": 1774921590.185942,
+    "ast_hash": "d67c307200a360f50912dcff8f563842",
+    "semantic_hash": "d67c307200a360f50912dcff8f563842"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion-links.json": {
+    "mtime": 1779215365.3635998,
+    "ast_hash": "1ca15a49a5ebd417e646e4c24983f766",
+    "semantic_hash": "1ca15a49a5ebd417e646e4c24983f766"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_category_.json": {
+    "mtime": 1779192639.9191859,
+    "ast_hash": "3f241bf47643aaf813f32faece307975",
+    "semantic_hash": "3f241bf47643aaf813f32faece307975"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b/break-clean-stop.sh": {
+    "mtime": 1779215365.3700547,
+    "ast_hash": "6241370f4d8a38c5f54a7df2fb4cab79",
+    "semantic_hash": "6241370f4d8a38c5f54a7df2fb4cab79"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b/verify.sh": {
+    "mtime": 1779215365.3728466,
+    "ast_hash": "014a7b1acc7ba6086797c217b1c064be",
+    "semantic_hash": "014a7b1acc7ba6086797c217b1c064be"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b/break-asymmetric-partition.sh": {
+    "mtime": 1779215365.3697932,
+    "ast_hash": "9a470c3f93aa9105ee1c00c96ffdbbf2",
+    "semantic_hash": "9a470c3f93aa9105ee1c00c96ffdbbf2"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b/break-full-partition.sh": {
+    "mtime": 1779215365.370358,
+    "ast_hash": "d1b902842763e816b171fc1ddcbfb434",
+    "semantic_hash": "d1b902842763e816b171fc1ddcbfb434"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/common/init-partition-test-data.sql": {
+    "mtime": 1779215365.3645923,
+    "ast_hash": "3569372ca1b7cf1f021ac0bfaf24d425",
+    "semantic_hash": "3569372ca1b7cf1f021ac0bfaf24d425"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/common/recover-partition.sh": {
+    "mtime": 1779215365.3648794,
+    "ast_hash": "ed6a36ae48aeb0d88bf25822db003f70",
+    "semantic_hash": "ed6a36ae48aeb0d88bf25822db003f70"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-a-a/entrypoint.sh": {
+    "mtime": 1779192639.9477232,
+    "ast_hash": "309401cde22f545410e1375e21cc9d04",
+    "semantic_hash": "309401cde22f545410e1375e21cc9d04"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-a-a/upgrade.sh": {
+    "mtime": 1779192639.9479666,
+    "ast_hash": "5e9cc0634502fe4154bde311e209bdd5",
+    "semantic_hash": "5e9cc0634502fe4154bde311e209bdd5"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a/break-clean-stop.sh": {
+    "mtime": 1779215365.3672097,
+    "ast_hash": "15787ca2f6ee2ab79333abecbb4a2d5c",
+    "semantic_hash": "15787ca2f6ee2ab79333abecbb4a2d5c"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a/verify.sh": {
+    "mtime": 1779215365.3685768,
+    "ast_hash": "53b85890a689fcb19a6fc077b8aad0f3",
+    "semantic_hash": "53b85890a689fcb19a6fc077b8aad0f3"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a/break-asymmetric-partition.sh": {
+    "mtime": 1779215365.366965,
+    "ast_hash": "219d16851e039e3c1a8886f58d228229",
+    "semantic_hash": "219d16851e039e3c1a8886f58d228229"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a/break-full-partition.sh": {
+    "mtime": 1779215365.367375,
+    "ast_hash": "97296ce38f7b89fceb4f6748e3c3ac0a",
+    "semantic_hash": "97296ce38f7b89fceb4f6748e3c3ac0a"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/__init__.py": {
+    "mtime": 1779192639.921684,
+    "ast_hash": "de650349043a295dec61794183f91721",
+    "semantic_hash": "de650349043a295dec61794183f91721"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/predictive-failover/src/agent_pf/__init__.py": {
+    "mtime": 1779192639.9279246,
+    "ast_hash": "936448fd672af2842249664e3b98f50a",
+    "semantic_hash": "936448fd672af2842249664e3b98f50a"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/predictive-failover/src/agent_pf/main.py": {
+    "mtime": 1779192639.9281187,
+    "ast_hash": "36fb27b883e171feea85afcbc3bb06f0",
+    "semantic_hash": "36fb27b883e171feea85afcbc3bb06f0"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/nl-ops/src/agent_nl/__init__.py": {
+    "mtime": 1779192639.9262662,
+    "ast_hash": "67a09e61c0ef9b841d4872eef3a0b2e1",
+    "semantic_hash": "67a09e61c0ef9b841d4872eef3a0b2e1"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/nl-ops/src/agent_nl/main.py": {
+    "mtime": 1779192639.9266138,
+    "ast_hash": "8ddda11e2221339bcf733207a41a0b69",
+    "semantic_hash": "8ddda11e2221339bcf733207a41a0b69"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/self-tuning/src/agent_st/__init__.py": {
+    "mtime": 1779192639.9287007,
+    "ast_hash": "88048347cc6a9ed2e22d8a2b83451f81",
+    "semantic_hash": "88048347cc6a9ed2e22d8a2b83451f81"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/self-tuning/src/agent_st/main.py": {
+    "mtime": 1779192639.928901,
+    "ast_hash": "a3d7f99a64b42354724ec10a0f2e61fa",
+    "semantic_hash": "a3d7f99a64b42354724ec10a0f2e61fa"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/shared/__init__.py": {
+    "mtime": 1779192639.9290912,
+    "ast_hash": "2f59ba94077058992514850b2327a3a1",
+    "semantic_hash": "2f59ba94077058992514850b2327a3a1"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/shared/lifecycle.py": {
+    "mtime": 1779192639.9296753,
+    "ast_hash": "0690798d2ae029c07d8ae08635cac385",
+    "semantic_hash": "0690798d2ae029c07d8ae08635cac385"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/monitoring/src/agent_mon/__init__.py": {
+    "mtime": 1779192639.9248981,
+    "ast_hash": "0c7920e7f6b72192dc4f542acbd6923c",
+    "semantic_hash": "0c7920e7f6b72192dc4f542acbd6923c"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/monitoring/src/agent_mon/main.py": {
+    "mtime": 1779192639.9252985,
+    "ast_hash": "f28cb3b1513790ba91bceea79ae2c85a",
+    "semantic_hash": "f28cb3b1513790ba91bceea79ae2c85a"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/auto-remediation/src/agent_ar/__init__.py": {
+    "mtime": 1779192639.9231222,
+    "ast_hash": "9d324518fea7be12ff1019eb1ccf680a",
+    "semantic_hash": "9d324518fea7be12ff1019eb1ccf680a"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/auto-remediation/src/agent_ar/main.py": {
+    "mtime": 1779192639.9233832,
+    "ast_hash": "c86fb03c9b16efd852afed1b0dc5c44b",
+    "semantic_hash": "c86fb03c9b16efd852afed1b0dc5c44b"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/ansible/lab-b-a/break.sh": {
+    "mtime": 1779192639.9323905,
+    "ast_hash": "a18c9d655a31b324cfc24ebafac621f9",
+    "semantic_hash": "a18c9d655a31b324cfc24ebafac621f9"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/dashboards/dash-06-core.json": {
+    "mtime": 1779192639.9407203,
+    "ast_hash": "25365965b85537334da33e5bc23e71e2",
+    "semantic_hash": "25365965b85537334da33e5bc23e71e2"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/dashboards/dash-06-lag.json": {
+    "mtime": 1779192639.9413624,
+    "ast_hash": "f746c4a15ecbe935b9ab4048154d21ce",
+    "semantic_hash": "f746c4a15ecbe935b9ab4048154d21ce"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/chaos/chaos-03-a.sh": {
+    "mtime": 1779192639.9382975,
+    "ast_hash": "bccc8e6716ba8fafa1d754e6a1f9515a",
+    "semantic_hash": "bccc8e6716ba8fafa1d754e6a1f9515a"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/_category_.json": {
+    "mtime": 1774921589.4113007,
+    "ast_hash": "0c8292f5792597811b16d28916a8f3cb",
+    "semantic_hash": "0c8292f5792597811b16d28916a8f3cb"
+  },
+  "/Users/vishal/code/blog-source/docs/presentations/_category_.json": {
+    "mtime": 1777507845.1842134,
+    "ast_hash": "4ce8d227c821fafeed1d24b99e199e4a",
+    "semantic_hash": "4ce8d227c821fafeed1d24b99e199e4a"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/_category_.json": {
+    "mtime": 1774921591.2515638,
+    "ast_hash": "a6fdb1c60db71fbe5b04a494e302e5bc",
+    "semantic_hash": "a6fdb1c60db71fbe5b04a494e302e5bc"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/go/_category_.json": {
+    "mtime": 1775877768.777859,
+    "ast_hash": "8236699b9b5379e2f906391639de19bc",
+    "semantic_hash": "8236699b9b5379e2f906391639de19bc"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/python/_category_.json": {
+    "mtime": 1774921681.4925904,
+    "ast_hash": "e21afefc918528e59fe0a0156ead2c36",
+    "semantic_hash": "e21afefc918528e59fe0a0156ead2c36"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/javascript/_category_.json": {
+    "mtime": 1774921684.4688783,
+    "ast_hash": "69f57a7480d192a8f6f3a34bf760cd4b",
+    "semantic_hash": "69f57a7480d192a8f6f3a34bf760cd4b"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/git/_category_.json": {
+    "mtime": 1774921573.6561725,
+    "ast_hash": "29216b16a9d05110401865533fd28920",
+    "semantic_hash": "29216b16a9d05110401865533fd28920"
+  },
+  "/Users/vishal/code/blog-source/docs/linux/_category_.json": {
+    "mtime": 1774921590.573537,
+    "ast_hash": "a2288df009339d87a94a3f0722833a1a",
+    "semantic_hash": "a2288df009339d87a94a3f0722833a1a"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/_category_.json": {
+    "mtime": 1774921591.8727446,
+    "ast_hash": "801c2e7ff2ec9e255edbdc3d41823f4b",
+    "semantic_hash": "801c2e7ff2ec9e255edbdc3d41823f4b"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/_category_.json": {
+    "mtime": 1774921573.6377246,
+    "ast_hash": "875287577601d2543f8ada9ef6837cf9",
+    "semantic_hash": "875287577601d2543f8ada9ef6837cf9"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/genai-tools/_category_.json": {
+    "mtime": 1774921573.636723,
+    "ast_hash": "9a6c0911aa70e37941d6555b6dbed3d5",
+    "semantic_hash": "9a6c0911aa70e37941d6555b6dbed3d5"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/spec-driven-development/_category_.json": {
+    "mtime": 1777507845.1820924,
+    "ast_hash": "8582f7e3ecd7718777910e6f79b755ff",
+    "semantic_hash": "8582f7e3ecd7718777910e6f79b755ff"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/_category_.json": {
+    "mtime": 1777507845.1762524,
+    "ast_hash": "c980813f7c17bd11bd8c0d7c8a8ef86d",
+    "semantic_hash": "c980813f7c17bd11bd8c0d7c8a8ef86d"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/_category_.json": {
+    "mtime": 1774921573.6476417,
+    "ast_hash": "0d263162d0374a8632ba460e366c414c",
+    "semantic_hash": "0d263162d0374a8632ba460e366c414c"
+  },
+  "/Users/vishal/code/blog-source/scripts/lint-chapter-frontmatter.mjs": {
+    "mtime": 1779192639.9584663,
+    "ast_hash": "8776aff03e152d6497201cab9fb1655d",
+    "semantic_hash": "8776aff03e152d6497201cab9fb1655d"
+  },
+  "/Users/vishal/code/blog-source/.specify/feature.json": {
+    "mtime": 1779215365.3620803,
+    "ast_hash": "6cfc555c0c46617a44c1709e26262a25",
+    "semantic_hash": "6cfc555c0c46617a44c1709e26262a25"
+  },
+  "/Users/vishal/code/blog-source/.specify/init-options.json": {
+    "mtime": 1779192639.8938076,
+    "ast_hash": "42cf47c163c6ccc2ea8885c67a6bbb2f",
+    "semantic_hash": "42cf47c163c6ccc2ea8885c67a6bbb2f"
+  },
+  "/Users/vishal/code/blog-source/.specify/integration.json": {
+    "mtime": 1779192639.8940072,
+    "ast_hash": "8663269fb740e4f78592ae87d23498d5",
+    "semantic_hash": "8663269fb740e4f78592ae87d23498d5"
+  },
+  "/Users/vishal/code/blog-source/.specify/workflows/workflow-registry.json": {
+    "mtime": 1779192639.9014099,
+    "ast_hash": "cda2249208b99223461e638c7cefbd79",
+    "semantic_hash": "cda2249208b99223461e638c7cefbd79"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/scripts/bash/git-common.sh": {
+    "mtime": 1779192639.8911767,
+    "ast_hash": "ccbcc8f94d52d18a50f892b96fd2d9f0",
+    "semantic_hash": "ccbcc8f94d52d18a50f892b96fd2d9f0"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/scripts/bash/auto-commit.sh": {
+    "mtime": 1779192639.890592,
+    "ast_hash": "d2eff3439669e2f21825e2727eab3e6e",
+    "semantic_hash": "d2eff3439669e2f21825e2727eab3e6e"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/scripts/bash/initialize-repo.sh": {
+    "mtime": 1779192639.891388,
+    "ast_hash": "74e6c1d493a031b83243ce71777f27ae",
+    "semantic_hash": "74e6c1d493a031b83243ce71777f27ae"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/scripts/bash/create-new-feature.sh": {
+    "mtime": 1779192639.8908904,
+    "ast_hash": "5236f607b9bcc2346e99714c06592817",
+    "semantic_hash": "5236f607b9bcc2346e99714c06592817"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/scripts/powershell/initialize-repo.ps1": {
+    "mtime": 1779192639.8928375,
+    "ast_hash": "6668e63007465e34f6d684dd2ef45718",
+    "semantic_hash": "6668e63007465e34f6d684dd2ef45718"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/scripts/powershell/auto-commit.ps1": {
+    "mtime": 1779192639.8919227,
+    "ast_hash": "31455f1c85510ff2f9904b5da9a5fbc2",
+    "semantic_hash": "31455f1c85510ff2f9904b5da9a5fbc2"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/scripts/powershell/create-new-feature.ps1": {
+    "mtime": 1779192639.8920963,
+    "ast_hash": "126d44abaf3f455c3a46287150ffcec7",
+    "semantic_hash": "126d44abaf3f455c3a46287150ffcec7"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/scripts/powershell/git-common.ps1": {
+    "mtime": 1779192639.8926365,
+    "ast_hash": "6850abf378460b0b31ad2b9e7ca60266",
+    "semantic_hash": "6850abf378460b0b31ad2b9e7ca60266"
+  },
+  "/Users/vishal/code/blog-source/.specify/integrations/devin.manifest.json": {
+    "mtime": 1779192639.8942075,
+    "ast_hash": "f227db99fb0fa2f2a42829acd162c971",
+    "semantic_hash": "f227db99fb0fa2f2a42829acd162c971"
+  },
+  "/Users/vishal/code/blog-source/.specify/integrations/speckit.manifest.json": {
+    "mtime": 1779192639.8943665,
+    "ast_hash": "a5707e41ea81bd497eaff99a2c305f33",
+    "semantic_hash": "a5707e41ea81bd497eaff99a2c305f33"
+  },
+  "/Users/vishal/code/blog-source/.specify/scripts/bash/common.sh": {
+    "mtime": 1779192639.8950696,
+    "ast_hash": "7de472f3938465821db6aaf26a24c0c4",
+    "semantic_hash": "7de472f3938465821db6aaf26a24c0c4"
+  },
+  "/Users/vishal/code/blog-source/.specify/scripts/bash/setup-plan.sh": {
+    "mtime": 1779192639.896058,
+    "ast_hash": "521df3d78e0f9179fa0db9bf4e765816",
+    "semantic_hash": "521df3d78e0f9179fa0db9bf4e765816"
+  },
+  "/Users/vishal/code/blog-source/.specify/scripts/bash/setup-tasks.sh": {
+    "mtime": 1779192639.8963847,
+    "ast_hash": "4469f7e61a36ffc2580318f7628e6ad7",
+    "semantic_hash": "4469f7e61a36ffc2580318f7628e6ad7"
+  },
+  "/Users/vishal/code/blog-source/.specify/scripts/bash/check-prerequisites.sh": {
+    "mtime": 1779192639.8947542,
+    "ast_hash": "c721663f05a10bf0c1dacf674d7349db",
+    "semantic_hash": "c721663f05a10bf0c1dacf674d7349db"
+  },
+  "/Users/vishal/code/blog-source/.specify/scripts/bash/create-new-feature.sh": {
+    "mtime": 1779192639.8958826,
+    "ast_hash": "08f248f9dfe66f8f1f9a519b61568d10",
+    "semantic_hash": "08f248f9dfe66f8f1f9a519b61568d10"
+  },
+  "/Users/vishal/code/blog-source/.devin/config.local.json": {
+    "mtime": 1780053923.7037647,
+    "ast_hash": "1b2c9b9d8cea019ac209c01396899f5f",
+    "semantic_hash": "1b2c9b9d8cea019ac209c01396899f5f"
+  },
+  "/Users/vishal/code/blog-source/.vscode/settings.json": {
+    "mtime": 1779192639.9025695,
+    "ast_hash": "393cde630e786b2a2c81f8df9c19e830",
+    "semantic_hash": "393cde630e786b2a2c81f8df9c19e830"
+  },
+  "/Users/vishal/code/blog-source/.vscode/extensions.json": {
+    "mtime": 1777507845.1745577,
+    "ast_hash": "e1d4ad70ce2dd3e15f9e43b36f649938",
+    "semantic_hash": "e1d4ad70ce2dd3e15f9e43b36f649938"
+  },
+  "/Users/vishal/code/blog-source/src/components/LoginPage/index.js": {
+    "mtime": 1774919975.75611,
+    "ast_hash": "f334934e54233ba3c1f5d82dbf6dba3c",
+    "semantic_hash": "f334934e54233ba3c1f5d82dbf6dba3c"
+  },
+  "/Users/vishal/code/blog-source/src/components/ArtifactRef/index.js": {
+    "mtime": 1779192639.966954,
+    "ast_hash": "590f94f7a618fd91c0c13d3fb21cadd3",
+    "semantic_hash": "590f94f7a618fd91c0c13d3fb21cadd3"
+  },
+  "/Users/vishal/code/blog-source/src/components/HomepageFeatures/index.js": {
+    "mtime": 1773015502.335599,
+    "ast_hash": "d68fd78d17520583ca55a517f59359cd",
+    "semantic_hash": "d68fd78d17520583ca55a517f59359cd"
+  },
+  "/Users/vishal/code/blog-source/src/components/ToolsNavbarItem/index.js": {
+    "mtime": 1775099606.2306838,
+    "ast_hash": "5e6eb83fa67cdc5843d3a927d37aa2d3",
+    "semantic_hash": "5e6eb83fa67cdc5843d3a927d37aa2d3"
+  },
+  "/Users/vishal/code/blog-source/src/components/LogoutButton/index.js": {
+    "mtime": 1774918147.5538304,
+    "ast_hash": "d35d3b5730b88984bb1cc6de24497e89",
+    "semantic_hash": "d35d3b5730b88984bb1cc6de24497e89"
+  },
+  "/Users/vishal/code/blog-source/src/theme/Root.js": {
+    "mtime": 1774918055.1279225,
+    "ast_hash": "3fc6e792c00c305ce0fd1caf9625a752",
+    "semantic_hash": "3fc6e792c00c305ce0fd1caf9625a752"
+  },
+  "/Users/vishal/code/blog-source/src/theme/DocSidebar/index.js": {
+    "mtime": 1774919017.2977269,
+    "ast_hash": "3fe12940eb05340bc5808bfe35f93844",
+    "semantic_hash": "3fe12940eb05340bc5808bfe35f93844"
+  },
+  "/Users/vishal/code/blog-source/src/theme/DocRoot/index.js": {
+    "mtime": 1774919639.8590589,
+    "ast_hash": "a7009e8b3141049bf7546f063aa20c67",
+    "semantic_hash": "a7009e8b3141049bf7546f063aa20c67"
+  },
+  "/Users/vishal/code/blog-source/src/theme/NavbarItem/ComponentTypes.js": {
+    "mtime": 1775088727.5936747,
+    "ast_hash": "fcf2b1cbc76aa93468c70cbf9a70adfc",
+    "semantic_hash": "fcf2b1cbc76aa93468c70cbf9a70adfc"
+  },
+  "/Users/vishal/code/blog-source/src/pages/about.js": {
+    "mtime": 1773015502.3360329,
+    "ast_hash": "8a1ad8f293fe6a386c2bf77adaa1cc52",
+    "semantic_hash": "8a1ad8f293fe6a386c2bf77adaa1cc52"
+  },
+  "/Users/vishal/code/blog-source/README.md": {
+    "mtime": 1773015502.3252132,
+    "ast_hash": "4d688c1e958eaeffb286f34afe368f2b",
+    "semantic_hash": "4d688c1e958eaeffb286f34afe368f2b"
+  },
+  "/Users/vishal/code/blog-source/AGENTS.md": {
+    "mtime": 1779215365.3625476,
+    "ast_hash": "620cc07da4e2c9ff6dd57afdcb2674de",
+    "semantic_hash": "620cc07da4e2c9ff6dd57afdcb2674de"
+  },
+  "/Users/vishal/code/blog-source/.devin.md": {
+    "mtime": 1779075846.8061914,
+    "ast_hash": "0c1b63201d41c0ec74c7ee32e7751548",
+    "semantic_hash": "0c1b63201d41c0ec74c7ee32e7751548"
+  },
+  "/Users/vishal/code/blog-source/CLAUDE.md": {
+    "mtime": 1777508244.271416,
+    "ast_hash": "e2bc4aa3d584ea3c6121404607b2fac1",
+    "semantic_hash": "e2bc4aa3d584ea3c6121404607b2fac1"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/quickstart.md": {
+    "mtime": 1779192639.960514,
+    "ast_hash": "5b7b82e2c43e9eaf886839e1ba5458c4",
+    "semantic_hash": "5b7b82e2c43e9eaf886839e1ba5458c4"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/tasks.md": {
+    "mtime": 1779192639.961815,
+    "ast_hash": "68e4f2486ed1725875c2521bf55e5697",
+    "semantic_hash": "68e4f2486ed1725875c2521bf55e5697"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/research.md": {
+    "mtime": 1779192639.960742,
+    "ast_hash": "f09f4b0f9ef1578ffae58bd59f7fa297",
+    "semantic_hash": "f09f4b0f9ef1578ffae58bd59f7fa297"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/data-model.md": {
+    "mtime": 1779192639.9594429,
+    "ast_hash": "cd3dd38748859a5ab6fed9306756816d",
+    "semantic_hash": "cd3dd38748859a5ab6fed9306756816d"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/plan.md": {
+    "mtime": 1779192639.9601562,
+    "ast_hash": "cde100212d4d814216e19b2e7aff11c2",
+    "semantic_hash": "cde100212d4d814216e19b2e7aff11c2"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/spec.md": {
+    "mtime": 1779192639.9609804,
+    "ast_hash": "2798cbac708fbb4c8a6a49be33be35e9",
+    "semantic_hash": "2798cbac708fbb4c8a6a49be33be35e9"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/checklists/requirements.md": {
+    "mtime": 1779192639.9587145,
+    "ast_hash": "e350ddb847575a72fd0ad5664a0f5ce6",
+    "semantic_hash": "e350ddb847575a72fd0ad5664a0f5ce6"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/contracts/artifact-id.md": {
+    "mtime": 1779192639.9590297,
+    "ast_hash": "6c7734884f65fde048b1e01560632945",
+    "semantic_hash": "6c7734884f65fde048b1e01560632945"
+  },
+  "/Users/vishal/code/blog-source/specs/001-postgres-ha-patroni-book/contracts/lab-structure.md": {
+    "mtime": 1779192639.9592724,
+    "ast_hash": "83893b168fc32a5c5d0ff34e039ceb3b",
+    "semantic_hash": "83893b168fc32a5c5d0ff34e039ceb3b"
+  },
+  "/Users/vishal/code/blog-source/specs/003-network-partition-testing/tasks.md": {
+    "mtime": 1779215365.3754187,
+    "ast_hash": "d5725957fa3109d489ef1c34b2dd531f",
+    "semantic_hash": "d5725957fa3109d489ef1c34b2dd531f"
+  },
+  "/Users/vishal/code/blog-source/specs/003-network-partition-testing/research.md": {
+    "mtime": 1779215365.3741639,
+    "ast_hash": "624f2c07db7b3e0a6b97e293a51414c9",
+    "semantic_hash": "624f2c07db7b3e0a6b97e293a51414c9"
+  },
+  "/Users/vishal/code/blog-source/specs/003-network-partition-testing/data-model.md": {
+    "mtime": 1779215365.373637,
+    "ast_hash": "c6c8509733dc57b82f70767408455fdd",
+    "semantic_hash": "c6c8509733dc57b82f70767408455fdd"
+  },
+  "/Users/vishal/code/blog-source/specs/003-network-partition-testing/plan.md": {
+    "mtime": 1779215365.3738701,
+    "ast_hash": "b7b9cbd03bf6efa9e754adecb533a84e",
+    "semantic_hash": "b7b9cbd03bf6efa9e754adecb533a84e"
+  },
+  "/Users/vishal/code/blog-source/specs/003-network-partition-testing/spec.md": {
+    "mtime": 1779215365.3748426,
+    "ast_hash": "580e860cc16345be079e5ad443639db3",
+    "semantic_hash": "580e860cc16345be079e5ad443639db3"
+  },
+  "/Users/vishal/code/blog-source/specs/003-network-partition-testing/checklists/requirements.md": {
+    "mtime": 1779215365.373339,
+    "ast_hash": "3d156618fb009b67b7d7244c70016a34",
+    "semantic_hash": "3d156618fb009b67b7d7244c70016a34"
+  },
+  "/Users/vishal/code/blog-source/specs/002-companion-code/quickstart.md": {
+    "mtime": 1779192639.9657526,
+    "ast_hash": "feebc6fbf49c594c234e2c964ead21d9",
+    "semantic_hash": "feebc6fbf49c594c234e2c964ead21d9"
+  },
+  "/Users/vishal/code/blog-source/specs/002-companion-code/tasks.md": {
+    "mtime": 1779192639.9667416,
+    "ast_hash": "9586db26718c19944ff06865c25dec94",
+    "semantic_hash": "9586db26718c19944ff06865c25dec94"
+  },
+  "/Users/vishal/code/blog-source/specs/002-companion-code/research.md": {
+    "mtime": 1779192639.9659913,
+    "ast_hash": "091e77779d0acb84d4f78e7d66243058",
+    "semantic_hash": "091e77779d0acb84d4f78e7d66243058"
+  },
+  "/Users/vishal/code/blog-source/specs/002-companion-code/data-model.md": {
+    "mtime": 1779192639.9645514,
+    "ast_hash": "23cee3fc76cefd40e0b4091e58834d35",
+    "semantic_hash": "23cee3fc76cefd40e0b4091e58834d35"
+  },
+  "/Users/vishal/code/blog-source/specs/002-companion-code/plan.md": {
+    "mtime": 1779192639.9651537,
+    "ast_hash": "38f1ab47031a8d0ebbf1601e16c9ce7c",
+    "semantic_hash": "38f1ab47031a8d0ebbf1601e16c9ce7c"
+  },
+  "/Users/vishal/code/blog-source/specs/002-companion-code/spec.md": {
+    "mtime": 1779192639.966191,
+    "ast_hash": "4f7f0c9772259ebac2346c573196d341",
+    "semantic_hash": "4f7f0c9772259ebac2346c573196d341"
+  },
+  "/Users/vishal/code/blog-source/specs/002-companion-code/checklists/requirements.md": {
+    "mtime": 1779192639.963083,
+    "ast_hash": "9d0dfccb8cb15d9ea6f368783f3062fa",
+    "semantic_hash": "9d0dfccb8cb15d9ea6f368783f3062fa"
+  },
+  "/Users/vishal/code/blog-source/specs/002-companion-code/contracts/lab-outputs.md": {
+    "mtime": 1779192639.9638495,
+    "ast_hash": "663cb6f1dc6600d8907c7752339a5789",
+    "semantic_hash": "663cb6f1dc6600d8907c7752339a5789"
+  },
+  "/Users/vishal/code/blog-source/specs/002-companion-code/contracts/ci-contract.md": {
+    "mtime": 1779192639.963642,
+    "ast_hash": "9dad0baf9f5b4b5bc58ffda18654a02a",
+    "semantic_hash": "9dad0baf9f5b4b5bc58ffda18654a02a"
+  },
+  "/Users/vishal/code/blog-source/docs/index.md": {
+    "mtime": 1774921573.6741168,
+    "ast_hash": "f20fdd779418d561c043dda4497e3cc9",
+    "semantic_hash": "f20fdd779418d561c043dda4497e3cc9"
+  },
+  "/Users/vishal/code/blog-source/docs/homelab/multi-device-syncthing-setup.md": {
+    "mtime": 1775959051.3818707,
+    "ast_hash": "1f85d055de3da89b777c1a4a27f2f5ad",
+    "semantic_hash": "1f85d055de3da89b777c1a4a27f2f5ad"
+  },
+  "/Users/vishal/code/blog-source/docs/homelab/macos-nas-smb-auto-mount.md": {
+    "mtime": 1779054207.9537873,
+    "ast_hash": "c2854aa9abe93f94b54a4b2e1cf07777",
+    "semantic_hash": "c2854aa9abe93f94b54a4b2e1cf07777"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/ansible-idempotency.md": {
+    "mtime": 1774921573.6322372,
+    "ast_hash": "abeb228fd6f37f932344e05d611e15ef",
+    "semantic_hash": "abeb228fd6f37f932344e05d611e15ef"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/index.md": {
+    "mtime": 1774921573.632626,
+    "ast_hash": "6e31395c5c64e7e40543d28fb7ca5e1e",
+    "semantic_hash": "6e31395c5c64e7e40543d28fb7ca5e1e"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/publishing-workflow.md": {
+    "mtime": 1773097792.2485864,
+    "ast_hash": "2bd315c3ab00dce1eda7789f4827d80d",
+    "semantic_hash": "2bd315c3ab00dce1eda7789f4827d80d"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/docusaurus-lxc-tailscale-deployment.md": {
+    "mtime": 1774921573.6331027,
+    "ast_hash": "59487421147ac26c488eee0640a8a81e",
+    "semantic_hash": "59487421147ac26c488eee0640a8a81e"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-reboot-guide.md": {
+    "mtime": 1777507708.2315376,
+    "ast_hash": "2c7460233d0cee63a302f1108076ae9d",
+    "semantic_hash": "2c7460233d0cee63a302f1108076ae9d"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/12-case-studies-anti-patterns.mdx": {
+    "mtime": 1779192639.9188926,
+    "ast_hash": "c9acc8c33597602c523011ba5d28f871",
+    "semantic_hash": "c9acc8c33597602c523011ba5d28f871"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/02-patroni-architecture-dcs.mdx": {
+    "mtime": 1779192639.913733,
+    "ast_hash": "72b5100138b5dc141320c7e34f45987c",
+    "semantic_hash": "72b5100138b5dc141320c7e34f45987c"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/09-zero-downtime-operations.mdx": {
+    "mtime": 1779192639.9174895,
+    "ast_hash": "da796a1c5b6513e9a7a3b9b70420d7e3",
+    "semantic_hash": "da796a1c5b6513e9a7a3b9b70420d7e3"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/11-agentic-ai-autonomous-ops.mdx": {
+    "mtime": 1779192639.9185095,
+    "ast_hash": "516ad852ca885fb51982fb24c0046cdc",
+    "semantic_hash": "516ad852ca885fb51982fb24c0046cdc"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/index.mdx": {
+    "mtime": 1779192639.955814,
+    "ast_hash": "b35170946dd686807302a50828e061b0",
+    "semantic_hash": "b35170946dd686807302a50828e061b0"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/appendix-a-python-runtime.mdx": {
+    "mtime": 1779192639.9544654,
+    "ast_hash": "c9d2db84ad12cd1a052b7827ec664857",
+    "semantic_hash": "c9d2db84ad12cd1a052b7827ec664857"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/06-observability-monitoring.mdx": {
+    "mtime": 1779192639.916087,
+    "ast_hash": "b1a7544c359fb9bfd0dcf1d510bf8998",
+    "semantic_hash": "b1a7544c359fb9bfd0dcf1d510bf8998"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/05-performance-tuning-ha.mdx": {
+    "mtime": 1779192639.915673,
+    "ast_hash": "a16acfecd71485401b9d9b0f7e787cfa",
+    "semantic_hash": "a16acfecd71485401b9d9b0f7e787cfa"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/00-preface.mdx": {
+    "mtime": 1779192639.912758,
+    "ast_hash": "a7d35e67d20fd99fa149489fcd3ca63e",
+    "semantic_hash": "a7d35e67d20fd99fa149489fcd3ca63e"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/10-geo-distributed-patroni.mdx": {
+    "mtime": 1779192639.917956,
+    "ast_hash": "711f3380d55eae588560bf089dae9b16",
+    "semantic_hash": "711f3380d55eae588560bf089dae9b16"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/04-configuration-best-practices.mdx": {
+    "mtime": 1779192639.915144,
+    "ast_hash": "19c9e5d48b04cbe07cf264ea15ca537f",
+    "semantic_hash": "19c9e5d48b04cbe07cf264ea15ca537f"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/13-network-partition-testing.mdx": {
+    "mtime": 1779216751.6875384,
+    "ast_hash": "6253877ae835c277228f13861319f6b8",
+    "semantic_hash": "6253877ae835c277228f13861319f6b8"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/08-backup-dr-pitr.mdx": {
+    "mtime": 1779224589.0409973,
+    "ast_hash": "ddce87bcd5dc5742004db7a4ad9e1c5f",
+    "semantic_hash": "ddce87bcd5dc5742004db7a4ad9e1c5f"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/07-troubleshooting-playbooks.mdx": {
+    "mtime": 1779192639.9165142,
+    "ast_hash": "239d4d58791f38cae6b181edd355fbe1",
+    "semantic_hash": "239d4d58791f38cae6b181edd355fbe1"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/appendix-b-patroni-internals.mdx": {
+    "mtime": 1779224592.8921766,
+    "ast_hash": "461bac5a756cb1b07c44c6f0e9b77c1e",
+    "semantic_hash": "461bac5a756cb1b07c44c6f0e9b77c1e"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/01-foundations-postgres-ha.mdx": {
+    "mtime": 1779224598.7103314,
+    "ast_hash": "91787197866903077cb2f4aca7e51657",
+    "semantic_hash": "91787197866903077cb2f4aca7e51657"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/03-deploying-patroni-cluster.mdx": {
+    "mtime": 1779192639.9145515,
+    "ast_hash": "138bd2e40440c1cf38ae024b7b2db59c",
+    "semantic_hash": "138bd2e40440c1cf38ae024b7b2db59c"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/ARTIFACT-IDS.md": {
+    "mtime": 1779215365.3640153,
+    "ast_hash": "3242a4d0c904d114c9c5e41b3a3ee15f",
+    "semantic_hash": "3242a4d0c904d114c9c5e41b3a3ee15f"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/README.md": {
+    "mtime": 1779215365.3643668,
+    "ast_hash": "59761d8435b3bf8fd0b348a7c5c5464d",
+    "semantic_hash": "59761d8435b3bf8fd0b348a7c5c5464d"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/terraform/lab-08-b/README.md": {
+    "mtime": 1779192639.9495804,
+    "ast_hash": "49c58c5cc76be240675b96ce1a5055f1",
+    "semantic_hash": "49c58c5cc76be240675b96ce1a5055f1"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-08-a/README.md": {
+    "mtime": 1779192639.946372,
+    "ast_hash": "9cdf4f5ae92dd34fed56b439727622ca",
+    "semantic_hash": "9cdf4f5ae92dd34fed56b439727622ca"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-08-a/patroni.yml": {
+    "mtime": 1779192639.9466488,
+    "ast_hash": "b5ffb5f3260688d62b2c5a0335a657cd",
+    "semantic_hash": "b5ffb5f3260688d62b2c5a0335a657cd"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-08-a/docker-compose.yml": {
+    "mtime": 1779192639.9465299,
+    "ast_hash": "1466a2dae40de3b5bc5abd5d117e2b0b",
+    "semantic_hash": "1466a2dae40de3b5bc5abd5d117e2b0b"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b/README.md": {
+    "mtime": 1779215365.369517,
+    "ast_hash": "84f3f288c4010d910d5132cab3a26534",
+    "semantic_hash": "84f3f288c4010d910d5132cab3a26534"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b/patroni-1.yml": {
+    "mtime": 1779215365.3712406,
+    "ast_hash": "3d9895e5b405a910e7264421801643a0",
+    "semantic_hash": "3d9895e5b405a910e7264421801643a0"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b/patroni-3.yml": {
+    "mtime": 1779215365.3721874,
+    "ast_hash": "bb73bc40abe78a1f545fbf15ad4cff1c",
+    "semantic_hash": "bb73bc40abe78a1f545fbf15ad4cff1c"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b/patroni-2.yml": {
+    "mtime": 1779215365.3715167,
+    "ast_hash": "c8c19373b7c2d403cd0755544aaf662b",
+    "semantic_hash": "c8c19373b7c2d403cd0755544aaf662b"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-b/docker-compose.yml": {
+    "mtime": 1779215365.3706954,
+    "ast_hash": "7c59da9f9f3beed354abe4da4652bd19",
+    "semantic_hash": "7c59da9f9f3beed354abe4da4652bd19"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/common/docker-compose.base.yml": {
+    "mtime": 1779192639.9418435,
+    "ast_hash": "99b930f3ea49aae84e77bae8730a7301",
+    "semantic_hash": "99b930f3ea49aae84e77bae8730a7301"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-a-a/README.md": {
+    "mtime": 1779192639.947478,
+    "ast_hash": "fd8145196d3e996618f1ad9bddfdb246",
+    "semantic_hash": "fd8145196d3e996618f1ad9bddfdb246"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-a-a/patroni.yml": {
+    "mtime": 1779192639.947837,
+    "ast_hash": "ed6581eaf680c3d1563afb2ea59d54ba",
+    "semantic_hash": "ed6581eaf680c3d1563afb2ea59d54ba"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-a-a/docker-compose.yml": {
+    "mtime": 1779192639.947605,
+    "ast_hash": "be2df893eae1675a73ba0ac15ebab723",
+    "semantic_hash": "be2df893eae1675a73ba0ac15ebab723"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-03-a/README.md": {
+    "mtime": 1779192639.9432049,
+    "ast_hash": "6c9faa831d775762e387f4219e8af137",
+    "semantic_hash": "6c9faa831d775762e387f4219e8af137"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-03-a/patroni-1.yml": {
+    "mtime": 1779192639.9442132,
+    "ast_hash": "5c4f31b0d71d142faca94b00bfa46a95",
+    "semantic_hash": "5c4f31b0d71d142faca94b00bfa46a95"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-03-a/patroni-3.yml": {
+    "mtime": 1779192639.9453492,
+    "ast_hash": "25a94444ca95f2664ed10877e4e6b1d7",
+    "semantic_hash": "25a94444ca95f2664ed10877e4e6b1d7"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-03-a/patroni-2.yml": {
+    "mtime": 1779192639.9446247,
+    "ast_hash": "6e0b8bfe82439aec3abe8d42d593a1a0",
+    "semantic_hash": "6e0b8bfe82439aec3abe8d42d593a1a0"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-03-a/docker-compose.yml": {
+    "mtime": 1779192639.943775,
+    "ast_hash": "b50748a5d568aff4cd4e18a46082e75b",
+    "semantic_hash": "b50748a5d568aff4cd4e18a46082e75b"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a/README.md": {
+    "mtime": 1779215365.3666399,
+    "ast_hash": "00809f3178a02edc77d904c6f6b02cf0",
+    "semantic_hash": "00809f3178a02edc77d904c6f6b02cf0"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a/patroni-1.yml": {
+    "mtime": 1779215365.3678734,
+    "ast_hash": "cd201d86eaedef869c51b184c4f52d24",
+    "semantic_hash": "cd201d86eaedef869c51b184c4f52d24"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a/patroni-2.yml": {
+    "mtime": 1779215365.3682919,
+    "ast_hash": "d974d3820b9abbabc309169780ab4211",
+    "semantic_hash": "d974d3820b9abbabc309169780ab4211"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/docker/lab-13-a/docker-compose.yml": {
+    "mtime": 1779215365.3676693,
+    "ast_hash": "2d8da1db42a9a884b154d009fabee37f",
+    "semantic_hash": "2d8da1db42a9a884b154d009fabee37f"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/patroni/config-04-ref.yml": {
+    "mtime": 1779192639.948653,
+    "ast_hash": "e7b681becafeafd38f1d065a295aad1b",
+    "semantic_hash": "e7b681becafeafd38f1d065a295aad1b"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/predictive-failover/README.md": {
+    "mtime": 1779192639.9268634,
+    "ast_hash": "2d0a862f2c95a01b09cbec145d37b1fe",
+    "semantic_hash": "2d0a862f2c95a01b09cbec145d37b1fe"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/nl-ops/README.md": {
+    "mtime": 1779192639.9254916,
+    "ast_hash": "9c87eedadcc660f10c2da0505191bbae",
+    "semantic_hash": "9c87eedadcc660f10c2da0505191bbae"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/self-tuning/README.md": {
+    "mtime": 1779192639.9283266,
+    "ast_hash": "c7ca6ddf1ea393614ff3f8b44aaf71ed",
+    "semantic_hash": "c7ca6ddf1ea393614ff3f8b44aaf71ed"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/shared/litellm-config.yaml": {
+    "mtime": 1779192639.9298413,
+    "ast_hash": "90ce494de56edb129f7fe2b4b2acd6f7",
+    "semantic_hash": "90ce494de56edb129f7fe2b4b2acd6f7"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/monitoring/README.md": {
+    "mtime": 1779192639.9239087,
+    "ast_hash": "33fc587e5a965fdb6fb6e0e8207bc549",
+    "semantic_hash": "33fc587e5a965fdb6fb6e0e8207bc549"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/agents/auto-remediation/README.md": {
+    "mtime": 1779192639.9219654,
+    "ast_hash": "547d5817311209ddd8aea0fa24ab0b44",
+    "semantic_hash": "547d5817311209ddd8aea0fa24ab0b44"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/ansible/lab-b-a/README.md": {
+    "mtime": 1779192639.9319434,
+    "ast_hash": "d30eb80f77ffdd363edf80c423c15ed1",
+    "semantic_hash": "d30eb80f77ffdd363edf80c423c15ed1"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/ansible/lab-b-a/playbook.yml": {
+    "mtime": 1779192639.9328103,
+    "ast_hash": "65749bd6539e9de9fd9c523fe091e575",
+    "semantic_hash": "65749bd6539e9de9fd9c523fe091e575"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/ansible/lab-b-a/roles/patroni/tasks/main.yml": {
+    "mtime": 1779192639.9355958,
+    "ast_hash": "6e30c753a676eb41a9033fec8403185c",
+    "semantic_hash": "6e30c753a676eb41a9033fec8403185c"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/ansible/lab-b-a/roles/patroni/handlers/main.yml": {
+    "mtime": 1779192639.9353962,
+    "ast_hash": "5a8918e0a2175a840709538f736d7c23",
+    "semantic_hash": "5a8918e0a2175a840709538f736d7c23"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/ansible/lab-b-a/roles/watchdog/tasks/main.yml": {
+    "mtime": 1779192639.937885,
+    "ast_hash": "cc7ddf88d2d6551a44cb3a64e385deb1",
+    "semantic_hash": "cc7ddf88d2d6551a44cb3a64e385deb1"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/ansible/lab-b-a/roles/etcd/tasks/main.yml": {
+    "mtime": 1779192639.9340966,
+    "ast_hash": "79ab6f3c77f9535600375183ee885598",
+    "semantic_hash": "79ab6f3c77f9535600375183ee885598"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/ansible/lab-b-a/roles/etcd/handlers/main.yml": {
+    "mtime": 1779192639.933565,
+    "ast_hash": "972056af28d9c20610138527455b190c",
+    "semantic_hash": "972056af28d9c20610138527455b190c"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-wal-bloat.yaml": {
+    "mtime": 1779192639.9405482,
+    "ast_hash": "993d242aa8a4c6ef318c8d8b5206ae48",
+    "semantic_hash": "993d242aa8a4c6ef318c8d8b5206ae48"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-dcs-partition.yaml": {
+    "mtime": 1779192639.9392304,
+    "ast_hash": "fc9f0bc05d3f210c7d5fe23aa638f6f0",
+    "semantic_hash": "fc9f0bc05d3f210c7d5fe23aa638f6f0"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-lag.yaml": {
+    "mtime": 1779192639.9396734,
+    "ast_hash": "2fcb9b7a7abb5a2b89fc9f2d64ba58ac",
+    "semantic_hash": "2fcb9b7a7abb5a2b89fc9f2d64ba58ac"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-leader-flap.yaml": {
+    "mtime": 1779192639.9403162,
+    "ast_hash": "dcec01c3cdfbc36172e525dcd511c717",
+    "semantic_hash": "dcec01c3cdfbc36172e525dcd511c717"
+  },
+  "/Users/vishal/code/blog-source/docs/devops/postgres-ha-patroni-book/_companion/dashboards/alerts/alert-06-cert-expiry.yaml": {
+    "mtime": 1779192639.9385798,
+    "ast_hash": "39592ef953697eb8812c8a6f1afb7401",
+    "semantic_hash": "39592ef953697eb8812c8a6f1afb7401"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/modern-authentication-overview.md": {
+    "mtime": 1774921573.6252072,
+    "ast_hash": "72a78a1679c885251e613b0bb7c5a89e",
+    "semantic_hash": "72a78a1679c885251e613b0bb7c5a89e"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/oauth2-guide.md": {
+    "mtime": 1774921573.625753,
+    "ast_hash": "8d9fa85825c0aa6a62f6011f1ced3317",
+    "semantic_hash": "8d9fa85825c0aa6a62f6011f1ced3317"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/oidc-deep-dive.md": {
+    "mtime": 1774921573.6263556,
+    "ast_hash": "c2be6a052af5204ebb6a885ba73dc83f",
+    "semantic_hash": "c2be6a052af5204ebb6a885ba73dc83f"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/kerberos-authentication.md": {
+    "mtime": 1774921573.626843,
+    "ast_hash": "fd9ae9c302a3219f7a656d61f64fd247",
+    "semantic_hash": "fd9ae9c302a3219f7a656d61f64fd247"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/implementation-tutorial.md": {
+    "mtime": 1774921573.6274562,
+    "ast_hash": "35618eb092d748d32c60ffe088b7fdca",
+    "semantic_hash": "35618eb092d748d32c60ffe088b7fdca"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/README.md": {
+    "mtime": 1774921573.6278787,
+    "ast_hash": "6831739bd3cab1aa263072eb9e5fbd3f",
+    "semantic_hash": "6831739bd3cab1aa263072eb9e5fbd3f"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/ldap-authentication.md": {
+    "mtime": 1774921573.628218,
+    "ast_hash": "c498a096961215268e29d38e33584283",
+    "semantic_hash": "c498a096961215268e29d38e33584283"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/saml-deep-dive.md": {
+    "mtime": 1774921573.6285338,
+    "ast_hash": "85c34d0089136b23beef2320ba7c7179",
+    "semantic_hash": "85c34d0089136b23beef2320ba7c7179"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/authentication-protocols-comparison.md": {
+    "mtime": 1774921573.6289473,
+    "ast_hash": "1242dc7773aa591592b817cfa53a2822",
+    "semantic_hash": "1242dc7773aa591592b817cfa53a2822"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/postgres-auth-integration.md": {
+    "mtime": 1774921573.62938,
+    "ast_hash": "36867a23e87b0de9a4f3604c96c4a465",
+    "semantic_hash": "36867a23e87b0de9a4f3604c96c4a465"
+  },
+  "/Users/vishal/code/blog-source/docs/auth/auth-index.md": {
+    "mtime": 1774921573.6297727,
+    "ast_hash": "75b9a24222f35ad4ba1b6e437c27a27a",
+    "semantic_hash": "75b9a24222f35ad4ba1b6e437c27a27a"
+  },
+  "/Users/vishal/code/blog-source/docs/presentations/sdd-presentation.md": {
+    "mtime": 1777507845.184465,
+    "ast_hash": "6727a097da40b26ac76bc42281aaacb4",
+    "semantic_hash": "6727a097da40b26ac76bc42281aaacb4"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/index.md": {
+    "mtime": 1774921573.6550615,
+    "ast_hash": "f6905f8ea281953dde3a239891626a8e",
+    "semantic_hash": "f6905f8ea281953dde3a239891626a8e"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/go/go-concurrency-explained.md": {
+    "mtime": 1775878303.5778673,
+    "ast_hash": "3f239edf05f56d9d8c5b9d4cd6d1e097",
+    "semantic_hash": "3f239edf05f56d9d8c5b9d4cd6d1e097"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/python/leveraging-toml-configuration.md": {
+    "mtime": 1774921573.6525629,
+    "ast_hash": "b540601631fe184c8455031e9f06a6f3",
+    "semantic_hash": "b540601631fe184c8455031e9f06a6f3"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/python/python-threading-guide.md": {
+    "mtime": 1774921573.6529698,
+    "ast_hash": "02402de227327d1a137eaf1bf01ec7b7",
+    "semantic_hash": "02402de227327d1a137eaf1bf01ec7b7"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/python/underscore-functions.md": {
+    "mtime": 1774921573.6533248,
+    "ast_hash": "b9667e2bf282a0a6685503eab0647285",
+    "semantic_hash": "b9667e2bf282a0a6685503eab0647285"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/python/python-logging-tutorial.md": {
+    "mtime": 1774921573.6538086,
+    "ast_hash": "8a7e1a427be9c633b479b3026a887261",
+    "semantic_hash": "8a7e1a427be9c633b479b3026a887261"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/python/python-tui-framework.md": {
+    "mtime": 1774926867.4298968,
+    "ast_hash": "ce1b84cfe7177eca7f102d116fe0626f",
+    "semantic_hash": "ce1b84cfe7177eca7f102d116fe0626f"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/python/name-main-explanation.md": {
+    "mtime": 1774921573.6542487,
+    "ast_hash": "8e9f02030ff0ab9b6df9153080aa1cb1",
+    "semantic_hash": "8e9f02030ff0ab9b6df9153080aa1cb1"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/python/monitoring-api-changes.md": {
+    "mtime": 1774921573.6546552,
+    "ast_hash": "bacf722791ee3d3e4fa5a0704eb9e232",
+    "semantic_hash": "bacf722791ee3d3e4fa5a0704eb9e232"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/javascript/serve-static-website.md": {
+    "mtime": 1774921573.6555698,
+    "ast_hash": "d7f0e815d3ac78ab9b78b7ca6810981d",
+    "semantic_hash": "d7f0e815d3ac78ab9b78b7ca6810981d"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/git/index.md": {
+    "mtime": 1774921573.6565425,
+    "ast_hash": "e206860dcfc9f6f1e5aa8067c2fb1066",
+    "semantic_hash": "e206860dcfc9f6f1e5aa8067c2fb1066"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/git/git-branching-guide.md": {
+    "mtime": 1774921573.6569347,
+    "ast_hash": "f05d0397f99ba7761b5aa4e6094282a2",
+    "semantic_hash": "f05d0397f99ba7761b5aa4e6094282a2"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/git/git-submodules-tutorial.md": {
+    "mtime": 1774921573.6573043,
+    "ast_hash": "eafebc6ffc592985a271668b4849bea3",
+    "semantic_hash": "eafebc6ffc592985a271668b4849bea3"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/git/gitlab-sso-setup.md": {
+    "mtime": 1774921573.6576943,
+    "ast_hash": "486bead03edbff7890c89716a5908cca",
+    "semantic_hash": "486bead03edbff7890c89716a5908cca"
+  },
+  "/Users/vishal/code/blog-source/docs/programming/git/git-workflow-multiple-developers.md": {
+    "mtime": 1774921573.6580577,
+    "ast_hash": "0bc31a91ea82f8c98e1e8254de5c1b14",
+    "semantic_hash": "0bc31a91ea82f8c98e1e8254de5c1b14"
+  },
+  "/Users/vishal/code/blog-source/docs/linux/networking-guide.md": {
+    "mtime": 1774921573.640626,
+    "ast_hash": "11e964f62c8a5ca1ce2d050ec27f4501",
+    "semantic_hash": "11e964f62c8a5ca1ce2d050ec27f4501"
+  },
+  "/Users/vishal/code/blog-source/docs/linux/journalctl-troubleshooting-guide.md": {
+    "mtime": 1774921573.641017,
+    "ast_hash": "44107b53fd50e7da9198fa0691511b65",
+    "semantic_hash": "44107b53fd50e7da9198fa0691511b65"
+  },
+  "/Users/vishal/code/blog-source/docs/linux/ssh-troubleshooting.md": {
+    "mtime": 1779192639.956769,
+    "ast_hash": "19627d83b3afe048355921ac44f7af76",
+    "semantic_hash": "19627d83b3afe048355921ac44f7af76"
+  },
+  "/Users/vishal/code/blog-source/docs/linux/index.md": {
+    "mtime": 1774921573.6414046,
+    "ast_hash": "40ad7c948049f028749c6c8bb77bbd88",
+    "semantic_hash": "40ad7c948049f028749c6c8bb77bbd88"
+  },
+  "/Users/vishal/code/blog-source/docs/linux/lxc-tailscale-tun-setup.md": {
+    "mtime": 1774921573.6418357,
+    "ast_hash": "f463b9ac98589cb20cb02c21187d10b4",
+    "semantic_hash": "f463b9ac98589cb20cb02c21187d10b4"
+  },
+  "/Users/vishal/code/blog-source/docs/linux/services-overview.md": {
+    "mtime": 1774921573.6423318,
+    "ast_hash": "5d84089c99b450e3020436229ebcfe63",
+    "semantic_hash": "5d84089c99b450e3020436229ebcfe63"
+  },
+  "/Users/vishal/code/blog-source/docs/linux/wayvnc-resolution-toggle.md": {
+    "mtime": 1779192639.9569182,
+    "ast_hash": "755443aa309639d1b08adef55b9a4311",
+    "semantic_hash": "755443aa309639d1b08adef55b9a4311"
+  },
+  "/Users/vishal/code/blog-source/docs/linux/fix-xterm-ghostty-unknown-terminal-type-error.md": {
+    "mtime": 1774921573.642725,
+    "ast_hash": "c67b0b3a1f13c5d42540ddadfdda3b27",
+    "semantic_hash": "c67b0b3a1f13c5d42540ddadfdda3b27"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/index.md": {
+    "mtime": 1774921573.6706452,
+    "ast_hash": "b489f8e280634b0c4c201b6216afb2c0",
+    "semantic_hash": "b489f8e280634b0c4c201b6216afb2c0"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/fundamentals/scalability.md": {
+    "mtime": 1774921573.660495,
+    "ast_hash": "235254c023324977445533b2a03e205f",
+    "semantic_hash": "235254c023324977445533b2a03e205f"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/fundamentals/reliability.md": {
+    "mtime": 1774921573.6609235,
+    "ast_hash": "cfb5663edccf2a39b5f2477f3e0d005d",
+    "semantic_hash": "cfb5663edccf2a39b5f2477f3e0d005d"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/fundamentals/data-intensive-applications.md": {
+    "mtime": 1774921573.6613698,
+    "ast_hash": "507c29690038c3af2799cb933b377042",
+    "semantic_hash": "507c29690038c3af2799cb933b377042"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/fundamentals/index.md": {
+    "mtime": 1774921573.6618292,
+    "ast_hash": "c6c42ff759084f132188988f3be15473",
+    "semantic_hash": "c6c42ff759084f132188988f3be15473"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/fundamentals/cap-theorem.md": {
+    "mtime": 1774921573.6621158,
+    "ast_hash": "10726d957638bad7847cfab58765dfc2",
+    "semantic_hash": "10726d957638bad7847cfab58765dfc2"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/fundamentals/performance-metrics.md": {
+    "mtime": 1774921573.6625075,
+    "ast_hash": "8020e5e565d525471cb983e3ed81a3a9",
+    "semantic_hash": "8020e5e565d525471cb983e3ed81a3a9"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/databases/data-modeling.md": {
+    "mtime": 1774921573.6630752,
+    "ast_hash": "3788667dd2338cd8aa8828a9f1d0edee",
+    "semantic_hash": "3788667dd2338cd8aa8828a9f1d0edee"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/databases/sql-vs-nosql.md": {
+    "mtime": 1774921573.6634812,
+    "ast_hash": "6baee32dac490d505c92941c302f56f3",
+    "semantic_hash": "6baee32dac490d505c92941c302f56f3"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/databases/index.md": {
+    "mtime": 1774921573.663869,
+    "ast_hash": "fc953374f652a957591bcc5374a2c3d3",
+    "semantic_hash": "fc953374f652a957591bcc5374a2c3d3"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/databases/scaling.md": {
+    "mtime": 1774921573.6642032,
+    "ast_hash": "e53e45529069ebc96ca5f88cdc915fe2",
+    "semantic_hash": "e53e45529069ebc96ca5f88cdc915fe2"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/databases/optimization.md": {
+    "mtime": 1774921573.6645932,
+    "ast_hash": "c0edff0883a8dbe3278146de1306097b",
+    "semantic_hash": "c0edff0883a8dbe3278146de1306097b"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/apis/best-practices.md": {
+    "mtime": 1774921573.6651728,
+    "ast_hash": "9581a054f5346e542da01387cec775c9",
+    "semantic_hash": "9581a054f5346e542da01387cec775c9"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/apis/index.md": {
+    "mtime": 1774921573.6655712,
+    "ast_hash": "df7a8f0699ef021cd2ef62d1728201c8",
+    "semantic_hash": "df7a8f0699ef021cd2ef62d1728201c8"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/apis/grpc.md": {
+    "mtime": 1774921573.6660116,
+    "ast_hash": "6df602ede47b2455670e95a5566fddcc",
+    "semantic_hash": "6df602ede47b2455670e95a5566fddcc"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/apis/graphql.md": {
+    "mtime": 1774921573.6663907,
+    "ast_hash": "e8c524dce01a1010668b17025f0257e7",
+    "semantic_hash": "e8c524dce01a1010668b17025f0257e7"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/apis/rest.md": {
+    "mtime": 1774921573.6667755,
+    "ast_hash": "5e47e00c3b0de7671f164db364c96c6b",
+    "semantic_hash": "5e47e00c3b0de7671f164db364c96c6b"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/networking/ip-addressing.md": {
+    "mtime": 1774921573.6673884,
+    "ast_hash": "d93c87c8459f6ec48e6c4a950c14dfc4",
+    "semantic_hash": "d93c87c8459f6ec48e6c4a950c14dfc4"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/networking/dns.md": {
+    "mtime": 1774921573.6678114,
+    "ast_hash": "364b569450228c043f0b52f4e4c2e868",
+    "semantic_hash": "364b569450228c043f0b52f4e4c2e868"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/networking/index.md": {
+    "mtime": 1774921573.6681051,
+    "ast_hash": "a97bc9b9515ad28a3e586413cce1daaf",
+    "semantic_hash": "a97bc9b9515ad28a3e586413cce1daaf"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/networking/protocols.md": {
+    "mtime": 1774921573.6684177,
+    "ast_hash": "9cf514bdf35877686c1805f264afd2b4",
+    "semantic_hash": "9cf514bdf35877686c1805f264afd2b4"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/architecture/proxies.md": {
+    "mtime": 1774921573.6690273,
+    "ast_hash": "abe0b3f78a424dc80a583808871593d0",
+    "semantic_hash": "abe0b3f78a424dc80a583808871593d0"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/architecture/caching.md": {
+    "mtime": 1774921573.669408,
+    "ast_hash": "2c40abb5e2847ce1b34df767437aff56",
+    "semantic_hash": "2c40abb5e2847ce1b34df767437aff56"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/architecture/index.md": {
+    "mtime": 1774921573.66967,
+    "ast_hash": "de3935c338b2259877098279a20adb2b",
+    "semantic_hash": "de3935c338b2259877098279a20adb2b"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/architecture/load-balancing.md": {
+    "mtime": 1774921573.6699524,
+    "ast_hash": "c83baa4554b84458ae344c9e1b9c5db3",
+    "semantic_hash": "c83baa4554b84458ae344c9e1b9c5db3"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/architecture/ci-cd.md": {
+    "mtime": 1774921573.6702504,
+    "ast_hash": "50bb34542c823355728f6609d3f35f9d",
+    "semantic_hash": "50bb34542c823355728f6609d3f35f9d"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/interviews/case-studies.md": {
+    "mtime": 1774921573.6713803,
+    "ast_hash": "05121ea6408d82e7136b51c1748a77f5",
+    "semantic_hash": "05121ea6408d82e7136b51c1748a77f5"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/interviews/index.md": {
+    "mtime": 1774921573.6716566,
+    "ast_hash": "0eff79bfd85dcc056a50d952897fa2c4",
+    "semantic_hash": "0eff79bfd85dcc056a50d952897fa2c4"
+  },
+  "/Users/vishal/code/blog-source/docs/system-design/interviews/common-patterns.md": {
+    "mtime": 1774921573.6719394,
+    "ast_hash": "042e779cbd66bd6c9458d8395c840d80",
+    "semantic_hash": "042e779cbd66bd6c9458d8395c840d80"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/pi-agent-memory.md": {
+    "mtime": 1778434051.6075938,
+    "ast_hash": "a2333b6b3eec44aa8f24adc8cd118619",
+    "semantic_hash": "a2333b6b3eec44aa8f24adc8cd118619"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/index.md": {
+    "mtime": 1774921573.638071,
+    "ast_hash": "2cee1ef92400ce75f0711ec8b18b9a23",
+    "semantic_hash": "2cee1ef92400ce75f0711ec8b18b9a23"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/genai-tools/claude-code.md": {
+    "mtime": 1774921573.635811,
+    "ast_hash": "4fe165b231e12ae6cf2e0820d6d952f4",
+    "semantic_hash": "4fe165b231e12ae6cf2e0820d6d952f4"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/genai-tools/openwebui-docker-setup.md": {
+    "mtime": 1774921573.6362035,
+    "ast_hash": "8b61e54b0c8473f588dc50f9e10f12c8",
+    "semantic_hash": "8b61e54b0c8473f588dc50f9e10f12c8"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/genai-tools/continue-dev-remote-ollama.md": {
+    "mtime": 1774921573.637307,
+    "ast_hash": "871ae0adf0c2bbdd927c431b0d6e8b4b",
+    "semantic_hash": "871ae0adf0c2bbdd927c431b0d6e8b4b"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/spec-driven-development/constitution.md": {
+    "mtime": 1777507845.182287,
+    "ast_hash": "c3dd2174571cedd0d66e541bd3abdac5",
+    "semantic_hash": "c3dd2174571cedd0d66e541bd3abdac5"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/spec-driven-development/tasks-phase.md": {
+    "mtime": 1777507845.1833348,
+    "ast_hash": "6d26dad9a1f094d76108898efa25e345",
+    "semantic_hash": "6d26dad9a1f094d76108898efa25e345"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/spec-driven-development/tools-and-resources.md": {
+    "mtime": 1777507845.183665,
+    "ast_hash": "823e2f5037a4677f176c931ea6c165e6",
+    "semantic_hash": "823e2f5037a4677f176c931ea6c165e6"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/spec-driven-development/specify-phase.md": {
+    "mtime": 1777507845.1831126,
+    "ast_hash": "aeb9fd3845f9c7d332cff6fbb49d2ce7",
+    "semantic_hash": "aeb9fd3845f9c7d332cff6fbb49d2ce7"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/spec-driven-development/plan-phase.md": {
+    "mtime": 1777507845.1829069,
+    "ast_hash": "7a0511ba4f70de0b51832258ae50cdac",
+    "semantic_hash": "7a0511ba4f70de0b51832258ae50cdac"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/spec-driven-development/index.md": {
+    "mtime": 1777507845.182557,
+    "ast_hash": "c4428e3a5591663e7540a0b7409fcda7",
+    "semantic_hash": "c4428e3a5591663e7540a0b7409fcda7"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/spec-driven-development/windsurf-mapping.md": {
+    "mtime": 1777507845.18398,
+    "ast_hash": "387bb4ceff62fc7421f6d109fffd114f",
+    "semantic_hash": "387bb4ceff62fc7421f6d109fffd114f"
+  },
+  "/Users/vishal/code/blog-source/docs/genai/spec-driven-development/constitution-sync-across-projects.md": {
+    "mtime": 1779192639.9563024,
+    "ast_hash": "4b9bec2bd8f61db876a74f16da98c626",
+    "semantic_hash": "4b9bec2bd8f61db876a74f16da98c626"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/sdd-demo.yaml": {
+    "mtime": 1777507845.1765587,
+    "ast_hash": "eaf84ca20b6537f4bb7f1ad395eeb50e",
+    "semantic_hash": "eaf84ca20b6537f4bb7f1ad395eeb50e"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/docker-compose.yml": {
+    "mtime": 1777507845.1763818,
+    "ast_hash": "e5e6442b0cfcd5105b7de933e2f84117",
+    "semantic_hash": "e5e6442b0cfcd5105b7de933e2f84117"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/06-speckit-intro.md": {
+    "mtime": 1777507845.1778183,
+    "ast_hash": "79b3a174b86c60142d40a4d3c1e064a3",
+    "semantic_hash": "79b3a174b86c60142d40a4d3c1e064a3"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/04-three-levels.md": {
+    "mtime": 1777507845.177225,
+    "ast_hash": "2c42917b0a03a715a23e847616251f48",
+    "semantic_hash": "2c42917b0a03a715a23e847616251f48"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/03-what-is-sdd.md": {
+    "mtime": 1777507845.176959,
+    "ast_hash": "c35cccab6d8c2c663590510138afeafd",
+    "semantic_hash": "c35cccab6d8c2c663590510138afeafd"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/11-windsurf-mapping.md": {
+    "mtime": 1777507845.180119,
+    "ast_hash": "e767ef015050cd68430002eafa4adcce",
+    "semantic_hash": "e767ef015050cd68430002eafa4adcce"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/16-getting-started-qa.md": {
+    "mtime": 1777507845.181147,
+    "ast_hash": "fd365531fbebc6259b68d98dbe4e5c49",
+    "semantic_hash": "fd365531fbebc6259b68d98dbe4e5c49"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/15-tradeoffs.md": {
+    "mtime": 1777507845.180989,
+    "ast_hash": "52c4abd8a86d2ccb32820ca5bb481b29",
+    "semantic_hash": "52c4abd8a86d2ccb32820ca5bb481b29"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/10-tasks.md": {
+    "mtime": 1777507845.179886,
+    "ast_hash": "3b23ef737af07dde3e3b55797f8f9bc2",
+    "semantic_hash": "3b23ef737af07dde3e3b55797f8f9bc2"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/14-demo-plan.md": {
+    "mtime": 1777507845.1807952,
+    "ast_hash": "049929ad6b30cf70d47ffeaa3ab6de43",
+    "semantic_hash": "049929ad6b30cf70d47ffeaa3ab6de43"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/08-specify.md": {
+    "mtime": 1777507845.1790447,
+    "ast_hash": "a41ccf60ab88c662582cb739d6187fa5",
+    "semantic_hash": "a41ccf60ab88c662582cb739d6187fa5"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/tasks.md": {
+    "mtime": 1777507845.1818266,
+    "ast_hash": "47b1e1f563ca6708fb8abf71617bf0f3",
+    "semantic_hash": "47b1e1f563ca6708fb8abf71617bf0f3"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/09-plan.md": {
+    "mtime": 1777507845.1792305,
+    "ast_hash": "995b0706ed520adde6162dcc4c838b41",
+    "semantic_hash": "995b0706ed520adde6162dcc4c838b41"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/plan.md": {
+    "mtime": 1777507845.1814876,
+    "ast_hash": "3cfbd1b356fd3d6c4b7f953cc128be5f",
+    "semantic_hash": "3cfbd1b356fd3d6c4b7f953cc128be5f"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/02-the-problem.md": {
+    "mtime": 1777507845.1768334,
+    "ast_hash": "6f1a2c0aa39374774b3bca1e86e50d48",
+    "semantic_hash": "6f1a2c0aa39374774b3bca1e86e50d48"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/13-real-example-pipeline.md": {
+    "mtime": 1777507845.1805913,
+    "ast_hash": "28947659e106d6a9b75a774a1223a384",
+    "semantic_hash": "28947659e106d6a9b75a774a1223a384"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/01-title-agenda.md": {
+    "mtime": 1777507845.1767142,
+    "ast_hash": "cce6a7deca4ca26b699745cf5a52b5a1",
+    "semantic_hash": "cce6a7deca4ca26b699745cf5a52b5a1"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/specify.md": {
+    "mtime": 1777507845.181625,
+    "ast_hash": "9c7f8b0778291fc903cf185819caddc6",
+    "semantic_hash": "9c7f8b0778291fc903cf185819caddc6"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/05-why-now.md": {
+    "mtime": 1777507845.1775203,
+    "ast_hash": "43fa67cdfd3e1576faf2f51172eaad76",
+    "semantic_hash": "43fa67cdfd3e1576faf2f51172eaad76"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/12-rules-workflows.md": {
+    "mtime": 1777507845.180436,
+    "ast_hash": "0b379a791e872fd7e7aea84b1e8987b6",
+    "semantic_hash": "0b379a791e872fd7e7aea84b1e8987b6"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/07-constitution.md": {
+    "mtime": 1777507845.1780453,
+    "ast_hash": "5730e3989be1b6771f958b749f8d5d6a",
+    "semantic_hash": "5730e3989be1b6771f958b749f8d5d6a"
+  },
+  "/Users/vishal/code/blog-source/docs/demos/health-check-scanner/.demo/slides/execute.md": {
+    "mtime": 1777507845.181346,
+    "ast_hash": "738766afd32e3da67e3bc561134a9d5c",
+    "semantic_hash": "738766afd32e3da67e3bc561134a9d5c"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/zk_cli.md": {
+    "mtime": 1774921573.6452188,
+    "ast_hash": "b4df5135406d61df32f8388e7d98e783",
+    "semantic_hash": "b4df5135406d61df32f8388e7d98e783"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/task_warrior_time_warrior.md": {
+    "mtime": 1774921573.6456845,
+    "ast_hash": "8d019dffc9134839c7f2f9973302ebdb",
+    "semantic_hash": "8d019dffc9134839c7f2f9973302ebdb"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/radicale.md": {
+    "mtime": 1774921573.6460361,
+    "ast_hash": "d632af42a99f2544fb6dbac5ece809d5",
+    "semantic_hash": "d632af42a99f2544fb6dbac5ece809d5"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/pass-cheatsheet.mdx": {
+    "mtime": 1774921573.6464653,
+    "ast_hash": "db68e3c1cfad1cc30e24a2e5e9acb3d1",
+    "semantic_hash": "db68e3c1cfad1cc30e24a2e5e9acb3d1"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/telos-template.md": {
+    "mtime": 1774921573.6468666,
+    "ast_hash": "02720051faf351a58db784db7a6ee84a",
+    "semantic_hash": "02720051faf351a58db784db7a6ee84a"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/telos-rapid-build-prompt.md": {
+    "mtime": 1774921573.6472647,
+    "ast_hash": "ebc3b5491c55cdc8d6054c58d84564a7",
+    "semantic_hash": "ebc3b5491c55cdc8d6054c58d84564a7"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/taskwarrior.md": {
+    "mtime": 1774921573.6479907,
+    "ast_hash": "14adc28c7e21368e6ae80610a90c261e",
+    "semantic_hash": "14adc28c7e21368e6ae80610a90c261e"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/telos-comprehensive-guide.md": {
+    "mtime": 1774921573.648388,
+    "ast_hash": "a260331d4e0461b06d0dbab261c51d4d",
+    "semantic_hash": "a260331d4e0461b06d0dbab261c51d4d"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/pass.md": {
+    "mtime": 1774921573.648801,
+    "ast_hash": "6e9e111a0da905b2c296bb62e7d21d2c",
+    "semantic_hash": "6e9e111a0da905b2c296bb62e7d21d2c"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/nb-mkdocs.md": {
+    "mtime": 1774921573.6491783,
+    "ast_hash": "41f70535028bb345c91f794579eb05de",
+    "semantic_hash": "41f70535028bb345c91f794579eb05de"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/index.md": {
+    "mtime": 1774921573.6496694,
+    "ast_hash": "6d971d55fc22400460f9873f073dabd9",
+    "semantic_hash": "6d971d55fc22400460f9873f073dabd9"
+  },
+  "/Users/vishal/code/blog-source/docs/productivity/mkdocs-material-customization.md": {
+    "mtime": 1774921573.6500874,
+    "ast_hash": "99014298a6082a5c4db65b7c3bf4b53c",
+    "semantic_hash": "99014298a6082a5c4db65b7c3bf4b53c"
+  },
+  "/Users/vishal/code/blog-source/blog/2022-08-21-mongodb-replicaset-write-concern-read-pref.md": {
+    "mtime": 1773015502.3271434,
+    "ast_hash": "8bf407f6ec1bf368e6d62ee19b42b256",
+    "semantic_hash": "8bf407f6ec1bf368e6d62ee19b42b256"
+  },
+  "/Users/vishal/code/blog-source/blog/2021-09-18-mongodb-rs-docker-persistent-volume.md": {
+    "mtime": 1773015502.325685,
+    "ast_hash": "5220175b3a2df5d8c82b8afea8c9ebb1",
+    "semantic_hash": "5220175b3a2df5d8c82b8afea8c9ebb1"
+  },
+  "/Users/vishal/code/blog-source/blog/2021-09-12-create-mongodb-docker.md": {
+    "mtime": 1773015502.3255212,
+    "ast_hash": "ea8cb87e751f7a6924cf936789721f5d",
+    "semantic_hash": "ea8cb87e751f7a6924cf936789721f5d"
+  },
+  "/Users/vishal/code/blog-source/blog/2022-04-10-local-home-lab.md": {
+    "mtime": 1773015502.3262286,
+    "ast_hash": "4a289f3b164bc51eec4c0ed4d45fdf96",
+    "semantic_hash": "4a289f3b164bc51eec4c0ed4d45fdf96"
+  },
+  "/Users/vishal/code/blog-source/blog/2026-03-08-spec-driven-development.md": {
+    "mtime": 1774925840.471355,
+    "ast_hash": "fc36e758f13e6849d0dc32775e11313c",
+    "semantic_hash": "fc36e758f13e6849d0dc32775e11313c"
+  },
+  "/Users/vishal/code/blog-source/blog/2022-12-30-fav-open-source-repo.md": {
+    "mtime": 1773015502.3278804,
+    "ast_hash": "f12c99405a20e391593f54fbee452acc",
+    "semantic_hash": "f12c99405a20e391593f54fbee452acc"
+  },
+  "/Users/vishal/code/blog-source/blog/2024-01-21-essentials-software-developer.md": {
+    "mtime": 1773015502.3280246,
+    "ast_hash": "a0b6e11dfa0a4f4587091740988e1877",
+    "semantic_hash": "a0b6e11dfa0a4f4587091740988e1877"
+  },
+  "/Users/vishal/code/blog-source/blog/authors.yml": {
+    "mtime": 1773015502.328394,
+    "ast_hash": "253c8874e72417eed0c6a6b2b081f7c1",
+    "semantic_hash": "253c8874e72417eed0c6a6b2b081f7c1"
+  },
+  "/Users/vishal/code/blog-source/blog/2024-08-25-bruno-postman.md": {
+    "mtime": 1773015502.328158,
+    "ast_hash": "be590ddbc1bd5c544f747ae43208fc76",
+    "semantic_hash": "be590ddbc1bd5c544f747ae43208fc76"
+  },
+  "/Users/vishal/code/blog-source/blog/2022-07-09-docker-sbom.md": {
+    "mtime": 1773015502.3265243,
+    "ast_hash": "855b97b19c089656a3a54f61a540f72c",
+    "semantic_hash": "855b97b19c089656a3a54f61a540f72c"
+  },
+  "/Users/vishal/code/blog-source/blog/2022-05-29-percona-mongo-replicaset-minio.md": {
+    "mtime": 1773015502.3263648,
+    "ast_hash": "63cf87c6e55537314b9aadc08b55b111",
+    "semantic_hash": "63cf87c6e55537314b9aadc08b55b111"
+  },
+  "/Users/vishal/code/blog-source/blog/2022-10-02-rest-api-design-rules.md": {
+    "mtime": 1773015502.327401,
+    "ast_hash": "e4a914f5ba873c5b8cec05edcde213ab",
+    "semantic_hash": "e4a914f5ba873c5b8cec05edcde213ab"
+  },
+  "/Users/vishal/code/blog-source/blog/2022-10-22-doc-as-code.md": {
+    "mtime": 1773015502.3275616,
+    "ast_hash": "2535ae50118ed4d02698f9f2ffac17cd",
+    "semantic_hash": "2535ae50118ed4d02698f9f2ffac17cd"
+  },
+  "/Users/vishal/code/blog-source/blog/2025-12-15-mcp-llm-servers.md": {
+    "mtime": 1773018569.6913114,
+    "ast_hash": "20aa8547eab69630d7c8ef8a10082c42",
+    "semantic_hash": "20aa8547eab69630d7c8ef8a10082c42"
+  },
+  "/Users/vishal/code/blog-source/blog/2021-10-02-sharding-mongo-docker.md": {
+    "mtime": 1773015502.3260577,
+    "ast_hash": "90695587374637777081d74554cbf8ec",
+    "semantic_hash": "90695587374637777081d74554cbf8ec"
+  },
+  "/Users/vishal/code/blog-source/blog/2024-09-21-BI-as-code.md": {
+    "mtime": 1773015502.328311,
+    "ast_hash": "e1aa138b6e31d91b5f0a09680a890931",
+    "semantic_hash": "e1aa138b6e31d91b5f0a09680a890931"
+  },
+  "/Users/vishal/code/blog-source/styles/Vocab/PostgresHA/accept.txt": {
+    "mtime": 1779192639.9675636,
+    "ast_hash": "7c6e93c5b3956476d7b61ea65f735357",
+    "semantic_hash": "7c6e93c5b3956476d7b61ea65f735357"
+  },
+  "/Users/vishal/code/blog-source/.github/workflows/deploy.yml": {
+    "mtime": 1773023915.0480206,
+    "ast_hash": "5c0b31bfd5ee7ac7cfa05f3b2ad60468",
+    "semantic_hash": "5c0b31bfd5ee7ac7cfa05f3b2ad60468"
+  },
+  "/Users/vishal/code/blog-source/.github/workflows/companion-ci.yml": {
+    "mtime": 1779192639.8865027,
+    "ast_hash": "5a701f39e6f4a7355979dbb55cddff26",
+    "semantic_hash": "5a701f39e6f4a7355979dbb55cddff26"
+  },
+  "/Users/vishal/code/blog-source/.github/workflows/book-lint.yml": {
+    "mtime": 1779192639.8863301,
+    "ast_hash": "9dc045793bf48fcc76e232c228c0d7ef",
+    "semantic_hash": "9dc045793bf48fcc76e232c228c0d7ef"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions.yml": {
+    "mtime": 1779192639.887263,
+    "ast_hash": "94ed8d3bfe81b58a24df61d656ddf5ac",
+    "semantic_hash": "94ed8d3bfe81b58a24df61d656ddf5ac"
+  },
+  "/Users/vishal/code/blog-source/.specify/memory/constitution.md": {
+    "mtime": 1779075846.8061914,
+    "ast_hash": "0c1b63201d41c0ec74c7ee32e7751548",
+    "semantic_hash": "0c1b63201d41c0ec74c7ee32e7751548"
+  },
+  "/Users/vishal/code/blog-source/.specify/workflows/speckit/workflow.yml": {
+    "mtime": 1779192639.899515,
+    "ast_hash": "f2ac035c7d23d79221c84e745d4a9380",
+    "semantic_hash": "f2ac035c7d23d79221c84e745d4a9380"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/extension.yml": {
+    "mtime": 1779192639.8900516,
+    "ast_hash": "5d4eebdd419577a3773d375e890404f1",
+    "semantic_hash": "5d4eebdd419577a3773d375e890404f1"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/git-config.yml": {
+    "mtime": 1779192639.8902683,
+    "ast_hash": "2e959d8f99a1aa365700f91f006dde16",
+    "semantic_hash": "2e959d8f99a1aa365700f91f006dde16"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/README.md": {
+    "mtime": 1779192639.8883035,
+    "ast_hash": "03c2460bdc0f0edd93a3a4f551c5bec0",
+    "semantic_hash": "03c2460bdc0f0edd93a3a4f551c5bec0"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/config-template.yml": {
+    "mtime": 1779192639.8897984,
+    "ast_hash": "2e959d8f99a1aa365700f91f006dde16",
+    "semantic_hash": "2e959d8f99a1aa365700f91f006dde16"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/commands/speckit.git.feature.md": {
+    "mtime": 1779192639.8888733,
+    "ast_hash": "1bd5a1974afd675961220e03622cb182",
+    "semantic_hash": "1bd5a1974afd675961220e03622cb182"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/commands/speckit.git.remote.md": {
+    "mtime": 1779192639.889406,
+    "ast_hash": "eeafceb7d40fa71cd35a39d62842d74e",
+    "semantic_hash": "eeafceb7d40fa71cd35a39d62842d74e"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/commands/speckit.git.commit.md": {
+    "mtime": 1779192639.8885536,
+    "ast_hash": "072a42b77ae4fc61ee2541fbdb9f191b",
+    "semantic_hash": "072a42b77ae4fc61ee2541fbdb9f191b"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/commands/speckit.git.validate.md": {
+    "mtime": 1779192639.8896275,
+    "ast_hash": "4379082fcdc8ff26ae4228596e4b6f3f",
+    "semantic_hash": "4379082fcdc8ff26ae4228596e4b6f3f"
+  },
+  "/Users/vishal/code/blog-source/.specify/extensions/git/commands/speckit.git.initialize.md": {
+    "mtime": 1779192639.8891435,
+    "ast_hash": "3b445c45690f63d74c072d2ad6b24d71",
+    "semantic_hash": "3b445c45690f63d74c072d2ad6b24d71"
+  },
+  "/Users/vishal/code/blog-source/.specify/auth-for-docs/tasks.md": {
+    "mtime": 1774917980.9589555,
+    "ast_hash": "6528973aa843d3949125e7f514a03661",
+    "semantic_hash": "6528973aa843d3949125e7f514a03661"
+  },
+  "/Users/vishal/code/blog-source/.specify/auth-for-docs/plan.md": {
+    "mtime": 1774917976.4091475,
+    "ast_hash": "9a8b985c1220abf24c2dde08770e34a9",
+    "semantic_hash": "9a8b985c1220abf24c2dde08770e34a9"
+  },
+  "/Users/vishal/code/blog-source/.specify/auth-for-docs/spec.md": {
+    "mtime": 1774917974.4552023,
+    "ast_hash": "6e9029eb0a830ac41075268f0166f577",
+    "semantic_hash": "6e9029eb0a830ac41075268f0166f577"
+  },
+  "/Users/vishal/code/blog-source/.specify/templates/constitution-template.md": {
+    "mtime": 1779192639.8967202,
+    "ast_hash": "dcefb6b60e7cb3db2e966977b6f02f18",
+    "semantic_hash": "dcefb6b60e7cb3db2e966977b6f02f18"
+  },
+  "/Users/vishal/code/blog-source/.specify/templates/checklist-template.md": {
+    "mtime": 1779192639.8965833,
+    "ast_hash": "af4274efb13cbb2263029402deb14f6b",
+    "semantic_hash": "af4274efb13cbb2263029402deb14f6b"
+  },
+  "/Users/vishal/code/blog-source/.specify/templates/tasks-template.md": {
+    "mtime": 1779192639.8981848,
+    "ast_hash": "f8b4f62d384defa0a559bdbbaacb0540",
+    "semantic_hash": "f8b4f62d384defa0a559bdbbaacb0540"
+  },
+  "/Users/vishal/code/blog-source/.specify/templates/spec-template.md": {
+    "mtime": 1779192639.8979077,
+    "ast_hash": "45ac8538bc1220324c9f0d610145b53f",
+    "semantic_hash": "45ac8538bc1220324c9f0d610145b53f"
+  },
+  "/Users/vishal/code/blog-source/.specify/templates/plan-template.md": {
+    "mtime": 1779192639.8974316,
+    "ast_hash": "fea2e21a1d9cf3470186abc1dfb6e9fb",
+    "semantic_hash": "fea2e21a1d9cf3470186abc1dfb6e9fb"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-checklist/SKILL.md": {
+    "mtime": 1779192639.8824348,
+    "ast_hash": "a2aa202b02f88783e8976686a80089e5",
+    "semantic_hash": "a2aa202b02f88783e8976686a80089e5"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-git-remote/SKILL.md": {
+    "mtime": 1779192639.884418,
+    "ast_hash": "77460848e4cc58010cc09600b956dd47",
+    "semantic_hash": "77460848e4cc58010cc09600b956dd47"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-git-validate/SKILL.md": {
+    "mtime": 1779192639.8846605,
+    "ast_hash": "18b06e81e0b57363e20fd0a3f14b1f63",
+    "semantic_hash": "18b06e81e0b57363e20fd0a3f14b1f63"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-git-initialize/SKILL.md": {
+    "mtime": 1779192639.88416,
+    "ast_hash": "b54f37da4d0e31993b059cb823d4f59d",
+    "semantic_hash": "b54f37da4d0e31993b059cb823d4f59d"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-constitution/SKILL.md": {
+    "mtime": 1779192639.8833857,
+    "ast_hash": "21f2d5adc2c9458ef3c84ff58b0939a6",
+    "semantic_hash": "21f2d5adc2c9458ef3c84ff58b0939a6"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-implement/SKILL.md": {
+    "mtime": 1779192639.8850212,
+    "ast_hash": "d2887f8e1a395f84293f98c9e0edebc3",
+    "semantic_hash": "d2887f8e1a395f84293f98c9e0edebc3"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-taskstoissues/SKILL.md": {
+    "mtime": 1779192639.8861122,
+    "ast_hash": "8408142da6dee51e8bc29d43d754b7a3",
+    "semantic_hash": "8408142da6dee51e8bc29d43d754b7a3"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-clarify/SKILL.md": {
+    "mtime": 1779192639.8830414,
+    "ast_hash": "c8be286204fed1c4e27dd12b0ed2fd7e",
+    "semantic_hash": "c8be286204fed1c4e27dd12b0ed2fd7e"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-plan/SKILL.md": {
+    "mtime": 1779192639.8853276,
+    "ast_hash": "84df661e2248b59b1f7bbbb25b84c4ae",
+    "semantic_hash": "84df661e2248b59b1f7bbbb25b84c4ae"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-git-feature/SKILL.md": {
+    "mtime": 1779192639.8839104,
+    "ast_hash": "55bdacb0f76877801816a1ad323445ab",
+    "semantic_hash": "55bdacb0f76877801816a1ad323445ab"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-analyze/SKILL.md": {
+    "mtime": 1779192639.8820632,
+    "ast_hash": "e7831d3205c64871ac867cdb8563d004",
+    "semantic_hash": "e7831d3205c64871ac867cdb8563d004"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-git-commit/SKILL.md": {
+    "mtime": 1779192639.8836656,
+    "ast_hash": "b3b5452d7f4a384684f4d134977b7413",
+    "semantic_hash": "b3b5452d7f4a384684f4d134977b7413"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-specify/SKILL.md": {
+    "mtime": 1779192639.885571,
+    "ast_hash": "0715db0318d1b39ef5a8d7349108f9e7",
+    "semantic_hash": "0715db0318d1b39ef5a8d7349108f9e7"
+  },
+  "/Users/vishal/code/blog-source/.devin/skills/speckit-tasks/SKILL.md": {
+    "mtime": 1779192639.885869,
+    "ast_hash": "b15e7a6759fef1a02174e806962d2973",
+    "semantic_hash": "b15e7a6759fef1a02174e806962d2973"
+  },
+  "/Users/vishal/code/blog-source/src/pages/markdown-page.md": {
+    "mtime": 1773015502.3362076,
+    "ast_hash": "9a308d3366f2b1fb40267a141b50d4d5",
+    "semantic_hash": "9a308d3366f2b1fb40267a141b50d4d5"
+  },
+  "/Users/vishal/code/blog-source/blog/minio.webp": {
+    "mtime": 1773015502.329345,
+    "ast_hash": "cbe942391f6028c45f2fd857540d56c6",
+    "semantic_hash": "cbe942391f6028c45f2fd857540d56c6"
+  },
+  "/Users/vishal/code/blog-source/blog/replicaset.png": {
+    "mtime": 1773015502.3302765,
+    "ast_hash": "d93ef716b3e7e76e3d0557e925e88f56",
+    "semantic_hash": "d93ef716b3e7e76e3d0557e925e88f56"
+  },
+  "/Users/vishal/code/blog-source/blog/2022-07-19-23-09-57.png": {
+    "mtime": 1773015502.3269913,
+    "ast_hash": "573d5c994b917046d2dd8a97d02293eb",
+    "semantic_hash": "573d5c994b917046d2dd8a97d02293eb"
+  },
+  "/Users/vishal/code/blog-source/blog/sbom.webp": {
+    "mtime": 1773015502.3306556,
+    "ast_hash": "7f7bc777a24d537bee2c990c558c806d",
+    "semantic_hash": "7f7bc777a24d537bee2c990c558c806d"
+  },
+  "/Users/vishal/code/blog-source/blog/images/replicaset.png": {
+    "mtime": 1773015502.3291888,
+    "ast_hash": "d93ef716b3e7e76e3d0557e925e88f56",
+    "semantic_hash": "d93ef716b3e7e76e3d0557e925e88f56"
+  },
+  "/Users/vishal/code/blog-source/static/img/undraw_docusaurus_mountain.svg": {
+    "mtime": 1773015502.3369815,
+    "ast_hash": "a6b83d7b4c3cf36cb21eb7a9721716dd",
+    "semantic_hash": "a6b83d7b4c3cf36cb21eb7a9721716dd"
+  },
+  "/Users/vishal/code/blog-source/static/img/undraw_docusaurus_react.svg": {
+    "mtime": 1773015502.3371317,
+    "ast_hash": "b64ae8e3c10e5ff2ec85a653cfe6edf8",
+    "semantic_hash": "b64ae8e3c10e5ff2ec85a653cfe6edf8"
+  },
+  "/Users/vishal/code/blog-source/static/img/docusaurus.png": {
+    "mtime": 1773015502.3366268,
+    "ast_hash": "7fa1a026116afe175cae818030d4ffc4",
+    "semantic_hash": "7fa1a026116afe175cae818030d4ffc4"
+  },
+  "/Users/vishal/code/blog-source/static/img/vishal.png": {
+    "mtime": 1773015502.3407617,
+    "ast_hash": "8d8f1d6418f348cd0bb869ccee31f68d",
+    "semantic_hash": "8d8f1d6418f348cd0bb869ccee31f68d"
+  },
+  "/Users/vishal/code/blog-source/static/img/undraw_docusaurus_tree.svg": {
+    "mtime": 1773015502.3372545,
+    "ast_hash": "8fa6e79a15c385d7b2dc4bb761a2e9e3",
+    "semantic_hash": "8fa6e79a15c385d7b2dc4bb761a2e9e3"
+  },
+  "/Users/vishal/code/blog-source/static/img/logo.svg": {
+    "mtime": 1773015502.3368616,
+    "ast_hash": "aa4fa2cdc39d33f2ee3b8f245b6d30d9",
+    "semantic_hash": "aa4fa2cdc39d33f2ee3b8f245b6d30d9"
+  }
+}
