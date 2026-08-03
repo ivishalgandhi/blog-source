@@ -5,13 +5,14 @@
     "uptodate"
   ],
   "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#fbed80",
     "activityBar.activeBorder": "#fa45d4",
+    "activityBar.activeBackground": "#fbed80",
     "activityBar.background": "#fbed80",
     "activityBar.foreground": "#15202b",
     "activityBar.inactiveForeground": "#15202b99",
     "activityBarBadge.background": "#06b9a5",
     "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#15202b99",
     "sash.hoverBorder": "#fbed80",
     "statusBar.background": "#f9e64f",
     "statusBar.foreground": "#15202b",
@@ -21,13 +22,12 @@
     "titleBar.activeBackground": "#f9e64f",
     "titleBar.activeForeground": "#15202b",
     "titleBar.inactiveBackground": "#f9e64f99",
-    "titleBar.inactiveForeground": "#15202b99",
-    "commandCenter.border": "#15202b99"
+    "titleBar.inactiveForeground": "#15202b99"
   },
   "peacock.color": "#f9e64f",
   "markdown.marp.html": "all",
   "demoTime.defaultFileType": "yaml",
-  "workbench.colorTheme": "Default Light Modern",
+  "workbench.colorTheme": "Default Dark Modern",
   "workbench.statusBar.visible": true,
   "workbench.editor.showTabs": "multiple",
   "workbench.activityBar.location": "default"
