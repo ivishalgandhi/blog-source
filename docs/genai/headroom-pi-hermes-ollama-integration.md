@@ -19,21 +19,28 @@ This guide documents how to integrate [Headroom](https://github.com/headroomlabs
 
 ## Architecture
 
-```
-┌─────────────┐     ┌──────────────┐     ┌─────────────────┐     ┌─────────────┐
-│   Pi (M2)   │────▶│ Headroom     │────▶│  Ollama (M4)    │────▶│ Cloud       │
-│  or Hermes  │     │  (M4:8787)   │     │  (M4:11434)     │     │ Models      │
-│   (M5)      │     │              │     │  Kimi, Gemma,   │     │ (Ollama     │
-│             │     │ Token comp   │     │  Qwen, GLM      │     │ Cloud)      │
-└─────────────┘     │ Cache align  │     └─────────────────┘     └─────────────┘
-                    └──────────────┘
-                              │
-                              ▼
-                    ┌─────────────────┐
-                    │ Cursor GUI      │
-                    │ (blocked —      │
-                    │  walled garden) │
-                    └─────────────────┘
+```mermaid
+sequenceDiagram
+    participant Pi as Pi Agent (M2)
+    participant Hermes as Hermes Agent (M5)
+    participant Headroom as Headroom Proxy<br/>(M4:8787)
+    participant Ollama as Ollama Server<br/>(M4:11434)
+    participant Cloud as Ollama Cloud
+
+    Pi->>Headroom: OpenAI API Request
+    Hermes->>Headroom: OpenAI API Request
+    Headroom->>Ollama: Forward to /v1/chat/completions
+    Ollama->>Cloud: Pull model weights (kimi, gemma, qwen)
+    Cloud-->>Ollama: Model weights
+    Ollama-->>Headroom: Response + usage tokens
+    Headroom-->>Pi: Compressed response (cache-only)
+    Headroom-->>Hermes: Compressed response (active)
+
+    note over Headroom: Token compression +<br/>cache alignment happens here
+
+    %% Cursor is blocked
+    CursorGUI as Cursor GUI
+    CursorGUI-xHeadroom: BLOCKED<br/>(api2.cursor.sh walled garden)
 ```
 
 ---
@@ -232,17 +239,36 @@ curl -s http://127.0.0.1:8787/stats | grep -E "api_requests|requests_compressed|
 
 ### Step 3.5: Actual Results
 
-After several Hermes conversations, Headroom stats showed:
+After running Hermes and Pi through Headroom, the stats show compression at work:
+
+#### Overall Metrics
 
 | Metric | Value |
 |--------|-------|
-| `api_requests` | **8** |
-| `requests_compressed` | **3** |
-| `best_compression_pct` | **30%** |
-| `best_detail` | **44,372 → 29,484 tokens** |
-| `total_tokens_removed` | **438** |
+| `api_requests` | **82** |
+| `requests_compressed` | **59** (72%) |
+| `total_tokens_removed` | **27.9K** |
+| `total_input_tokens` | **6.13M** |
+| `best_detail` | **42,053 → 19,879 tokens** (53% reduction) |
+| `savings_usd` | **~/bin/bash.08** |
 
-**Key insight:** On the largest request, Headroom compressed **44,372 tokens down to 29,484** — a **33% reduction** on Ollama models.
+#### By Model
+
+| Model | Requests | Tokens Saved | Savings % | Est. Cost |
+|-------|----------|--------------|-----------|-----------|
+| `kimi-k2.6:cloud` | 66 | 22.6K | 0.58% | /bin/bash.068 |
+| `kimi-k2.7-code:cloud` | 5 | 16 | 0.10% | /bin/bash.00005 |
+| `passthrough:models` | 11 | 0 | 0.00% | /bin/bash.00 |
+
+#### By Client Agent
+
+Headroom identifies clients by their API agent signature. In our setup:
+
+| Client | Requests | Models Used | Compression Mode |
+|--------|----------|-------------|-----------------|
+| **openai** (Hermes + Pi) | 82 | kimi-k2.6, kimi-k2.7-code | Active for Hermes, cache-only for Pi |
+
+**Key insight:** The bulk of savings comes from Hermes using `kimi-k2.6:cloud` — large context requests trigger compression. Pi routes through the same proxy but stays in cache-only mode due to bug #846.
 
 ---
 
@@ -330,12 +356,12 @@ This is bug #846. Headroom should automatically fall back to `cache` mode for Pi
 
 ## Part 7: Summary
 
-| Tool | Through Headroom | Compression | Status |
-|------|-----------------|-------------|--------|
-| **Pi** | ✅ Yes (with workaround) | Cache-only (bug #846) | Working |
-| **Hermes** | ✅ Yes | ✅ Active (30%+ on large contexts) | Working |
-| **Cursor GUI** | ⚠️ Partial (own API key only) | Depends on model | Limited |
-| **cursor-agent CLI** | ❌ No | N/A | Blocked by design |
+| Tool | Through Headroom | By Model | Compression | Status |
+|------|-----------------|--------|-------------|--------|
+| **Pi** | ✅ Yes (with workaround) | kimi-k2.6, kimi-k2.7-code | Cache-only (bug #846) | Working |
+| **Hermes** | ✅ Yes | kimi-k2.6 (66 reqs), kimi-k2.7-code (5 reqs) | ✅ Active (53% best) | Working |
+| **Cursor GUI** | ⚠️ Partial (own API key only) | N/A (walled garden) | Depends on model | Limited |
+| **cursor-agent CLI** | ❌ No | N/A | N/A | Blocked by design |
 
 **The chain that works:**
 ```
