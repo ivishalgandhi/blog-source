@@ -160,7 +160,7 @@ It removes *integration* lock-in — the wiring between your surfaces and one ag
 | Model and inference | No | Commercial CLIs route to their own model stack and pricing |
 | Capability coverage | No | Agents implement different subsets: modes, terminals, client-passed MCP |
 | Extension methods | No | Vendor-prefixed methods and slash commands re-couple your UX |
-| Data path | No | Prompts and code leave for whoever operates that agent |
+| Agent inventory | No | Your agreement covers the agent you bought, not the one a developer adds |
 | Exit rights | Only with open source | You can keep running an OSS agent after a price or policy change |
 
 Two of those deserve detail because they bite quietly.
@@ -175,7 +175,11 @@ if cfg.RequireReadOnlyMode && !supportsReadOnlyMode(initResp.AgentCapabilities) 
 
 Capability negotiation is the only part of the swap story the protocol will enforce for you, and only if you write the assertion.
 
-**The data path does not travel with the protocol.** ACP describes how a host drives an agent. It says nothing about where your code goes once that agent process starts. Composing two products over a shared protocol does not merge their operational boundaries: each process still runs on someone's infrastructure, under whatever arrangement you have with that provider. "We standardized on ACP" answers an integration question, not a sourcing one. Before wiring any agent into an internal surface, be able to state plainly which process read the code and whose infrastructure ran the inference — for every agent you allow.
+**Your agreement covers the agent you bought, not the one a developer can add.** Enterprises generally do the procurement part well. The major agent vendors offer privacy modes enforced org-wide, zero-retention arrangements with model providers, SOC 2 reports, DPAs, data residency, and customer-managed keys. If you signed that paperwork, the objection "but where does our code go" is already answered — for that vendor.
+
+ACP changes the cost of introducing a different one. An agent is a subprocess the client launches from a config file: in JetBrains AI Assistant that is `~/.jetbrains/acp.json`, in the developer's home directory, with the agent's own credentials in `env`. One edit points an approved IDE at an unapproved agent running on a personal subscription. JetBrains says so plainly — ACP agents come with their own subscription, and that is between you and them. Cognition documents the same boundary for third-party agents inside Devin Desktop.
+
+The vendors are not hiding this; they are already building controls for it. Cursor offers an allowed-team-IDs policy so corporate devices cannot log into personal accounts. Devin Desktop lets team admins push an approved ACP registry to their users. Both are acknowledgements that the governing question has shifted. It is no longer "is our agent vendor compliant." It is "which agent binaries can actually run here, and who decided that."
 
 This is where open-source agents change the calculus rather than just the vendor name. An agent like Hermes runs ACP through its own provider resolver, so the credentials and model endpoint are the ones you configured — including a self-hosted one. Goose and opencode are similar: the runtime is yours to fork, pin, and audit. That is genuine exit right.
 
@@ -237,7 +241,7 @@ That topology mirrors how we already treat database access: applications do not 
 2. What is the default mode for unattended sessions, and who may promote a session to edit-and-execute?
 3. Where do approval records land, who reviews them, and which fields are mandatory?
 4. Is MCP inventory delivered as reviewed files in the repo, or injected by the control plane at session start?
-5. For each agent you are considering, whose infrastructure runs the inference — and can you say so without checking?
+5. Which agent binaries are allowed to run against your repos, who approved that list, and what stops a developer adding one more?
 6. Can you swap the agent binary in staging without changing the portal API?
 
 If you cannot answer (2) and (3), you are not ready for edit-and-execute mode in production. Stay read-only and spend the time instrumenting permissions. Question (6) is the proof: if swapping the agent binary requires an API change, you never owned the client — you rented the brand with extra steps.
@@ -249,7 +253,9 @@ Own the client. Rent the model brand. ACP is how you keep that distinction when 
 - [Agent Client Protocol](https://agentclientprotocol.com/) and the [ACP registry](https://agentclientprotocol.com/get-started/registry)
 - [coder/acp-go-sdk](https://github.com/coder/acp-go-sdk)
 - [Cursor CLI ACP](https://cursor.com/docs/cli/acp)
-- [Devin ACP docs](https://docs.devin.ai/desktop/acp)
+- [Devin Desktop ACP, including team registry config](https://docs.devin.ai/desktop/acp)
+- [JetBrains AI Assistant ACP setup](https://www.jetbrains.com/help/ai-assistant/acp.html)
+- [Cursor enterprise privacy and data governance](https://cursor.com/docs/enterprise/privacy-and-data-governance)
 - [Hermes ACP host integration](https://hermes-agent.nousresearch.com/docs/user-guide/features/acp)
 - [goose in ACP clients](https://goose-docs.ai/docs/guides/acp-clients/)
 - [Breaking the N×M Barrier: MCP](./2025-12-15-mcp-llm-servers.md)
